@@ -6,7 +6,10 @@ package org.yzpang.demo;
  * Date: 2025/3/6 下午2:26
  **/
 public class Demo {
-    public static void main(String[] args) {
-        System.out.println("Hello World!");
+    public static void main(String[] args) throws InterruptedException {
+        while (true) {
+            System.out.println("Hello World!");
+            Thread.sleep(1000);
+        }
     }
 }
