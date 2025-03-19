@@ -9,7 +9,7 @@ import java.nio.file.Paths;
  * Desc: 类文件加载
  * Date: 2025/3/18 上午8:46
  **/
-public class ClassFileLoader {
+public class ClassFileLoader extends ClassLoader {
 
     /**
      * 读取字节码文件为字节数组
@@ -23,5 +23,11 @@ public class ClassFileLoader {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    protected Clazz findClass(String name) throws ClassNotFoundException {
+        byte[] bytes = loadFile(name);
+        return super.findClass(name);
     }
 }
