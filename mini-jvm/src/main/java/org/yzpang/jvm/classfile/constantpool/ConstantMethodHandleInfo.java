@@ -1,12 +1,16 @@
 package org.yzpang.jvm.classfile.constantpool;
 
+import lombok.Data;
+import org.yzpang.jvm.constant.ConstantPoolConstants;
+
 /**
  * Author: yzpang
  * Desc:
  * Date: 2025/3/18 上午10:26
  **/
+@Data
 public class ConstantMethodHandleInfo extends ConstantPoolInfo {
-    private int tag = ConstantInfoEnum.METHOD_HANDLE.ordinal();
+    private int tag = ConstantPoolConstants.METHOD_HANDLE;
     /**
      * 1-9范围内,表示方法句柄的类型
      */

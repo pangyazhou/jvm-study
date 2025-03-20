@@ -1,11 +1,14 @@
 package org.yzpang.jvm.classfile.attribute;
 
+import lombok.Data;
+
 /**
  * Author: yzpang
  * Desc: 异常处理器
  * Date: 2025/3/18 下午1:56
  **/
-public class ExceptionTable {
+@Data
+public class ExceptionInfo {
     /**
      * u2 异常处理器作用范围
      */
@@ -15,12 +18,12 @@ public class ExceptionTable {
      */
     private int endPc;
     /**
-     * 异常处理器的起点
+     * u2 异常处理器的起点
      */
     private int handlerPc;
     /**
-     * !=0: 常量池的有效索引,指向Constant_Class_info结构, 表示当前异常处理器捕捉的异常类型.
-     * ==0: 所有异常抛出都调用此异常处理器, 用于处理finally语句.
+     * u2   !=0: 常量池的有效索引,指向Constant_Class_info结构, 表示当前异常处理器捕捉的异常类型.
+     *      ==0: 所有异常抛出都调用此异常处理器, 用于处理finally语句.
      */
     private int catchType;
 }

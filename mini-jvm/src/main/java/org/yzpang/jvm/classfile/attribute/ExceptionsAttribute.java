@@ -1,5 +1,6 @@
 package org.yzpang.jvm.classfile.attribute;
 
+import lombok.Data;
 import org.yzpang.jvm.classfile.AttributeInfo;
 
 /**
@@ -7,6 +8,7 @@ import org.yzpang.jvm.classfile.AttributeInfo;
  * Desc: 异常属性
  * Date: 2025/3/18 下午3:30
  **/
+@Data
 public class ExceptionsAttribute extends AttributeInfo {
     /**
      * 异常表中的数量

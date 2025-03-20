@@ -11,9 +11,6 @@
 
     <artifactId>mini-jvm</artifactId>
     <packaging>pom</packaging>
-    <modules>
-        <module>org.yzpang.jvm</module>
-    </modules>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>

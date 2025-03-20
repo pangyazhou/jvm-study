@@ -1,6 +1,6 @@
 package org.yzpang.jvm.classfile.attribute;
 
-import com.sun.org.apache.bcel.internal.classfile.ExceptionTable;
+import lombok.Data;
 import org.yzpang.jvm.classfile.AttributeInfo;
 
 /**
@@ -12,34 +12,35 @@ import org.yzpang.jvm.classfile.AttributeInfo;
  *          method_info中有且智能有一个Code属性.
  * Date: 2025/3/18 下午1:51
  **/
+@Data
 public class CodeAttribute extends AttributeInfo {
     /**
-     * 操作数栈最大深度
+     * u2 操作数栈最大深度
      */
     private int maxStack;
     /**
-     * 局部变量表中的局部变量个数
+     * u2 局部变量表中的局部变量个数
      * long/double类型局部变量最大索引是 max_locals-2, 其他类型局部变量最大索引是max_locals-1
      */
     private int maxLocals;
     /**
-     * code[] 数组的长度, 必须大于0
+     * u4 code[] 数组的长度, 必须大于0
      */
     private int codeLength;
     /**
-     * 实现当前方法的Java虚拟机代码的实际字节内容
+     * u1 实现当前方法的Java虚拟机代码的实际字节内容
      */
     private byte[] code;
     /**
-     * exception_table表成员个数
+     * u2 exception_table表成员个数
      */
     private int exceptionTableLength;
     /**
      * code[]数组中的一个异常处理器, 顺序不可改动
      */
-    private ExceptionTable[] exceptionTable;
+    private ExceptionInfo[] exceptionInfo;
     /**
-     * 属性表数量
+     * u2 属性表数量
      */
     private int attributesCount;
     private AttributeInfo[] attributes;
