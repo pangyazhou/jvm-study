@@ -1,5 +1,6 @@
 package org.yzpang.jvm.classfile.attribute;
 
+import lombok.Data;
 import org.yzpang.jvm.classfile.AttributeInfo;
 
 /**
@@ -10,10 +11,11 @@ import org.yzpang.jvm.classfile.AttributeInfo;
  *          属性表中最多有一个该属性
  * Date: 2025/3/19 下午2:11
  **/
+@Data
 public class RuntimeVisibleAnnotationsAttribute extends AttributeInfo {
     /**
-     * 运行时可见注解的数量
+     * u2 运行时可见注解的数量
      */
-    private short numAnnotations;
+    private int numAnnotations;
     private Annotations[] annotations;
 }

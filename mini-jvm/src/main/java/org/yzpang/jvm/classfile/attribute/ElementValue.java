@@ -1,10 +1,13 @@
 package org.yzpang.jvm.classfile.attribute;
 
+import lombok.Data;
+
 /**
  * Author: yzpang
  * Desc:
  * Date: 2025/3/19 下午2:23
  **/
+@Data
 public class ElementValue {
     /**
      * u1 使用ASCII字符表示键值对中的值是什么类型

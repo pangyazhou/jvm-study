@@ -11,6 +11,18 @@ public interface ClassAccessConstants {
      */
     int ACC_PUBLIC = 0x0001;
     /**
+     * 是否为private
+     */
+    int ACC_PRIVATE = 0x0002;
+    /**
+     * 是否为protected
+     */
+    int ACC_PROTECTED = 0x0004;
+    /**
+     * 是否为static
+     */
+    int ACC_STATIC = 0x0008;
+    /**
      * 是否被声明为final, 只有类可以被设置
      */
     int ACC_FINAL = 0x0010;

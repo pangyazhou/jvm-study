@@ -1,10 +1,13 @@
 package org.yzpang.jvm.classfile.attribute;
 
+import lombok.Data;
+
 /**
  * Author: yzpang
  * Desc:   枚举常量
  * Date: 2025/3/19 下午2:27
  **/
+@Data
 public class EnumConstValue {
     /**
      * u2  常量池的有效索引, 指向Constant_Utf8_info结构, 表示一个有效的字段描述符

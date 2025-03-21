@@ -1,17 +1,20 @@
 package org.yzpang.jvm.classfile.attribute;
 
+import lombok.Data;
+
 /**
  * Author: yzpang
  * Desc: 行号表
  * Date: 2025/3/18 下午5:21
  **/
+@Data
 public class LineNumberTable {
     /**
-     * code[]数组的索引,
+     * u2 code[]数组的索引,
      */
     private int startPC;
     /**
-     * 源文件中对应的行号
+     * u2 源文件中对应的行号
      */
     private int lineNumber;
 }

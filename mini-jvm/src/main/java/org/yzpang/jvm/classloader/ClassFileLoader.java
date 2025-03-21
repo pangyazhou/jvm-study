@@ -419,6 +419,46 @@ public class ClassFileLoader extends ClassLoader {
                 }
                 codeAttribute.setAttributes(attributeInfos);
                 return codeAttribute;
+            case AttributeNameConstants.LINE_NUMBER_TABLE:
+                LineNumberTableAttribute lineNumberTableAttribute = new LineNumberTableAttribute();
+                BeanUtil.copyProperties(attributeInfo, lineNumberTableAttribute);
+                int lineNumberTableLength = ByteBuffer.wrap(Arrays.copyOfRange(lineNumberTableAttribute.getInfo(), currentIndex, currentIndex + 2)).getShort();
+                lineNumberTableAttribute.setLineNumberTableLength(lineNumberTableLength);
+                currentIndex += 2;
+                LineNumberTable[] lineNumberTables = new LineNumberTable[lineNumberTableLength];
+                for (int i = 0; i < lineNumberTableLength; i++){
+                    LineNumberTable lineNumberTable = new LineNumberTable();
+                    lineNumberTable.setStartPC(ByteBuffer.wrap(Arrays.copyOfRange(lineNumberTableAttribute.getInfo(), currentIndex, currentIndex + 2)).getShort());
+                    currentIndex += 2;
+                    lineNumberTable.setLineNumber(ByteBuffer.wrap(Arrays.copyOfRange(lineNumberTableAttribute.getInfo(), currentIndex, currentIndex + 2)).getShort());
+                    currentIndex += 2;
+                    lineNumberTables[i] = lineNumberTable;
+                }
+                lineNumberTableAttribute.setLineNumberTables(lineNumberTables);
+                return lineNumberTableAttribute;
+            case AttributeNameConstants.LOCAL_VARIABLE_TABLE:
+                LocalVariableTableAttribute localVariableTableAttribute = new LocalVariableTableAttribute();
+                BeanUtil.copyProperties(attributeInfo, localVariableTableAttribute);
+                int localVariableTableLength = ByteBuffer.wrap(Arrays.copyOfRange(localVariableTableAttribute.getInfo(), currentIndex, currentIndex + 2)).getShort();
+                localVariableTableAttribute.setLocalVariableTableLength(localVariableTableLength);
+                currentIndex += 2;
+                LocalVariableTable[] localVariableTables = new LocalVariableTable[localVariableTableLength];
+                for (int i = 0; i < localVariableTableLength; i++){
+                    LocalVariableTable localVariableTable = new LocalVariableTable();
+                    localVariableTable.setStartPC(ByteBuffer.wrap(Arrays.copyOfRange(localVariableTableAttribute.getInfo(), currentIndex, currentIndex + 2)).getShort());
+                    currentIndex += 2;
+                    localVariableTable.setLength(ByteBuffer.wrap(Arrays.copyOfRange(localVariableTableAttribute.getInfo(), currentIndex, currentIndex + 2)).getShort());
+                    currentIndex += 2;
+                    localVariableTable.setNameIndex(ByteBuffer.wrap(Arrays.copyOfRange(localVariableTableAttribute.getInfo(), currentIndex, currentIndex + 2)).getShort());
+                    currentIndex += 2;
+                    localVariableTable.setDescriptorIndex(ByteBuffer.wrap(Arrays.copyOfRange(localVariableTableAttribute.getInfo(), currentIndex, currentIndex + 2)).getShort());
+                    currentIndex += 2;
+                    localVariableTable.setIndex(ByteBuffer.wrap(Arrays.copyOfRange(localVariableTableAttribute.getInfo(), currentIndex, currentIndex + 2)).getShort());
+                    currentIndex += 2;
+                    localVariableTables[i] = localVariableTable;
+                }
+                localVariableTableAttribute.setLocalVariableTables(localVariableTables);
+                return localVariableTableAttribute;
             case AttributeNameConstants.INNER_CLASSES:
                 /* 内部类 */
                 InnerClassesAttribute innerClassesAttribute = new InnerClassesAttribute();
@@ -465,6 +505,7 @@ public class ClassFileLoader extends ClassLoader {
                 constantValueAttribute.setConstantValueIndex(ByteBuffer.wrap(constantValueAttribute.getInfo()).getShort());
                 return constantValueAttribute;
             case AttributeNameConstants.EXCEPTIONS:
+                /* 异常属性 */
                 ExceptionsAttribute exceptionsAttribute = new ExceptionsAttribute();
                 BeanUtil.copyProperties(attributeInfo, exceptionsAttribute);
                 int numberOfExceptions = ByteBuffer.wrap(Arrays.copyOfRange(exceptionsAttribute.getInfo(), currentIndex, currentIndex + 2)).getShort();
@@ -477,8 +518,121 @@ public class ClassFileLoader extends ClassLoader {
                 }
                 exceptionsAttribute.setExceptionIndexTable(exceptionIndexTable);
                 return exceptionsAttribute;
+            case AttributeNameConstants.BOOTSTRAPMETHODS:
+                /* 动态调用 */
+                BootstrapMethodsAttribute bootstrapMethodsAttribute = new BootstrapMethodsAttribute();
+                BeanUtil.copyProperties(attributeInfo, bootstrapMethodsAttribute);
+                int numBootstrapMethods = ByteBuffer.wrap(Arrays.copyOfRange(bootstrapMethodsAttribute.getInfo(), currentIndex, currentIndex + 2)).getShort();
+                bootstrapMethodsAttribute.setNumBootstrapMethods(numBootstrapMethods);
+                currentIndex += 2;
+                BootstrapMethod[] bootstrapMethods = new BootstrapMethod[numBootstrapMethods];
+                for (int i = 0; i < numBootstrapMethods; i++){
+                    BootstrapMethod bootstrapMethod = new BootstrapMethod();
+                    bootstrapMethod.setBootstrap_method_ref(ByteBuffer.wrap(Arrays.copyOfRange(bootstrapMethodsAttribute.getInfo(), currentIndex, currentIndex + 2)).getShort());
+                    currentIndex += 2;
+                    int numBootstrapArguments = ByteBuffer.wrap(Arrays.copyOfRange(bootstrapMethodsAttribute.getInfo(), currentIndex, currentIndex + 2)).getShort();
+                    bootstrapMethod.setNumBootstrapArguments(numBootstrapArguments);
+                    currentIndex += 2;
+                    int[] bootstrapArguments = new int[numBootstrapArguments];
+                    for (int j = 0; j < numBootstrapArguments; j++){
+                        bootstrapArguments[j] = ByteBuffer.wrap(Arrays.copyOfRange(bootstrapMethodsAttribute.getInfo(), currentIndex, currentIndex + 2)).getShort();
+                        currentIndex += 2;
+                    }
+                    bootstrapMethod.setBootstrapArguments(bootstrapArguments);
+                    bootstrapMethods[i] = bootstrapMethod;
+                }
+                bootstrapMethodsAttribute.setBootstrapMethods(bootstrapMethods);
+                return bootstrapMethodsAttribute;
+            case AttributeNameConstants.RUNTIME_VISIBLE_ANNOTATIONS:
+                /* 可见注解 */
+                RuntimeVisibleAnnotationsAttribute runtimeVisibleAnnotationsAttribute = new RuntimeVisibleAnnotationsAttribute();
+                BeanUtil.copyProperties(attributeInfo, runtimeVisibleAnnotationsAttribute);
+                int numAnnotations = ByteBuffer.wrap(Arrays.copyOfRange(runtimeVisibleAnnotationsAttribute.getInfo(), currentIndex, currentIndex + 2)).getShort();
+                runtimeVisibleAnnotationsAttribute.setNumAnnotations(numAnnotations);
+                currentIndex += 2;
+                index = new int[]{currentIndex};
+                Annotations[] annotations = new Annotations[numAnnotations];
+                for (int i = 0; i < numAnnotations; i++){
+                    annotations[i] = parseAnnotations(runtimeVisibleAnnotationsAttribute.getInfo(), index);
+                }
+                runtimeVisibleAnnotationsAttribute.setAnnotations(annotations);
+                return runtimeVisibleAnnotationsAttribute;
         }
         return attributeInfo;
+    }
+
+    /**
+     * 解析注解项
+     * @param bytes 二进制流
+     * @param index 当前索引
+     * @return 注解对象
+     */
+    private Annotations parseAnnotations(byte[] bytes, int[] index){
+        int currentIndex = index[0];
+        Annotations annotation = new Annotations();
+        annotation.setTypeIndex(ByteBuffer.wrap(Arrays.copyOfRange(bytes, currentIndex, currentIndex + 2)).getShort());
+        currentIndex += 2;
+        int numElementValuePairs = ByteBuffer.wrap(Arrays.copyOfRange(bytes, currentIndex, currentIndex + 2)).getShort();
+        annotation.setNumElementValuePairs(numElementValuePairs);
+        currentIndex += 2;
+        ElementValuePairs[] elementValuePairs = new ElementValuePairs[numElementValuePairs];
+        for (int i = 0; i < numElementValuePairs; i++){
+            ElementValuePairs elementValuePair = new ElementValuePairs();
+            // 注解字段名称
+            elementValuePair.setElementNameIndex(ByteBuffer.wrap(Arrays.copyOfRange(bytes, currentIndex, currentIndex + 2)).getShort());
+            currentIndex += 2;
+            // 注解字段值
+            index[0] = currentIndex;
+            ElementValue elementValue = parseElementValue(bytes, index);
+            elementValuePair.setElementValue(elementValue);
+            currentIndex = index[0];
+            elementValuePairs[i] = elementValuePair;
+        }
+        annotation.setElementValuePairs(elementValuePairs);
+        index[0] = currentIndex;
+        return annotation;
+    }
+
+    private ElementValue parseElementValue(byte[] bytes, int[] index){
+        int currentIndex = index[0];
+        ElementValue elementValue = new ElementValue();
+        char tag = (char)bytes[currentIndex];
+        elementValue.setTag(tag);
+        currentIndex += 1;
+        switch (tag){
+            case 'B':
+            case 'C':
+            case 'D':
+            case 'F':
+            case 'I':
+            case 'J':
+            case 'S':
+            case 'Z':
+            case 's':
+                elementValue.setConstValueIndex(ByteBuffer.wrap(Arrays.copyOfRange(bytes, currentIndex, currentIndex + 2)).getShort());
+                currentIndex += 2;
+                break;
+            case 'c':
+                elementValue.setClassInfoIndex(ByteBuffer.wrap(Arrays.copyOfRange(bytes, currentIndex, currentIndex + 2)).getShort());
+                currentIndex += 2;
+                break;
+            case 'e':
+                EnumConstValue enumConstValue = new EnumConstValue();
+                enumConstValue.setTypeNameIndex(ByteBuffer.wrap(Arrays.copyOfRange(bytes, currentIndex, currentIndex + 2)).getShort());
+                currentIndex += 2;
+                enumConstValue.setConstNameIndex(ByteBuffer.wrap(Arrays.copyOfRange(bytes, currentIndex, currentIndex + 2)).getShort());
+                currentIndex += 2;
+                elementValue.setEnumConstValue(enumConstValue);
+                break;
+            case '@':
+                // todo
+                break;
+            case '[':
+                // todo
+                break;
+        }
+        index[0] = currentIndex;
+        return elementValue;
     }
 
     private boolean validate(ClassFile classFile) throws Exception {

@@ -1,10 +1,10 @@
 package org.yzpang.jvm.classfile;
 
 import lombok.Data;
-import org.yzpang.jvm.classfile.attribute.ConstantValueAttribute;
-import org.yzpang.jvm.classfile.attribute.DeprecatedAttribute;
+import org.yzpang.jvm.classfile.attribute.*;
 import org.yzpang.jvm.classfile.constant.AttributeNameConstants;
 import org.yzpang.jvm.classfile.constant.ClassAccessConstants;
+import org.yzpang.jvm.classfile.constant.MethodAccessConstants;
 import org.yzpang.jvm.classfile.constantpool.*;
 import org.yzpang.jvm.classfile.util.ClassFileUtil;
 import org.yzpang.jvm.constant.ConstantPoolConstants;
@@ -258,13 +258,42 @@ public class ClassFile {
             }
             sb.append("\t\tdescriptor: ").append(descriptor).append("\n");
             sb.append("\t\tflags: ").append(ClassFileUtil.getMethodAccessFlags(methodInfo.getAccessFlags())).append("\n");
-            sb.append("\t\tattributes: ").append("\n");
             for (int j = 0; j < methodInfo.getAttributeCount(); j++) {
                 AttributeInfo attributeInfo = methodInfo.getAttributes()[j];
                 String attributeName = ClassFileUtil.getUtf8Info(constantPoolInfos, attributeInfo.getAttributeNameIndex());
-                sb.append("\t\t\t").append(attributeName).append(": ");
+                sb.append("\t\t").append(attributeName).append(": ");
                 if (attributeInfo instanceof DeprecatedAttribute){
-                    sb.append("True").append("\n");
+                    sb.append("true").append("\n");
+                } else if (attributeInfo instanceof CodeAttribute) {
+                    CodeAttribute codeAttribute = (CodeAttribute) attributeInfo;
+                    sb.append("\n\t\t\t").append("stack=").append(codeAttribute.getMaxStack())
+                            .append(", locals=").append(codeAttribute.getMaxLocals())
+                            .append(", args_size=").append((ClassFileUtil.calculateArgs(descriptor)
+                                    + ((methodInfo.getAccessFlags() & MethodAccessConstants.ACC_STATIC) == 0 ? 1 : 0)))
+                            .append("\n");
+                    for (AttributeInfo attribute : codeAttribute.getAttributes()) {
+                        String attributeNameOfCode = ClassFileUtil.getUtf8Info(constantPoolInfos, attribute.getAttributeNameIndex());
+                        sb.append("\t\t\t").append(attributeNameOfCode).append(": ").append("\n");
+                        if (attribute instanceof LineNumberTableAttribute){
+                            LineNumberTableAttribute lineNumberTableAttribute = (LineNumberTableAttribute) attribute;
+                            LineNumberTable[] lineNumberTables = lineNumberTableAttribute.getLineNumberTables();
+                            for (LineNumberTable lineNumberTable : lineNumberTables) {
+                                sb.append("\t\t\t\t").append("line ").append(lineNumberTable.getLineNumber()).append(" ").append(lineNumberTable.getStartPC()).append("\n");
+                            }
+                        } else if (attribute instanceof LocalVariableTableAttribute) {
+                            LocalVariableTableAttribute localVariableTableAttribute = (LocalVariableTableAttribute) attribute;
+                            LocalVariableTable[] localVariableTables = localVariableTableAttribute.getLocalVariableTables();
+                            sb.append("\t\t\t\t").append("Start\t").append("Length\t").append("Slot\t").append("Name\t").append("Signature").append("\n");
+                            for (LocalVariableTable localVariableTable : localVariableTables) {
+                                sb.append("\t\t\t\t\t").append(localVariableTable.getStartPC())
+                                        .append("\t").append(localVariableTable.getLength())
+                                        .append("\t").append(localVariableTable.getIndex())
+                                        .append("\t").append(ClassFileUtil.getUtf8Info(constantPoolInfos, localVariableTable.getNameIndex()))
+                                        .append("\t").append(ClassFileUtil.getUtf8Info(constantPoolInfos, localVariableTable.getDescriptorIndex()))
+                                        .append("\n");
+                            }
+                        }
+                    }
                 } else {
                     sb.append("\n");
                 }
@@ -277,6 +306,68 @@ public class ClassFile {
             sb.append("\t").append(attributeName).append(": ");
             if (attributeInfo instanceof DeprecatedAttribute){
                 sb.append("True").append("\n");
+            } else if (attributeInfo instanceof SourceFileAttribute) {
+                SourceFileAttribute sourceFileAttribute = (SourceFileAttribute) attributeInfo;
+                String sourceFileName = ClassFileUtil.getUtf8Info(constantPoolInfos, sourceFileAttribute.getSourceFileIndex());
+                sb.append("\"").append(sourceFileName).append("\"").append("\n");
+            } else if (attributeInfo instanceof InnerClassesAttribute) {
+                InnerClassesAttribute innerClassesAttribute = (InnerClassesAttribute) attributeInfo;
+                int classesCount = innerClassesAttribute.getNumberOfClasses();
+                for (int j = 0; j < classesCount; j++) {
+                    InnerClassTable innerClassTable = innerClassesAttribute.getInnerClasses()[j];
+                    sb.append("\t\t").append(ClassFileUtil.parseClassAccessFlags(innerClassTable.getInnerClassAccessFlags())).append(" ");
+                    sb.append("#").append(innerClassTable.getInnerNameIndex()).append("= ")
+                            .append("#").append(innerClassTable.getInnerClassInfoIndex()).append(" of ")
+                            .append("#").append(innerClassTable.getOuterClassInfoIndex()).append("; ")
+                            .append("//").append(ClassFileUtil.getUtf8Info(constantPoolInfos, innerClassTable.getInnerNameIndex()))
+                            .append("=class ").append(ClassFileUtil.getClassInfo(constantPoolInfos, innerClassTable.getInnerClassInfoIndex()))
+                            .append(" of class ").append(ClassFileUtil.getClassInfo(constantPoolInfos, innerClassTable.getOuterClassInfoIndex()))
+                            .append("\n");
+                }
+            } else if (attributeInfo instanceof BootstrapMethodsAttribute) {
+                BootstrapMethodsAttribute bootstrapMethodsAttribute = (BootstrapMethodsAttribute) attributeInfo;
+                int numBootstrapMethods = bootstrapMethodsAttribute.getNumBootstrapMethods();
+                sb.append("\n");
+                for (int j = 0; j < numBootstrapMethods; j++) {
+                    BootstrapMethod bootstrapMethod = bootstrapMethodsAttribute.getBootstrapMethods()[j];
+                    sb.append("\t\t").append(j).append(": ")
+                            .append("#").append(bootstrapMethod.getBootstrap_method_ref())
+                            .append(" ").append(ClassFileUtil.parseConstantPoolIndex(constantPoolInfos, bootstrapMethod.getBootstrap_method_ref()))
+                            .append("\n");
+                    sb.append("\t\t\t").append("Method arguments: ").append("\n");
+                    int numBootstrapArguments = bootstrapMethod.getNumBootstrapArguments();
+                    for (int k = 0; k < numBootstrapArguments; k++) {
+                        sb.append("\t\t\t\t#")
+                                .append(bootstrapMethod.getBootstrapArguments()[k])
+                                .append(" ").append(ClassFileUtil.parseConstantPoolIndex(constantPoolInfos, bootstrapMethod.getBootstrapArguments()[k]))
+                                .append("\n");
+                    }
+                }
+            } else if (attributeInfo instanceof RuntimeVisibleAnnotationsAttribute) {
+                RuntimeVisibleAnnotationsAttribute runtimeVisibleAnnotationsAttribute = (RuntimeVisibleAnnotationsAttribute) attributeInfo;
+                int numAnnotations = runtimeVisibleAnnotationsAttribute.getNumAnnotations();
+                sb.append("\n");
+                for (int j = 0; j < numAnnotations; j++) {
+                    Annotations annotation = runtimeVisibleAnnotationsAttribute.getAnnotations()[j];
+                    sb.append("\t\t").append(j).append(": ")
+                            .append("#").append(annotation.getTypeIndex())
+                            .append("(");
+                    int numElementValuePairs = annotation.getNumElementValuePairs();
+                    for (int k = 0; k < numElementValuePairs; k++) {
+                        ElementValuePairs elementValuePairs = annotation.getElementValuePairs()[k];
+                        sb.append("#").append(elementValuePairs.getElementNameIndex())
+                                .append("=")
+                                .append(elementValuePairs.getElementValue().getTag())
+                                .append("#")
+                                .append(elementValuePairs.getElementValue().getConstValueIndex())
+                                .append(",");
+                    }
+                    if (numElementValuePairs > 0) {
+                        sb.deleteCharAt(sb.length() - 1);
+                    }
+                    sb.append(")")
+                            .append("\n");
+                }
             } else {
                 sb.append("\n");
             }

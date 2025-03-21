@@ -4,6 +4,9 @@ import org.junit.Test;
 import org.yzpang.jvm.classfile.AttributeInfo;
 import org.yzpang.jvm.classfile.attribute.ConstantValueAttribute;
 
+import java.nio.ByteBuffer;
+import java.util.Arrays;
+
 import static org.junit.Assert.*;
 
 public class ClassFileUtilTest {
@@ -28,5 +31,20 @@ public class ClassFileUtilTest {
         AttributeInfo attributeInfo = new AttributeInfo();
         ConstantValueAttribute constantValueAttribute = (ConstantValueAttribute) attributeInfo;
 
+    }
+
+    @Test
+    public void testParseChar(){
+        byte[] bytes = new byte[]{0, 115};
+        int currentIndex = 0;
+        char c = ByteBuffer.wrap(Arrays.copyOfRange(bytes, currentIndex, currentIndex + 2)).getChar();
+        System.out.println(c);
+    }
+
+    @Test
+    public void testParseMethodDescriptor(){
+        String descriptor = "([[IJLjava.lang.String;S)Ljava.lang.String;";
+        int args = ClassFileUtil.calculateArgs(descriptor);
+        System.out.println(args);
     }
 }

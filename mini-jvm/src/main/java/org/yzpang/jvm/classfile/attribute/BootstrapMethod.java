@@ -1,18 +1,24 @@
 package org.yzpang.jvm.classfile.attribute;
 
+import lombok.Data;
+
 /**
  * Author: yzpang
  * Desc:
  * Date: 2025/3/19 下午1:52
  **/
+@Data
 public class BootstrapMethod {
     /**
-     * 常量池的有效索引, 指向Constant_MethodHandle_info结构,
+     * u2 常量池的有效索引, 指向Constant_MethodHandle_info结构,
      */
     private int bootstrap_method_ref;
+    /**
+     * u2
+     */
     private int numBootstrapArguments;
     /**
-     * 常量池的有效索引,指向以下结构:
+     * u2 常量池的有效索引,指向以下结构:
      * Constant_String_info
      * Constant_Class_info
      * Constant_Integer_info
