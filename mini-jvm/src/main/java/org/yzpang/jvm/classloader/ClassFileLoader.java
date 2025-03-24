@@ -9,6 +9,8 @@ import org.yzpang.jvm.classfile.attribute.*;
 import org.yzpang.jvm.classfile.constant.AttributeNameConstants;
 import org.yzpang.jvm.classfile.constantpool.*;
 import org.yzpang.jvm.classfile.util.ClassFileUtil;
+import org.yzpang.jvm.classpath.CustomClassloader;
+import org.yzpang.jvm.classpath.DirCustomClassloader;
 import org.yzpang.jvm.constant.ConstantPoolConstants;
 import org.yzpang.jvm.constant.JvmConstants;
 
@@ -32,7 +34,9 @@ public class ClassFileLoader extends ClassLoader {
      */
     public byte[] loadFile(String fileName){
         try {
-            return Files.readAllBytes(Paths.get(fileName));
+            CustomClassloader classloader = new DirCustomClassloader();
+            return classloader.readClass(fileName);
+//            return Files.readAllBytes(Paths.get(fileName));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -142,8 +146,9 @@ public class ClassFileLoader extends ClassLoader {
             throw new RuntimeException(e);
         }
 
-        System.out.println(classFile);
-        return new Clazz();
+        Clazz clazz = new Clazz();
+        clazz.setClassFile(classFile);
+        return clazz;
     }
 
     /**

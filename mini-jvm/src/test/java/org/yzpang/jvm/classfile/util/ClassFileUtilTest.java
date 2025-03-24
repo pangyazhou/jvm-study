@@ -5,7 +5,10 @@ import org.junit.Test;
 import org.yzpang.jvm.classfile.AttributeInfo;
 import org.yzpang.jvm.classfile.attribute.ConstantValueAttribute;
 
+import java.lang.reflect.Type;
 import java.nio.ByteBuffer;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
 
 import static org.junit.Assert.*;
@@ -46,5 +49,13 @@ public class ClassFileUtilTest {
         String descriptor = "([[IJLjava.lang.String;S)Ljava.lang.String;";
         int args = ClassFileUtil.calculateArgs(descriptor);
         System.out.println(args);
+    }
+
+    @Test
+    public void testCurrentDir(){
+        String path = System.getProperty("user.dir");
+        System.out.println(path);
+        String currentPath = Paths.get("").toAbsolutePath().toString();
+        System.out.println(currentPath);
     }
 }
