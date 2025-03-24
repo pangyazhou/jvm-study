@@ -1,5 +1,6 @@
 package org.yzpang.jvm.classfile.util;
 
+import com.sun.org.apache.bcel.internal.util.ClassPath;
 import org.junit.Test;
 import org.yzpang.jvm.classfile.AttributeInfo;
 import org.yzpang.jvm.classfile.attribute.ConstantValueAttribute;
@@ -30,7 +31,6 @@ public class ClassFileUtilTest {
     public void testBeanCopy(){
         AttributeInfo attributeInfo = new AttributeInfo();
         ConstantValueAttribute constantValueAttribute = (ConstantValueAttribute) attributeInfo;
-
     }
 
     @Test

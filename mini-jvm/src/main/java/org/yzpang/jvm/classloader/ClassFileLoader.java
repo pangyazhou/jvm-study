@@ -543,6 +543,23 @@ public class ClassFileLoader extends ClassLoader {
                 }
                 bootstrapMethodsAttribute.setBootstrapMethods(bootstrapMethods);
                 return bootstrapMethodsAttribute;
+            case AttributeNameConstants.METHOD_PARAMETERS:
+                MethodParametersAttribute methodParametersAttribute = new MethodParametersAttribute();
+                BeanUtil.copyProperties(attributeInfo, methodParametersAttribute);
+                int parametersCount = methodParametersAttribute.getInfo()[0];
+                methodParametersAttribute.setParameterCount(parametersCount);
+                currentIndex += 1;
+                Parameters[] parameters = new Parameters[parametersCount];
+                for (int i = 0; i < parametersCount; i++){
+                    Parameters parameter = new Parameters();
+                    parameter.setNameIndex(ByteBuffer.wrap(Arrays.copyOfRange(methodParametersAttribute.getInfo(), currentIndex, currentIndex + 2)).getShort());
+                    currentIndex += 2;
+                    parameter.setAccessFlags(ByteBuffer.wrap(Arrays.copyOfRange(methodParametersAttribute.getInfo(), currentIndex, currentIndex + 2)).getShort());
+                    currentIndex += 2;
+                    parameters[i] = parameter;
+                }
+                methodParametersAttribute.setParameters(parameters);
+                return methodParametersAttribute;
             case AttributeNameConstants.RUNTIME_VISIBLE_ANNOTATIONS:
                 /* 可见注解 */
                 RuntimeVisibleAnnotationsAttribute runtimeVisibleAnnotationsAttribute = new RuntimeVisibleAnnotationsAttribute();

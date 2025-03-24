@@ -20,4 +20,5 @@ public interface AttributeNameConstants {
     String RUNTIME_INVISIBLE_TYPE_PARAMETERS = "RuntimeInvisibleTypeParameters";
     String LINE_NUMBER_TABLE = "LineNumberTable";
     String LOCAL_VARIABLE_TABLE = "LocalVariableTable";
+    String METHOD_PARAMETERS = "MethodParameters";
 }

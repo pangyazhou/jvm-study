@@ -1,5 +1,6 @@
 package org.yzpang.jvm.classfile.attribute;
 
+import lombok.Data;
 import org.yzpang.jvm.classfile.AttributeInfo;
 
 /**
@@ -10,9 +11,12 @@ import org.yzpang.jvm.classfile.AttributeInfo;
  *          最多只有一个该属性
  * Date: 2025/3/19 下午1:58
  **/
+@Data
 public class MethodParametersAttribute extends AttributeInfo {
     /**
-     * 参数个数 u1
+     * u1 参数个数
      */
-    private short parameterCount;
+    private int parameterCount;
+
+    private Parameters[] parameters;
 }
