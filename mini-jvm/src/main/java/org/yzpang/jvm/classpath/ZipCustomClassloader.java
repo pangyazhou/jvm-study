@@ -1,6 +1,12 @@
 package org.yzpang.jvm.classpath;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Enumeration;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 
 /**
  * Author: yzpang
@@ -21,5 +27,23 @@ public class ZipCustomClassloader extends CustomClassloader {
         this.absDir = Paths.get(absDir).toAbsolutePath().toString();
     }
 
+    @Override
+    public byte[] readClass(String className) throws IOException {
+        // todo 每个Class文件都要打开jar,后期优化
+        ZipFile zipFile = new ZipFile(this.absDir);
+        ZipEntry entry = zipFile.getEntry(className);
+        if (entry != null) {
+            System.out.println("entry: " + entry.getName());
+            InputStream zipFileInputStream = zipFile.getInputStream(entry);
+            byte[] data = new byte[zipFileInputStream.available()];
+            zipFileInputStream.read(data);
+            return data;
+        }
+        return new byte[0];
+    }
 
+    @Override
+    public String toString() {
+        return absDir;
+    }
 }
