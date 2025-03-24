@@ -3,6 +3,7 @@ package org.yzpang.jvm.classpath;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,21 +13,28 @@ import java.util.List;
  * Date: 2025/3/24 下午5:24
  **/
 public class WildcardCustomClassloader extends CustomClassloader {
-    List<CustomClassloader> customClassloaders;
-    public WildcardCustomClassloader(String path) throws IOException {
+    List<CustomClassloader> customClassloaders = new ArrayList<>();
+    public WildcardCustomClassloader(String path) {
         String baseDir = path.substring(0, path.length() - 1);
-        Files.walk(Paths.get(baseDir), 1)
-                .filter(path1 -> path1.toString().endsWith(".jar") || path1.toString().endsWith(".zip"))
-                .forEach(path1 -> {
-                    customClassloaders.add(new ZipCustomClassloader(path1.toString()));
-                });
+        try {
+            Files.walk(Paths.get(baseDir), 1)
+                    .filter(path1 -> path1.toString().endsWith(".jar") || path1.toString().endsWith(".zip"))
+                    .forEach(path1 -> {
+                        customClassloaders.add(new ZipCustomClassloader(path1.toString()));
+                    });
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public byte[] readClass(String className) throws IOException {
         for (CustomClassloader customClassloader : customClassloaders) {
             try {
-                return customClassloader.readClass(className);
+                byte[] data = customClassloader.readClass(className);
+                if (data != null) {
+                    return data;
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }

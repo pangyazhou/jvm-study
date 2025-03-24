@@ -3,8 +3,10 @@ package org.yzpang.jvm.classpath;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Arrays;
 
 
 public class ZipCustomClassloaderTest {
@@ -27,6 +29,14 @@ public class ZipCustomClassloaderTest {
                 .filter(path1 -> path1.toString().endsWith(".jar"))
 
                 .forEach(System.out::println);
+    }
+
+    @Test
+    public void testBootstrapClassloader() throws IOException {
+        String className = "java/lang/String.class";
+        CustomClassloader bootClasspath = CustomClasspath.parse("", "").getBootClasspath();
+        byte[] classData = bootClasspath.findClass(className);
+        System.out.println(Arrays.toString(classData));
     }
 
 }

@@ -39,7 +39,7 @@ public class ZipCustomClassloader extends CustomClassloader {
             zipFileInputStream.read(data);
             return data;
         }
-        return new byte[0];
+        return null;
     }
 
     @Override
