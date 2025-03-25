@@ -1,13 +1,21 @@
 package org.yzpang.jvm.classloader;
 
+import lombok.Data;
+import org.yzpang.jvm.classpath.CustomClassloader;
+
+import java.io.IOException;
+
 /**
  * Author: yzpang
  * Desc: 类加载器
  * Date: 2025/3/19 下午4:17
  **/
+@Data
 public abstract class ClassLoader {
 
-    public Clazz loadClass(String name) throws ClassNotFoundException{
+    protected CustomClassloader customClassloader;
+
+    public Clazz loadClass(String name) throws ClassNotFoundException, IOException {
         Clazz clazz = null;
         clazz = findClass(name);
         return clazz;
@@ -26,7 +34,7 @@ public abstract class ClassLoader {
     }
 
 
-    protected Clazz findClass(String name) throws ClassNotFoundException{
+    public Clazz findClass(String name) throws ClassNotFoundException, IOException {
         throw new ClassNotFoundException(name);
     }
 }

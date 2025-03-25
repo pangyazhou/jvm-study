@@ -28,7 +28,12 @@ public class DirCustomClassloader extends CustomClassloader {
         // 构建Class文件的绝对路径
         String fileName = Paths.get(absDir, className).toString();
         // 读取Class文件二进制流
-        return Files.readAllBytes(Paths.get(fileName));
+
+        try {
+            return Files.readAllBytes(Paths.get(fileName));
+        } catch (IOException e) {
+            throw new IOException("class not found: " + className);
+        }
     }
 
     @Override

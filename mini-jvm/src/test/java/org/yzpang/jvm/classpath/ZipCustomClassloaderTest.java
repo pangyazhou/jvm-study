@@ -3,7 +3,6 @@ package org.yzpang.jvm.classpath;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
@@ -37,6 +36,11 @@ public class ZipCustomClassloaderTest {
         CustomClassloader bootClasspath = CustomClasspath.parse("", "").getBootClasspath();
         byte[] classData = bootClasspath.findClass(className);
         System.out.println(Arrays.toString(classData));
+    }
+
+    @Test
+    public void testCurrentDir(){
+        System.out.println(System.getProperty("user.dir"));
     }
 
 }

@@ -1,6 +1,7 @@
 package org.yzpang.jvm.classloader;
 
 import cn.hutool.core.bean.BeanUtil;
+import lombok.Data;
 import org.yzpang.jvm.classfile.AttributeInfo;
 import org.yzpang.jvm.classfile.ClassFile;
 import org.yzpang.jvm.classfile.FieldInfo;
@@ -25,6 +26,7 @@ import java.util.Arrays;
  * Desc: 类文件加载
  * Date: 2025/3/18 上午8:46
  **/
+@Data
 public class ClassFileLoader extends ClassLoader {
 
     /**
@@ -44,8 +46,8 @@ public class ClassFileLoader extends ClassLoader {
     }
 
     @Override
-    protected Clazz findClass(String name) throws ClassNotFoundException {
-        byte[] bytes = loadFile(name);
+    public Clazz findClass(String name) throws ClassNotFoundException, IOException {
+        byte[] bytes = this.customClassloader.findClass(name);
         if (bytes == null){
             throw new ClassNotFoundException(name);
         }
