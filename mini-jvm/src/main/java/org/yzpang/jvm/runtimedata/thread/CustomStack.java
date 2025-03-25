@@ -21,6 +21,11 @@ public class CustomStack {
      */
     private CustomFrame top;
 
+    /**
+     * 所属线程
+     */
+    private CustomThread thread;
+
     public CustomStack(int maxSize) {
         this.maxSize = maxSize;
     }

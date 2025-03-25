@@ -1,6 +1,7 @@
 package org.yzpang.jvm.instructions.base;
 
 import org.yzpang.jvm.runtimedata.thread.CustomFrame;
+import org.yzpang.jvm.runtimedata.thread.CustomOperandStack;
 
 /**
  * Author: yzpang
@@ -57,5 +58,46 @@ public class NoOperandsInstruction implements CustomInstruction{
         Object value = frame.getOperandStack().popReference();
         frame.getLocalVariable().setReference(index, value);
     }
+
+    /**
+     * 比较float
+     */
+    protected final void fcmpg(CustomFrame frame, boolean gFlag) {
+        CustomOperandStack operandStack = frame.getOperandStack();
+        float var1 = operandStack.popFloat();
+        float var2 = operandStack.popFloat();
+        if (var2 > var1){
+            operandStack.pushInt(1);
+        } else if (var2 == var1){
+            operandStack.pushInt(0);
+        } else if (var2 < var1) {
+            operandStack.pushInt(-1);
+        } else if (gFlag) {
+            operandStack.pushInt(1);
+        } else {
+            operandStack.pushInt(-1);
+        }
+    }
+
+    /**
+     * 比较double
+     */
+    protected final void dcmpg(CustomFrame frame, boolean gFlag) {
+        CustomOperandStack operandStack = frame.getOperandStack();
+        double var1 = operandStack.popDouble();
+        double var2 = operandStack.popDouble();
+        if (var2 > var1){
+            operandStack.pushInt(1);
+        } else if (var2 == var1){
+            operandStack.pushInt(0);
+        } else if (var2 < var1) {
+            operandStack.pushInt(-1);
+        } else if (gFlag) {
+            operandStack.pushInt(1);
+        } else {
+            operandStack.pushInt(-1);
+        }
+    }
+
 
 }

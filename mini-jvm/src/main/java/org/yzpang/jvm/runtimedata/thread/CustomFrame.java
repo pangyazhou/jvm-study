@@ -22,6 +22,15 @@ public class CustomFrame {
      */
     private CustomOperandStack operandStack;
 
+    /**
+     * 所属栈
+     */
+    private CustomStack stack;
+    /**
+     * 所属线程
+     */
+    private CustomThread thread;
+
     public CustomFrame(int maxLocal, int maxStack) {
         localVariable = new CustomLocalVariable(maxLocal);
         operandStack = new CustomOperandStack(maxStack);
