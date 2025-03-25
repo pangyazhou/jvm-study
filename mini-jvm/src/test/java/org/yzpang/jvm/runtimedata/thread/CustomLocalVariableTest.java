@@ -3,6 +3,7 @@ package org.yzpang.jvm.runtimedata.thread;
 import org.junit.Test;
 
 import java.math.BigDecimal;
+import java.nio.ByteBuffer;
 
 public class CustomLocalVariableTest {
     @Test
@@ -52,5 +53,17 @@ public class CustomLocalVariableTest {
         long lowValue = low & 0xFFFFFFFFL;
         System.out.println(lowValue);
         System.out.println(highValue | lowValue);
+    }
+
+    @Test
+    public void testByteBuffer(){
+        ByteBuffer buffer = ByteBuffer.wrap(new byte[]{1, 2, 3, 4, 5, 6, 7, 8, 9});
+        System.out.println(buffer.position());
+        System.out.println(buffer.get());
+        System.out.println(buffer.position());
+        System.out.println(buffer.getShort());
+        System.out.println(buffer.position());
+        System.out.println(buffer.getInt());
+        System.out.println(buffer.position());
     }
 }

@@ -62,4 +62,14 @@ public class CustomOperandStack {
         slots[size].setReference(null);
         return obj;
     }
+
+    public void pushSlot(CustomSlot slot) {
+        slots[size] = slot;
+        size += 1;
+    }
+
+    public CustomSlot popSlot() {
+        size--;
+        return slots[size];
+    }
 }
