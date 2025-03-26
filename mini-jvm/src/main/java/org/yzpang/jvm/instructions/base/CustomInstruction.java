@@ -8,4 +8,5 @@ import org.yzpang.jvm.runtimedata.thread.CustomFrame;
 public interface CustomInstruction {
     void fetchOperands(BytecodeReader reader);
     void execute(CustomFrame frame);
+
 }

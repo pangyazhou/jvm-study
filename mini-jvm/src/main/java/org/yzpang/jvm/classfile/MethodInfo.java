@@ -1,6 +1,7 @@
 package org.yzpang.jvm.classfile;
 
 import lombok.Data;
+import org.yzpang.jvm.classfile.attribute.CodeAttribute;
 
 /**
  * Author: yzpang
@@ -29,4 +30,13 @@ public class MethodInfo {
      * u2 属性表
      */
     private AttributeInfo[] attributes;
+
+    public CodeAttribute getCodeAttribute() {
+        for (AttributeInfo attribute : attributes) {
+            if (attribute instanceof CodeAttribute) {
+                return (CodeAttribute) attribute;
+            }
+        }
+        return null;
+    }
 }

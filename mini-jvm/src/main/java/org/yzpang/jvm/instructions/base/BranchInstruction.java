@@ -9,7 +9,7 @@ import org.yzpang.jvm.runtimedata.thread.CustomFrame;
  **/
 public class BranchInstruction extends NoOperandsInstruction {
     // 跳转偏移量
-    protected short offset;
+    protected int offset;
 
     @Override
     public void fetchOperands(BytecodeReader reader) {
@@ -17,7 +17,9 @@ public class BranchInstruction extends NoOperandsInstruction {
     }
 
     protected void branch(CustomFrame frame, int offset){
-        //todo 跳转到其他PC
+        int pc = frame.getThread().getPc();
+        int nextPC = pc + offset;
+        frame.setNextPC(nextPC);
     }
 
 }

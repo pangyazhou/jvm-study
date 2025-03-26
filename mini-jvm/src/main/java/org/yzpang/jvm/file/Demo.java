@@ -52,4 +52,32 @@ public class Demo extends DemoSuper implements DemoInterface, DemoInterface2 {
     public void go() {
         System.out.println("go");
     }
+
+    public int chooseNear(int num){
+        switch (num){
+            case 1:
+                return 5;
+            case 2:
+                return 10;
+            case 3:
+                return 20;
+            case 6:
+                return 30;
+            default:
+                return 0;
+        }
+    }
+
+    public int chooseFar(int num){
+        switch (num){
+            case 100:
+                return 24;
+            case 0:
+                return 15;
+            case -100:
+                return 1;
+            default:
+                return -1;
+        }
+    }
 }

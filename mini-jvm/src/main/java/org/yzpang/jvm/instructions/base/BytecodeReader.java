@@ -1,5 +1,7 @@
 package org.yzpang.jvm.instructions.base;
 
+import lombok.Getter;
+
 /**
  * Author: yzpang
  * Desc: 字节码操作
@@ -13,6 +15,7 @@ public class BytecodeReader {
     /**
      * PC寄存器
      */
+    @Getter
     private int pc;
 
     public BytecodeReader(byte[] code) {
@@ -22,8 +25,6 @@ public class BytecodeReader {
 
     /**
      * 重置
-     * @param code
-     * @param pc
      */
     public void reset(byte[] code, int pc) {
         this.code = code;
@@ -36,16 +37,42 @@ public class BytecodeReader {
         return b;
     }
 
+    public int readUByte(){
+        byte b = this.readByte();
+        return b & 0xFF;
+    }
+
     public short readShort(){
-        short s = this.code[this.pc];
-        this.pc += 2;
-        return s;
+        return (short) ((this.readByte() << 8) | this.readByte());
+    }
+
+    public int readUShort(){
+        short s = this.readShort();
+        return s & 0xFFFF;
     }
 
     public int readInt(){
-        int i = this.code[this.pc];
-        this.pc += 4;
-        return i;
+        return this.readByte() << 24 | this.readByte() << 16 | this.readByte() << 8 | this.readByte();
+    }
+
+
+    /**
+     * 读取int数组
+     * @param count 数组长度
+     * @return int[]
+     */
+    public int[] readInts(int count){
+        int[] ints = new int[count];
+        for (int i = 0; i < count; i++) {
+            ints[i] = this.readInt();
+        }
+        return ints;
+    }
+
+    public void skipPadding(){
+        while (this.pc % 4 != 0) {
+            readByte();
+        }
     }
 
 }

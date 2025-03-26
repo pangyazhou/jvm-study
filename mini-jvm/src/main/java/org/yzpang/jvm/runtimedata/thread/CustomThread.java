@@ -24,7 +24,6 @@ public class CustomThread {
 
     /**
      * 栈帧入栈
-     * @param frame
      */
     public void pushFrame(CustomFrame frame){
         customStack.push(frame);
@@ -32,7 +31,6 @@ public class CustomThread {
 
     /**
      * 栈帧出栈
-     * @return
      */
     public CustomFrame popFrame(){
         return customStack.pop();
@@ -40,9 +38,18 @@ public class CustomThread {
 
     /**
      * 当前帧
-     * @return
      */
     public CustomFrame currentFrame(){
         return customStack.top();
+    }
+
+    /**
+     * 新建帧
+     * @param maxLocal 局部变量表个数
+     * @param maxStack 操作数栈深度
+     * @return frame
+     */
+    public CustomFrame newFrame(int maxLocal, int maxStack){
+        return new CustomFrame(this, maxLocal, maxStack);
     }
 }

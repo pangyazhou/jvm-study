@@ -9,7 +9,7 @@ public class Index16Instruction extends NoOperandsInstruction{
     /**
      * 双字节操作数, 表示常量池索引
      */
-    protected short index;
+    protected int index;
 
     @Override
     public void fetchOperands(BytecodeReader reader) {
