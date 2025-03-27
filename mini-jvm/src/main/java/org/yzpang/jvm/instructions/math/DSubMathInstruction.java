@@ -7,6 +7,7 @@ import org.yzpang.jvm.runtimedata.thread.CustomOperandStack;
 /**
  * Author: yzpang
  * Desc: dsub
+ * 0x67
  * Date: 2025/3/25 下午5:06
  **/
 public class DSubMathInstruction extends NoOperandsInstruction {

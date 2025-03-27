@@ -6,6 +6,7 @@ import org.yzpang.jvm.runtimedata.thread.CustomFrame;
 /**
  * Author: yzpang
  * Desc: astore
+ * 0x3a
  * Date: 2025/3/25 下午3:54
  **/
 public class AStoreInstruction extends Index8Instruction {

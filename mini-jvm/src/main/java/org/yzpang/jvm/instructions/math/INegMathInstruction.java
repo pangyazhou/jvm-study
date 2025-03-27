@@ -7,6 +7,7 @@ import org.yzpang.jvm.runtimedata.thread.CustomOperandStack;
 /**
  * Author: yzpang
  * Desc: ineg
+ * 0x74
  * Date: 2025/3/25 下午4:57
  **/
 public class INegMathInstruction extends NoOperandsInstruction {

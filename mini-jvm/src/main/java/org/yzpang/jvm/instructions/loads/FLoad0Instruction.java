@@ -6,6 +6,7 @@ import org.yzpang.jvm.runtimedata.thread.CustomFrame;
 /**
  * Author: yzpang
  * Desc: fload_0
+ * 0x22
  * Date: 2025/3/25 下午3:41
  **/
 public class FLoad0Instruction extends NoOperandsInstruction {

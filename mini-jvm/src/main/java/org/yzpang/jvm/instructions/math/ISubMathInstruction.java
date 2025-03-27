@@ -7,6 +7,7 @@ import org.yzpang.jvm.runtimedata.thread.CustomOperandStack;
 /**
  * Author: yzpang
  * Desc: isub
+ * 0x64
  * Date: 2025/3/25 下午5:06
  **/
 public class ISubMathInstruction extends NoOperandsInstruction {

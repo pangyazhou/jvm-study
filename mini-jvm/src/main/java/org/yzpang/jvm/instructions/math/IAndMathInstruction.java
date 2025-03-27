@@ -6,6 +6,7 @@ import org.yzpang.jvm.runtimedata.thread.CustomOperandStack;
 
 /**
  * iand
+ * 0x7e
  */
 public class IAndMathInstruction extends NoOperandsInstruction {
     @Override

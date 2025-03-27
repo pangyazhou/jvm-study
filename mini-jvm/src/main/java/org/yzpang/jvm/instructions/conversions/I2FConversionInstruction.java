@@ -6,6 +6,7 @@ import org.yzpang.jvm.runtimedata.thread.CustomOperandStack;
 
 /**
  * i2f
+ * 0x86
  * int-->float
  */
 public class I2FConversionInstruction extends NoOperandsInstruction {

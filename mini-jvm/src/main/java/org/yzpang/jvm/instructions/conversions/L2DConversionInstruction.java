@@ -6,6 +6,7 @@ import org.yzpang.jvm.runtimedata.thread.CustomOperandStack;
 
 /**
  * l2d
+ * 0x8a
  * long-->double
  */
 public class L2DConversionInstruction extends NoOperandsInstruction {

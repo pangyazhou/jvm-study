@@ -6,6 +6,7 @@ import org.yzpang.jvm.runtimedata.thread.CustomOperandStack;
 
 /**
  * f2d
+ * 0x8d
  * float-->double
  */
 public class F2DConversionInstruction extends NoOperandsInstruction {

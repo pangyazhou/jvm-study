@@ -6,6 +6,7 @@ import org.yzpang.jvm.runtimedata.thread.CustomFrame;
 
 /**
  * goto_w
+ * 0xc8
  * offset 为4字节
  */
 public class GotowExtendedInstruction extends BranchInstruction {

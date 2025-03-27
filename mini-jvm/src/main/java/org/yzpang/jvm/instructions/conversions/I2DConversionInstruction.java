@@ -6,6 +6,7 @@ import org.yzpang.jvm.runtimedata.thread.CustomOperandStack;
 
 /**
  * i2d
+ * 0x87
  * int-->double
  */
 public class I2DConversionInstruction extends NoOperandsInstruction {

@@ -6,6 +6,7 @@ import org.yzpang.jvm.runtimedata.thread.CustomFrame;
 /**
  * Author: yzpang
  * Desc: dstore
+ * 0x39
  * Date: 2025/3/25 下午3:54
  **/
 public class DStoreInstruction extends Index8Instruction {

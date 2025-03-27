@@ -7,6 +7,7 @@ import org.yzpang.jvm.runtimedata.thread.CustomFrame;
 /**
  * Author: yzpang
  * Desc: bipush
+ * 0x11
  * Date: 2025/3/25 下午2:58
  **/
 public class SipushConstantInstruction extends Index16Instruction {

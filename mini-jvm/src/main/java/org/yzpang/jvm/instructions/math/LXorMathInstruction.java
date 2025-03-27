@@ -6,6 +6,7 @@ import org.yzpang.jvm.runtimedata.thread.CustomOperandStack;
 
 /**
  * lxor
+ * 0x83
  */
 public class LXorMathInstruction extends NoOperandsInstruction {
     @Override

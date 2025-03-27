@@ -6,6 +6,7 @@ import org.yzpang.jvm.runtimedata.thread.CustomOperandStack;
 
 /**
  * ior
+ * 0x80
  */
 public class IOrMathInstruction extends NoOperandsInstruction {
     @Override

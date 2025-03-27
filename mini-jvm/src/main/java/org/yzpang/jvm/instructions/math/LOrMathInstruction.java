@@ -6,6 +6,7 @@ import org.yzpang.jvm.runtimedata.thread.CustomOperandStack;
 
 /**
  * lor
+ * 0x81
  */
 public class LOrMathInstruction extends NoOperandsInstruction {
     @Override

@@ -6,6 +6,7 @@ import org.yzpang.jvm.runtimedata.thread.CustomFrame;
 
 /**
  * tableswitch
+ * 0xaa
  *          0: iload_1
  *          1: tableswitch   { // 1 to 6
  *                        1: 40

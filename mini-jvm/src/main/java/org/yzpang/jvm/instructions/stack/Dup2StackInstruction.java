@@ -7,7 +7,8 @@ import org.yzpang.jvm.runtimedata.thread.CustomSlot;
 
 /**
  * Author: yzpang
- * Desc: dup
+ * Desc: dup2
+ * 0x5c
  * Before: | ... | B | A |
  * After:  | ... | B | A | B | A |
  * Date: 2025/3/25 下午4:34

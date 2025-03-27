@@ -6,6 +6,7 @@ import org.yzpang.jvm.runtimedata.thread.CustomFrame;
 /**
  * Author: yzpang
  * Desc: lconst_1
+ * 0x0a
  * Date: 2025/3/25 下午2:50
  **/
 public class LConst1Instruction extends NoOperandsInstruction {

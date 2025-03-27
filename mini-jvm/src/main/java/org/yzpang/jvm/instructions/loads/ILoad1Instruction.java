@@ -6,6 +6,7 @@ import org.yzpang.jvm.runtimedata.thread.CustomFrame;
 /**
  * Author: yzpang
  * Desc: iload_1
+ * 0x1b
  * Date: 2025/3/25 下午3:41
  **/
 public class ILoad1Instruction extends NoOperandsInstruction {

@@ -6,6 +6,7 @@ import org.yzpang.jvm.runtimedata.thread.CustomOperandStack;
 
 /**
  * lcmp
+ * 0x94
  * 比较long, 返回 -1, 0, 1
  */
 public class LcmpComparisonInstruction extends NoOperandsInstruction {

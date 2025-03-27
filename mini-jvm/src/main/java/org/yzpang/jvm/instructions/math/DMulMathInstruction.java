@@ -6,16 +6,17 @@ import org.yzpang.jvm.runtimedata.thread.CustomOperandStack;
 
 /**
  * Author: yzpang
- * Desc: lmul
+ * Desc: dmul
+ * 0x6b
  * Date: 2025/3/25 下午5:06
  **/
-public class LFMulMathInstruction extends NoOperandsInstruction {
+public class DMulMathInstruction extends NoOperandsInstruction {
     @Override
     public void execute(CustomFrame frame) {
         CustomOperandStack operandStack = frame.getOperandStack();
-        long var1 = operandStack.popLong();
-        long var2 = operandStack.popLong();
-        long result = var2 * var1;
-        operandStack.pushLong(result);
+        double var1 = operandStack.popDouble();
+        double var2 = operandStack.popDouble();
+        double result = var2 * var1;
+        operandStack.pushDouble(result);
     }
 }

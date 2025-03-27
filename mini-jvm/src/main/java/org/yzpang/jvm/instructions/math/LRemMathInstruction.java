@@ -7,6 +7,7 @@ import org.yzpang.jvm.runtimedata.thread.CustomOperandStack;
 /**
  * Author: yzpang
  * Desc: lrem
+ * 0x71
  * Date: 2025/3/25 下午4:57
  **/
 public class LRemMathInstruction extends NoOperandsInstruction {

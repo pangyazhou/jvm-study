@@ -5,6 +5,7 @@ import org.yzpang.jvm.runtimedata.thread.CustomFrame;
 
 /**
  * if_acmpeq
+ * 0xa5
  * 此指令将操作数栈顶的两个引用变量弹出, 然后进行比较, 满足条件则跳转.
  */
 public class IfacmpeqComparisonInstruction extends BranchInstruction {

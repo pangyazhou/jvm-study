@@ -9,6 +9,7 @@ import org.yzpang.jvm.runtimedata.thread.CustomFrame;
 
 /**
  * wide
+ * 0xc4
  * 扩展指令
  */
 public class WideExtendedInstruction extends NoOperandsInstruction {

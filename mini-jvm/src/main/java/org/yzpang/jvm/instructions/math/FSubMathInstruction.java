@@ -7,6 +7,7 @@ import org.yzpang.jvm.runtimedata.thread.CustomOperandStack;
 /**
  * Author: yzpang
  * Desc: fsub
+ * 0x66
  * Date: 2025/3/25 下午5:06
  **/
 public class FSubMathInstruction extends NoOperandsInstruction {

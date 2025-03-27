@@ -6,6 +6,7 @@ import org.yzpang.jvm.runtimedata.thread.CustomFrame;
 /**
  * Author: yzpang
  * Desc: aload_2
+ * 0x2c
  * Date: 2025/3/25 下午3:41
  **/
 public class ALoad2Instruction extends NoOperandsInstruction {

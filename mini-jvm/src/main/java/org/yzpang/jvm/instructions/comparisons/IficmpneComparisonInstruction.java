@@ -5,6 +5,7 @@ import org.yzpang.jvm.runtimedata.thread.CustomFrame;
 
 /**
  * if_icmpne
+ * 0xa0
  * 此指令将操作数栈顶的两个int变量弹出, 然后进行比较, 满足条件则跳转.
  */
 public class IficmpneComparisonInstruction extends BranchInstruction {

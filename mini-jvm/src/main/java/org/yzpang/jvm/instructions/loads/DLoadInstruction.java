@@ -6,6 +6,7 @@ import org.yzpang.jvm.runtimedata.thread.CustomFrame;
 /**
  * Author: yzpang
  * Desc: iload指令
+ * 0x18
  * Date: 2025/3/25 下午3:40
  **/
 public class DLoadInstruction extends Index8Instruction {

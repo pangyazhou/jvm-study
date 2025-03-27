@@ -6,6 +6,7 @@ import org.yzpang.jvm.runtimedata.thread.CustomFrame;
 /**
  * Author: yzpang
  * Desc: dstore_3
+ * 0x4a
  * Date: 2025/3/25 下午3:54
  **/
 public class DStore3Instruction extends NoOperandsInstruction {

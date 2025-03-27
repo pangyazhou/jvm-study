@@ -7,6 +7,7 @@ import org.yzpang.jvm.runtimedata.thread.CustomOperandStack;
 /**
  * Author: yzpang
  * Desc: frem
+ * 0x72
  * Date: 2025/3/25 下午4:57
  **/
 public class FRemMathInstruction extends NoOperandsInstruction {

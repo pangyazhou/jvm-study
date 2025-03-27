@@ -7,6 +7,7 @@ import org.yzpang.jvm.runtimedata.thread.CustomOperandStack;
 /**
  * Author: yzpang
  * Desc: iushr
+ * 0x7c
  * 逻辑右位移
  * Date: 2025/3/25 下午5:24
  **/

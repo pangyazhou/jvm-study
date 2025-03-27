@@ -5,6 +5,7 @@ import org.yzpang.jvm.runtimedata.thread.CustomFrame;
 
 /**
  * goto
+ * 0xa7
  * 无条件跳转
  */
 public class GotoControlInstruction extends BranchInstruction {

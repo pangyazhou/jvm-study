@@ -7,6 +7,7 @@ import org.yzpang.jvm.runtimedata.thread.CustomOperandStack;
 /**
  * Author: yzpang
  * Desc: pop
+ * 0x57
  * 弹出一个slot
  * Date: 2025/3/25 下午4:30
  **/

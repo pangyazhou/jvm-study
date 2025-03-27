@@ -6,6 +6,7 @@ import org.yzpang.jvm.runtimedata.thread.CustomFrame;
 /**
  * Author: yzpang
  * Desc: iconst_m1
+ * 0x02
  * Date: 2025/3/25 下午2:50
  **/
 public class IConstM1Instruction extends NoOperandsInstruction {

@@ -5,6 +5,7 @@ import org.yzpang.jvm.runtimedata.thread.CustomFrame;
 
 /**
  * ifnonnull 跳转
+ * 0xc7
  */
 public class IfNonNullExtendedInstruction extends BranchInstruction {
     @Override

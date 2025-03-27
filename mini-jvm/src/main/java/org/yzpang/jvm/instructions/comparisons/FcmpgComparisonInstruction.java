@@ -6,6 +6,7 @@ import org.yzpang.jvm.runtimedata.thread.CustomOperandStack;
 
 /**
  * fcpmg
+ * 0x96
  * 比较float, 返回 -1, 0, 1
  */
 public class FcmpgComparisonInstruction extends NoOperandsInstruction {

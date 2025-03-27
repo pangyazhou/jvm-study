@@ -6,6 +6,7 @@ import org.yzpang.jvm.runtimedata.thread.CustomOperandStack;
 
 /**
  * i2b
+ * 0x91
  * int-->byte
  */
 public class I2BConversionInstruction extends NoOperandsInstruction {

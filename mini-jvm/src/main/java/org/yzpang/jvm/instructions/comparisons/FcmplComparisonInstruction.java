@@ -5,6 +5,7 @@ import org.yzpang.jvm.runtimedata.thread.CustomFrame;
 
 /**
  * fcpml
+ * 0x95
  * 比较float, 返回 -1, 0, 1
  */
 public class FcmplComparisonInstruction extends NoOperandsInstruction {

@@ -5,6 +5,7 @@ import org.yzpang.jvm.runtimedata.thread.CustomFrame;
 
 /**
  * ifeq
+ * 0x99
  * 此指令将操作数栈顶的int变量弹出, 然后跟0比较, 满足条件则跳转.
  */
 public class IfeqComparisonInstruction extends BranchInstruction {

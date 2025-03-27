@@ -6,6 +6,7 @@ import org.yzpang.jvm.runtimedata.thread.CustomOperandStack;
 
 /**
  * d2i
+ * 0x8e
  * double-->int
  */
 public class D2IConversionInstruction extends NoOperandsInstruction {

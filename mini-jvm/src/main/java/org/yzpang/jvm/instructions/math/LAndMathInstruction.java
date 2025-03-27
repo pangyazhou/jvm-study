@@ -6,6 +6,7 @@ import org.yzpang.jvm.runtimedata.thread.CustomOperandStack;
 
 /**
  * land
+ * 0x7f
  */
 public class LAndMathInstruction extends NoOperandsInstruction {
     @Override

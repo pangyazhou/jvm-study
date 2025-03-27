@@ -7,6 +7,7 @@ import org.yzpang.jvm.runtimedata.thread.CustomOperandStack;
 /**
  * Author: yzpang
  * Desc: ldiv
+ * 0x6d
  * Date: 2025/3/25 下午5:06
  **/
 public class LDivMathInstruction extends NoOperandsInstruction {

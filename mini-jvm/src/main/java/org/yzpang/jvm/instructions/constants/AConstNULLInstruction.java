@@ -5,7 +5,7 @@ import org.yzpang.jvm.runtimedata.thread.CustomFrame;
 
 /**
  * Author: yzpang
- * Desc: aconst_null 指令
+ * Desc: aconst_null 0x01 指令
  * Date: 2025/3/25 下午2:48
  **/
 public class AConstNULLInstruction extends NoOperandsInstruction {

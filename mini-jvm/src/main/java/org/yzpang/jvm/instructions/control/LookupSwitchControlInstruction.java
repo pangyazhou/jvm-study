@@ -6,6 +6,7 @@ import org.yzpang.jvm.runtimedata.thread.CustomFrame;
 
 /**
  * lookupswitch
+ * 0xab
  *          0: iload_1
  *          1: lookupswitch  { // 3
  *                     -100: 42
