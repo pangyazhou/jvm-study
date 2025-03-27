@@ -16,6 +16,7 @@ public class IIncMathInstruction extends Index8Instruction {
     /**
      * 增加的常量值
      */
+    @Setter
     protected int constValue;
 
     @Override
