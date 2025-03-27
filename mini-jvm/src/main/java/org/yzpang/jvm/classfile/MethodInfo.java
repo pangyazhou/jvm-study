@@ -2,6 +2,7 @@ package org.yzpang.jvm.classfile;
 
 import lombok.Data;
 import org.yzpang.jvm.classfile.attribute.CodeAttribute;
+import org.yzpang.jvm.classfile.util.ClassFileUtil;
 
 /**
  * Author: yzpang
@@ -30,6 +31,16 @@ public class MethodInfo {
      * u2 属性表
      */
     private AttributeInfo[] attributes;
+
+    private ClassFile classFile;
+
+    public String getName(){
+        return ClassFileUtil.getUtf8Info(classFile.getConstantPoolInfos(), nameIndex);
+    }
+
+    public String getDescriptor(){
+        return ClassFileUtil.getUtf8Info(classFile.getConstantPoolInfos(), descriptorIndex);
+    }
 
     public CodeAttribute getCodeAttribute() {
         for (AttributeInfo attribute : attributes) {

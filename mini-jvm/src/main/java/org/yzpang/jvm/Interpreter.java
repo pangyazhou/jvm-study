@@ -30,6 +30,8 @@ public class Interpreter {
         CustomFrame frame = thread.newFrame(maxLocals, maxStack);
         thread.pushFrame(frame);
 
+        // 解析执行字节码
+        loop(thread, bytecode);
     }
 
     /**
@@ -42,16 +44,21 @@ public class Interpreter {
         CustomFrame frame = thread.popFrame();
         BytecodeReader reader = new BytecodeReader(bytecode);
 
-        int pc = frame.getNextPC();
-        thread.setPc(pc);
-
-        // 解码
-        reader.reset(bytecode, pc);
-        int opcode = reader.readUByte();
-        CustomInstruction instruction = InstructionFactory.newInstruction(opcode);
-        instruction.fetchOperands(reader);
-        frame.setNextPC(reader.getPc());
-        // 执行
-        instruction.execute(frame);
+        while (true) {
+            int pc = frame.getNextPC();
+            thread.setPc(pc);
+            // 解码
+            reader.reset(bytecode, pc);
+            int opcode = reader.readUByte();
+            CustomInstruction instruction = InstructionFactory.newInstruction(opcode);
+            if (instruction == null) {
+                System.out.println("LocalVars: " + frame.getLocalVariable());
+                break;
+            }
+            instruction.fetchOperands(reader);
+            frame.setNextPC(reader.getPc());
+            // 执行
+            instruction.execute(frame);
+        }
     }
 }

@@ -20,4 +20,6 @@ public class AttributeInfo {
 
     private byte[] info;
 
+    private ClassFile classFile;
+
 }

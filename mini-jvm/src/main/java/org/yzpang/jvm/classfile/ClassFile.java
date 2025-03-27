@@ -94,6 +94,17 @@ public class ClassFile {
      */
     private AttributeInfo[] attributes;
 
+    public MethodInfo getMainMethod(){
+        for (MethodInfo methodInfo : methods) {
+            String methodName = methodInfo.getName();
+            String descriptor = methodInfo.getDescriptor();
+            if (methodName.equals("main") && descriptor.equals("([Ljava/lang/String;)V")) {
+                return methodInfo;
+            }
+        }
+        return null;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

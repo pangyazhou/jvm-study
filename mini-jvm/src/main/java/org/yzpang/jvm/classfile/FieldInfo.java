@@ -26,4 +26,6 @@ public class FieldInfo {
      */
     private int attributeCount;
     private AttributeInfo[] attributes;
+
+    private ClassFile classFile;
 }

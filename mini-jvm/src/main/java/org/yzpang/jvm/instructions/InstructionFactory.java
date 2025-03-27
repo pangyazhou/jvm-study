@@ -1,7 +1,5 @@
 package org.yzpang.jvm.instructions;
 
-import com.sun.org.apache.bcel.internal.generic.LCMP;
-import com.sun.org.apache.bcel.internal.generic.PopInstruction;
 import org.yzpang.jvm.instructions.base.CustomInstruction;
 import org.yzpang.jvm.instructions.base.NoOperandsInstruction;
 import org.yzpang.jvm.instructions.comparisons.*;
@@ -66,6 +64,7 @@ public class InstructionFactory {
             case 0x12:
             case 0x13:
             case 0x14:
+                return null;
             case 0x15:
                 return new ILoadInstruction();
             case 0x16:
@@ -124,6 +123,7 @@ public class InstructionFactory {
             case 0x33:
             case 0x34:
             case 0x35:
+                return null;
             case 0x36:
                 return new IStoreInstruction();
             case 0x37:
@@ -182,6 +182,7 @@ public class InstructionFactory {
             case 0x54:
             case 0x55:
             case 0x56:
+                return null;
             case 0x57:
                 return new PopStackInstruction();
             case 0x58:
@@ -321,9 +322,9 @@ public class InstructionFactory {
             case 0x9b:
                 return new IfltComparisonInstruction();
             case 0x9c:
-                return new IfgtComparisonInstruction();
-            case 0x9d:
                 return new IfgeComparisonInstruction();
+            case 0x9d:
+                return new IfgtComparisonInstruction();
             case 0x9e:
                 return new IfleComparisonInstruction();
             case 0x9f:
@@ -333,9 +334,9 @@ public class InstructionFactory {
             case 0xa1:
                 return new IficmpltComparisonInstruction();
             case 0xa2:
-                return new IficmpgtComparisonInstruction();
-            case 0xa3:
                 return new IficmpgeComparisonInstruction();
+            case 0xa3:
+                return new IficmpgtComparisonInstruction();
             case 0xa4:
                 return new IficmpleComparisonInstruction();
             case 0xa5:
@@ -346,6 +347,7 @@ public class InstructionFactory {
                 return new GotoControlInstruction();
             case 0xa8:
             case 0xa9:
+                return null;
             case 0xaa:
                 return new TableSwitchControlInstruction();
             case 0xab:
@@ -374,9 +376,11 @@ public class InstructionFactory {
             case 0xc1:
             case 0xc2:
             case 0xc3:
+                return null;
             case 0xc4:
                 return new WideExtendedInstruction();
             case 0xc5:
+                return null;
             case 0xc6:
                 return new IfNullExtendedInstruction();
             case 0xc7:
@@ -390,6 +394,7 @@ public class InstructionFactory {
             case 0xcd:
             case 0xce:
             case 0xcf:
+                return null;
             default:
                 break;
         }

@@ -1,6 +1,8 @@
 package org.yzpang.jvm;
 
 
+import org.yzpang.jvm.classfile.ClassFile;
+import org.yzpang.jvm.classfile.MethodInfo;
 import org.yzpang.jvm.classloader.ClassFileLoader;
 import org.yzpang.jvm.classloader.ClassLoader;
 import org.yzpang.jvm.classloader.Clazz;
@@ -36,8 +38,13 @@ public class JvmMain {
         ClassLoader classLoader = new ClassFileLoader();
         classLoader.setCustomClassloader(classpath.getAppClasspath());
         Clazz clazz = classLoader.findClass(className);
-        System.out.println(clazz);
-
+        ClassFile classFile = clazz.getClassFile();
+        MethodInfo mainMethod = classFile.getMainMethod();
+        if (mainMethod != null) {
+            new Interpreter().interpret(mainMethod);
+        } else {
+            System.out.println("类文件中没有主方法: main");
+        }
     }
 
     public static void printHelp(){

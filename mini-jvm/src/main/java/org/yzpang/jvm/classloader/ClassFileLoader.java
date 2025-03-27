@@ -314,6 +314,7 @@ public class ClassFileLoader extends ClassLoader {
             }
             fieldInfo.setAttributes(attributeInfos);
         }
+        fieldInfo.setClassFile(classFile);
         return fieldInfo;
     }
 
@@ -343,6 +344,7 @@ public class ClassFileLoader extends ClassLoader {
             }
             methodInfo.setAttributes(attributeInfos);
         }
+        methodInfo.setClassFile(classFile);
         return methodInfo;
     }
 
@@ -366,6 +368,7 @@ public class ClassFileLoader extends ClassLoader {
         attributeInfo.setInfo(Arrays.copyOfRange(bytes, currentIndex, currentIndex + length));
         currentIndex += length;
         index[0] = currentIndex;
+        attributeInfo.setClassFile(classFile);
         return parseSpecificAttributeInfo(attributeInfo, classFile);
     }
 
