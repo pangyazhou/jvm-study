@@ -29,6 +29,7 @@ public class WideExtendedInstruction extends NoOperandsInstruction {
                 this.modifiedInstruction = iLoadInstruction;
                 break;
             case 0x16:
+                // todo 其他扩展指令
                 break;
             case 0x84:
                 // iinc

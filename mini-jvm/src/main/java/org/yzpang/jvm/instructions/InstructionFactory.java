@@ -1,6 +1,23 @@
 package org.yzpang.jvm.instructions;
 
+import com.sun.org.apache.bcel.internal.generic.LCMP;
+import com.sun.org.apache.bcel.internal.generic.PopInstruction;
 import org.yzpang.jvm.instructions.base.CustomInstruction;
+import org.yzpang.jvm.instructions.base.NoOperandsInstruction;
+import org.yzpang.jvm.instructions.comparisons.*;
+import org.yzpang.jvm.instructions.constants.*;
+import org.yzpang.jvm.instructions.control.GotoControlInstruction;
+import org.yzpang.jvm.instructions.control.LookupSwitchControlInstruction;
+import org.yzpang.jvm.instructions.control.TableSwitchControlInstruction;
+import org.yzpang.jvm.instructions.conversions.*;
+import org.yzpang.jvm.instructions.extended.GotowExtendedInstruction;
+import org.yzpang.jvm.instructions.extended.IfNonNullExtendedInstruction;
+import org.yzpang.jvm.instructions.extended.IfNullExtendedInstruction;
+import org.yzpang.jvm.instructions.extended.WideExtendedInstruction;
+import org.yzpang.jvm.instructions.loads.*;
+import org.yzpang.jvm.instructions.math.*;
+import org.yzpang.jvm.instructions.stack.*;
+import org.yzpang.jvm.instructions.stores.*;
 
 /**
  * 指令工厂
@@ -11,515 +28,368 @@ public class InstructionFactory {
     public static CustomInstruction newInstruction(int opcode) {
         switch (opcode) {
             case 0x00:
-                break;
+                return new NoOperandsInstruction();
             case 0x01:
-                break;
+                return new AConstNULLInstruction();
             case 0x02:
-                break;
+                return new IConstM1Instruction();
             case 0x03:
-                break;
+                return new IConst0Instruction();
             case 0x04:
-                break;
+                return new IConst1Instruction();
             case 0x05:
-                break;
+                return new IConst2Instruction();
             case 0x06:
-                break;
+                return new IConst3Instruction();
             case 0x07:
-                break;
+                return new IConst4Instruction();
             case 0x08:
-                break;
+                return new IConst5Instruction();
             case 0x09:
-                break;
+                return new LConst0Instruction();
+            case 0x0a:
+                return new LConst1Instruction();
+            case 0x0b:
+                return new FConst0Instruction();
+            case 0x0c:
+                return new FConst1Instruction();
+            case 0x0d:
+                return new FConst2Instruction();
+            case 0x0e:
+                return new DConst0Instruction();
+            case 0x0f:
+                return new DConst1Instruction();
             case 0x10:
-                break;
+                return new BipushConstantInstruction();
             case 0x11:
-                break;
+                return new SipushConstantInstruction();
             case 0x12:
-                break;
             case 0x13:
-                break;
             case 0x14:
-                break;
             case 0x15:
-                break;
+                return new ILoadInstruction();
             case 0x16:
-                break;
+                return new LLoadInstruction();
             case 0x17:
-                break;
+                return new FLoadInstruction();
             case 0x18:
-                break;
+                return new DLoadInstruction();
             case 0x19:
-                break;
+                return new ALoadInstruction();
+            case 0x1a:
+                return new ILoad0Instruction();
+            case 0x1b:
+                return new ILoad1Instruction();
+            case 0x1c:
+                return new ILoad2Instruction();
+            case 0x1d:
+                return new ILoad3Instruction();
+            case 0x1e:
+                return new LLoad0Instruction();
+            case 0x1f:
+                return new LLoad1Instruction();
             case 0x20:
-                break;
+                return new LLoad2Instruction();
             case 0x21:
-                break;
+                return new LLoad3Instruction();
             case 0x22:
-                break;
+                return new FLoad0Instruction();
             case 0x23:
-                break;
+                return new FLoad1Instruction();
             case 0x24:
-                break;
+                return new FLoad2Instruction();
             case 0x25:
-                break;
+                return new FLoad3Instruction();
             case 0x26:
-                break;
+                return new DLoad0Instruction();
             case 0x27:
-                break;
+                return new DLoad1Instruction();
             case 0x28:
-                break;
+                return new DLoad2Instruction();
             case 0x29:
-                break;
+                return new DLoad3Instruction();
+            case 0x2a:
+                return new ALoad0Instruction();
+            case 0x2b:
+                return new ALoad1Instruction();
+            case 0x2c:
+                return new ALoad2Instruction();
+            case 0x2d:
+                return new ALoad3Instruction();
+            case 0x2e:
+            case 0x2f:
             case 0x30:
-                break;
             case 0x31:
-                break;
             case 0x32:
-                break;
             case 0x33:
-                break;
             case 0x34:
-                break;
             case 0x35:
-                break;
             case 0x36:
-                break;
+                return new IStoreInstruction();
             case 0x37:
-                break;
+                return new LStoreInstruction();
             case 0x38:
-                break;
+                return new FStoreInstruction();
             case 0x39:
-                break;
+                return new DStoreInstruction();
+            case 0x3a:
+                return new AStoreInstruction();
+            case 0x3b:
+                return new IStore0Instruction();
+            case 0x3c:
+                return new IStore1Instruction();
+            case 0x3d:
+                return new IStore2Instruction();
+            case 0x3e:
+                return new IStore3Instruction();
+            case 0x3f:
+                return new LStore0Instruction();
             case 0x40:
-                break;
+                return new LStore1Instruction();
             case 0x41:
-                break;
+                return new LStore2Instruction();
             case 0x42:
-                break;
+                return new LStore3Instruction();
             case 0x43:
-                break;
+                return new FStore0Instruction();
             case 0x44:
-                break;
+                return new FStore1Instruction();
             case 0x45:
-                break;
+                return new FStore2Instruction();
             case 0x46:
-                break;
+                return new FStore3Instruction();
             case 0x47:
-                break;
+                return new DStore0Instruction();
             case 0x48:
-                break;
+                return new DStore1Instruction();
             case 0x49:
-                break;
+                return new DStore2Instruction();
+            case 0x4a:
+                return new DStore3Instruction();
+            case 0x4b:
+                return new AStore0Instruction();
+            case 0x4c:
+                return new AStore1Instruction();
+            case 0x4d:
+                return new AStore2Instruction();
+            case 0x4e:
+                return new AStore3Instruction();
+            case 0x4f:
             case 0x50:
-                break;
             case 0x51:
-                break;
             case 0x52:
-                break;
             case 0x53:
-                break;
             case 0x54:
-                break;
             case 0x55:
-                break;
             case 0x56:
-                break;
             case 0x57:
-                break;
+                return new PopStackInstruction();
             case 0x58:
-                break;
+                return new Pop2StackInstruction();
             case 0x59:
-                break;
+                return new DupStackInstruction();
+            case 0x5a:
+                return new DupX1StackInstruction();
+            case 0x5b:
+                return new DupX2StackInstruction();
+            case 0x5c:
+                return new Dup2StackInstruction();
+            case 0x5d:
+                return new Dup2X1StackInstruction();
+            case 0x5e:
+                return new Dup2X2StackInstruction();
+            case 0x5f:
+                return new SwapStackInstruction();
             case 0x60:
-                break;
+                return new IAddMathInstruction();
             case 0x61:
-                break;
+                return new LAddMathInstruction();
             case 0x62:
-                break;
+                return new FAddMathInstruction();
             case 0x63:
-                break;
+                return new DAddMathInstruction();
             case 0x64:
-                break;
+                return new ISubMathInstruction();
             case 0x65:
-                break;
+                return new LSubMathInstruction();
             case 0x66:
-                break;
+                return new FSubMathInstruction();
             case 0x67:
-                break;
+                return new DSubMathInstruction();
             case 0x68:
-                break;
+                return new IMulMathInstruction();
             case 0x69:
-                break;
+                return new LMulMathInstruction();
+            case 0x6a:
+                return new FMulMathInstruction();
+            case 0x6b:
+                return new DMulMathInstruction();
+            case 0x6c:
+                return new IDivMathInstruction();
+            case 0x6d:
+                return new LDivMathInstruction();
+            case 0x6e:
+                return new FDivMathInstruction();
+            case 0x6f:
+                return new DDivMathInstruction();
             case 0x70:
-                break;
+                return new IRemMathInstruction();
             case 0x71:
-                break;
+                return new LRemMathInstruction();
             case 0x72:
-                break;
+                return new FRemMathInstruction();
             case 0x73:
-                break;
+                return new DRemMathInstruction();
             case 0x74:
-                break;
+                return new INegMathInstruction();
             case 0x75:
-                break;
+                return new LNegMathInstruction();
             case 0x76:
-                break;
+                return new FNegMathInstruction();
             case 0x77:
-                break;
+                return new DNegMathInstruction();
             case 0x78:
-                break;
+                return new IShlMathInstruction();
             case 0x79:
-                break;
+                return new LShlMathInstruction();
+            case 0x7a:
+                return new IShrMathInstruction();
+            case 0x7b:
+                return new LShrMathInstruction();
+            case 0x7c:
+                return new IUShrMathInstruction();
+            case 0x7d:
+                return new LUShrMathInstruction();
+            case 0x7e:
+                return new IAndMathInstruction();
+            case 0x7f:
+                return new LAndMathInstruction();
             case 0x80:
-                break;
+                return new IOrMathInstruction();
             case 0x81:
-                break;
+                return new LOrMathInstruction();
             case 0x82:
-                break;
+                return new IXorMathInstruction();
             case 0x83:
-                break;
+                return new LXorMathInstruction();
             case 0x84:
-                break;
+                return new IIncMathInstruction();
             case 0x85:
-                break;
+                return new I2LConversionInstruction();
             case 0x86:
-                break;
+                return new I2FConversionInstruction();
             case 0x87:
-                break;
+                return new I2DConversionInstruction();
             case 0x88:
-                break;
+                return new L2IConversionInstruction();
             case 0x89:
-                break;
+                return new L2FConversionInstruction();
+            case 0x8a:
+                return new L2DConversionInstruction();
+            case 0x8b:
+                return new F2IConversionInstruction();
+            case 0x8c:
+                return new F2LConversionInstruction();
+            case 0x8d:
+                return new F2DConversionInstruction();
+            case 0x8e:
+                return new D2IConversionInstruction();
+            case 0x8f:
+                return new D2LConversionInstruction();
             case 0x90:
-                break;
+                return new D2FConversionInstruction();
             case 0x91:
-                break;
+                return new I2BConversionInstruction();
             case 0x92:
-                break;
+                return new I2CConversionInstruction();
             case 0x93:
-                break;
+                return new I2SConversionInstruction();
             case 0x94:
-                break;
+                return new LcmpComparisonInstruction();
             case 0x95:
-                break;
+                return new FcmplComparisonInstruction();
             case 0x96:
-                break;
+                return new FcmpgComparisonInstruction();
             case 0x97:
-                break;
+                return new DcmplComparisonInstruction();
             case 0x98:
-                break;
+                return new DcmpgComparisonInstruction();
             case 0x99:
-                break;
-            case 0x100:
-                break;
-            case 0x101:
-                break;
-            case 0x102:
-                break;
-            case 0x103:
-                break;
-            case 0x104:
-                break;
-            case 0x105:
-                break;
-            case 0x106:
-                break;
-            case 0x107:
-                break;
-            case 0x108:
-                break;
-            case 0x109:
-                break;
-            case 0x110:
-                break;
-            case 0x111:
-                break;
-            case 0x112:
-                break;
-            case 0x113:
-                break;
-            case 0x114:
-                break;
-            case 0x115:
-                break;
-            case 0x116:
-                break;
-            case 0x117:
-                break;
-            case 0x118:
-                break;
-            case 0x119:
-                break;
-            case 0x120:
-                break;
-            case 0x121:
-                break;
-            case 0x122:
-                break;
-            case 0x123:
-                break;
-            case 0x124:
-                break;
-            case 0x125:
-                break;
-            case 0x126:
-                break;
-            case 0x127:
-                break;
-            case 0x128:
-                break;
-            case 0x129:
-                break;
-            case 0x130:
-                break;
-            case 0x131:
-                break;
-            case 0x132:
-                break;
-            case 0x133:
-                break;
-            case 0x134:
-                break;
-            case 0x135:
-                break;
-            case 0x136:
-                break;
-            case 0x137:
-                break;
-            case 0x138:
-                break;
-            case 0x139:
-                break;
-            case 0x140:
-                break;
-            case 0x141:
-                break;
-            case 0x142:
-                break;
-            case 0x143:
-                break;
-            case 0x144:
-                break;
-            case 0x145:
-                break;
-            case 0x146:
-                break;
-            case 0x147:
-                break;
-            case 0x148:
-                break;
-            case 0x149:
-                break;
-            case 0x150:
-                break;
-            case 0x151:
-                break;
-            case 0x152:
-                break;
-            case 0x153:
-                break;
-            case 0x154:
-                break;
-            case 0x155:
-                break;
-            case 0x156:
-                break;
-            case 0x157:
-                break;
-            case 0x158:
-                break;
-            case 0x159:
-                break;
-            case 0x160:
-                break;
-            case 0x161:
-                break;
-            case 0x162:
-                break;
-            case 0x163:
-                break;
-            case 0x164:
-                break;
-            case 0x165:
-                break;
-            case 0x166:
-                break;
-            case 0x167:
-                break;
-            case 0x168:
-                break;
-            case 0x169:
-                break;
-            case 0x170:
-                break;
-            case 0x171:
-                break;
-            case 0x172:
-                break;
-            case 0x173:
-                break;
-            case 0x174:
-                break;
-            case 0x175:
-                break;
-            case 0x176:
-                break;
-            case 0x177:
-                break;
-            case 0x178:
-                break;
-            case 0x179:
-                break;
-            case 0x180:
-                break;
-            case 0x181:
-                break;
-            case 0x182:
-                break;
-            case 0x183:
-                break;
-            case 0x184:
-                break;
-            case 0x185:
-                break;
-            case 0x186:
-                break;
-            case 0x187:
-                break;
-            case 0x188:
-                break;
-            case 0x189:
-                break;
-            case 0x190:
-                break;
-            case 0x191:
-                break;
-            case 0x192:
-                break;
-            case 0x193:
-                break;
-            case 0x194:
-                break;
-            case 0x195:
-                break;
-            case 0x196:
-                break;
-            case 0x197:
-                break;
-            case 0x198:
-                break;
-            case 0x199:
-                break;
-            case 0x200:
-                break;
-            case 0x201:
-                break;
-            case 0x202:
-                break;
-            case 0x203:
-                break;
-            case 0x204:
-                break;
-            case 0x205:
-                break;
-            case 0x206:
-                break;
-            case 0x207:
-                break;
-            case 0x208:
-                break;
-            case 0x209:
-                break;
-            case 0x210:
-                break;
-            case 0x211:
-                break;
-            case 0x212:
-                break;
-            case 0x213:
-                break;
-            case 0x214:
-                break;
-            case 0x215:
-                break;
-            case 0x216:
-                break;
-            case 0x217:
-                break;
-            case 0x218:
-                break;
-            case 0x219:
-                break;
-            case 0x220:
-                break;
-            case 0x221:
-                break;
-            case 0x222:
-                break;
-            case 0x223:
-                break;
-            case 0x224:
-                break;
-            case 0x225:
-                break;
-            case 0x226:
-                break;
-            case 0x227:
-                break;
-            case 0x228:
-                break;
-            case 0x229:
-                break;
-            case 0x230:
-                break;
-            case 0x231:
-                break;
-            case 0x232:
-                break;
-            case 0x233:
-                break;
-            case 0x234:
-                break;
-            case 0x235:
-                break;
-            case 0x236:
-                break;
-            case 0x237:
-                break;
-            case 0x238:
-                break;
-            case 0x239:
-                break;
-            case 0x240:
-                break;
-            case 0x241:
-                break;
-            case 0x242:
-                break;
-            case 0x243:
-                break;
-            case 0x244:
-                break;
-            case 0x245:
-                break;
-            case 0x246:
-                break;
-            case 0x247:
-                break;
-            case 0x248:
-                break;
-            case 0x249:
-                break;
-            case 0x250:
-                break;
-            case 0x251:
-                break;
-            case 0x252:
-                break;
-            case 0x253:
-                break;
-            case 0x254:
-                break;
+                return new IfeqComparisonInstruction();
+            case 0x9a:
+                return new IfneComparisonInstruction();
+            case 0x9b:
+                return new IfltComparisonInstruction();
+            case 0x9c:
+                return new IfgtComparisonInstruction();
+            case 0x9d:
+                return new IfgeComparisonInstruction();
+            case 0x9e:
+                return new IfleComparisonInstruction();
+            case 0x9f:
+                return new IficmpeqComparisonInstruction();
+            case 0xa0:
+                return new IficmpneComparisonInstruction();
+            case 0xa1:
+                return new IficmpltComparisonInstruction();
+            case 0xa2:
+                return new IficmpgtComparisonInstruction();
+            case 0xa3:
+                return new IficmpgeComparisonInstruction();
+            case 0xa4:
+                return new IficmpleComparisonInstruction();
+            case 0xa5:
+                return new IfacmpeqComparisonInstruction();
+            case 0xa6:
+                return new IfacmpneComparisonInstruction();
+            case 0xa7:
+                return new GotoControlInstruction();
+            case 0xa8:
+            case 0xa9:
+            case 0xaa:
+                return new TableSwitchControlInstruction();
+            case 0xab:
+                return new LookupSwitchControlInstruction();
+            case 0xac:
+            case 0xad:
+            case 0xae:
+            case 0xaf:
+            case 0xb0:
+            case 0xb1:
+            case 0xb2:
+            case 0xb3:
+            case 0xb4:
+            case 0xb5:
+            case 0xb6:
+            case 0xb7:
+            case 0xb8:
+            case 0xb9:
+            case 0xba:
+            case 0xbb:
+            case 0xbc:
+            case 0xbd:
+            case 0xbe:
+            case 0xbf:
+            case 0xc0:
+            case 0xc1:
+            case 0xc2:
+            case 0xc3:
+            case 0xc4:
+                return new WideExtendedInstruction();
+            case 0xc5:
+            case 0xc6:
+                return new IfNullExtendedInstruction();
+            case 0xc7:
+                return new IfNonNullExtendedInstruction();
+            case 0xc8:
+                return new GotowExtendedInstruction();
+            case 0xc9:
+            case 0xca:
+            case 0xcb:
+            case 0xcc:
+            case 0xcd:
+            case 0xce:
+            case 0xcf:
             default:
                 break;
         }
