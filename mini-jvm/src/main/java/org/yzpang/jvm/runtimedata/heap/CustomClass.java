@@ -6,7 +6,6 @@ import org.yzpang.jvm.classfile.ClassFile;
 import org.yzpang.jvm.classfile.FieldInfo;
 import org.yzpang.jvm.classfile.MethodInfo;
 import org.yzpang.jvm.classfile.attribute.CodeAttribute;
-import org.yzpang.jvm.classfile.constantpool.ConstantPoolInfo;
 import org.yzpang.jvm.classpath.CustomClassloader;
 import org.yzpang.jvm.runtimedata.thread.CustomSlot;
 

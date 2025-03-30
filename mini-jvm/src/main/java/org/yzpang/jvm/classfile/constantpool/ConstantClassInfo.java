@@ -1,6 +1,7 @@
 package org.yzpang.jvm.classfile.constantpool;
 
 import lombok.Data;
+import org.yzpang.jvm.classfile.util.ClassFileUtil;
 import org.yzpang.jvm.constant.ConstantPoolConstants;
 
 /**
@@ -15,4 +16,5 @@ public class ConstantClassInfo extends ConstantPoolInfo{
      * 常量池的索引值, 指向常量池中一个CONSTANT_Utf8_info类型常量.此常量代表了这个类(或接口)的全限定名.
      */
     private int nameIndex;
+
 }

@@ -12,5 +12,5 @@ public class ConstantPoolInfo {
     /**
      * u1 常量标志
      */
-    private int tag;
+    protected int tag;
 }
