@@ -94,6 +94,22 @@ public class ClassFile {
      */
     private AttributeInfo[] attributes;
 
+    public String getClassName(){
+        return ClassFileUtil.getClassInfo(constantPoolInfos, thisClass);
+    }
+
+    public String getSuperClassName(){
+        return ClassFileUtil.getClassInfo(constantPoolInfos, superClass);
+    }
+
+    public String[] getInterfacesNames(){
+        String[] names = new String[interfacesCount];
+        for (int i = 0; i < interfacesCount; i++) {
+            names[i] = ClassFileUtil.getClassInfo(constantPoolInfos, interfaces[i]);
+        }
+        return names;
+    }
+
     public MethodInfo getMainMethod(){
         for (MethodInfo methodInfo : methods) {
             String methodName = methodInfo.getName();

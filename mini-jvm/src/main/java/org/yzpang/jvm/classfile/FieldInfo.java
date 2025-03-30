@@ -1,6 +1,7 @@
 package org.yzpang.jvm.classfile;
 
 import lombok.Data;
+import org.yzpang.jvm.classfile.util.ClassFileUtil;
 
 /**
  * Author: yzpang
@@ -26,6 +27,14 @@ public class FieldInfo {
      */
     private int attributeCount;
     private AttributeInfo[] attributes;
+
+    public String getName(){
+        return ClassFileUtil.getUtf8Info(classFile.getConstantPoolInfos(), nameIndex);
+    }
+
+    public String getDescriptor(){
+        return ClassFileUtil.getUtf8Info(classFile.getConstantPoolInfos(), descriptorIndex);
+    }
 
     private ClassFile classFile;
 }

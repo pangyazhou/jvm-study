@@ -17,8 +17,6 @@ import org.yzpang.jvm.constant.JvmConstants;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.Arrays;
 
 /**
@@ -27,7 +25,7 @@ import java.util.Arrays;
  * Date: 2025/3/18 上午8:46
  **/
 @Data
-public class ClassFileLoader extends ClassLoader {
+public class CustomClassFileLoader extends CustomClassLoader {
 
     /**
      * 读取字节码文件为字节数组

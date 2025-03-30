@@ -3,8 +3,8 @@ package org.yzpang.jvm;
 
 import org.yzpang.jvm.classfile.ClassFile;
 import org.yzpang.jvm.classfile.MethodInfo;
-import org.yzpang.jvm.classloader.ClassFileLoader;
-import org.yzpang.jvm.classloader.ClassLoader;
+import org.yzpang.jvm.classloader.CustomClassFileLoader;
+import org.yzpang.jvm.classloader.CustomClassLoader;
 import org.yzpang.jvm.classloader.Clazz;
 import org.yzpang.jvm.classpath.Command;
 import org.yzpang.jvm.classpath.CustomClasspath;
@@ -35,9 +35,9 @@ public class JvmMain {
                 command.getCpOption(), command.getClazz(), Arrays.toString(command.getArgs()));
         String className = command.getClazz().replaceAll("\\.", "/").concat(".class");
         System.out.println(className);
-        ClassLoader classLoader = new ClassFileLoader();
-        classLoader.setCustomClassloader(classpath.getAppClasspath());
-        Clazz clazz = classLoader.findClass(className);
+        CustomClassLoader customClassLoader = new CustomClassFileLoader();
+        customClassLoader.setCustomClassloader(classpath.getAppClasspath());
+        Clazz clazz = customClassLoader.findClass(className);
         ClassFile classFile = clazz.getClassFile();
         MethodInfo mainMethod = classFile.getMainMethod();
         if (mainMethod != null) {

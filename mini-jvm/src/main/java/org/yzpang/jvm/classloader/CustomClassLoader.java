@@ -11,7 +11,7 @@ import java.io.IOException;
  * Date: 2025/3/19 下午4:17
  **/
 @Data
-public abstract class ClassLoader {
+public abstract class CustomClassLoader {
 
     protected CustomClassloader customClassloader;
 
