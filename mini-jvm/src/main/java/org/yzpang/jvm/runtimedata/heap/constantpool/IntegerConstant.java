@@ -9,4 +9,8 @@ public class IntegerConstant implements CustomConstant<Integer> {
         this.value = value;
     }
 
+    @Override
+    public Integer get() {
+        return 0;
+    }
 }

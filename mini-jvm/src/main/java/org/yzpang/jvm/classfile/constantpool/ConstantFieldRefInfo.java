@@ -1,6 +1,6 @@
 package org.yzpang.jvm.classfile.constantpool;
 
-import lombok.Data;
+import org.yzpang.jvm.classfile.ConstantPoolInfo;
 import org.yzpang.jvm.constant.ConstantPoolConstants;
 
 /**
@@ -11,4 +11,7 @@ import org.yzpang.jvm.constant.ConstantPoolConstants;
 public class ConstantFieldRefInfo extends ConstantMemberRefInfo {
     private int tag = ConstantPoolConstants.FIELDREF;
 
+    public ConstantFieldRefInfo(ConstantPoolInfo constantPool) {
+        super(constantPool);
+    }
 }

@@ -9,4 +9,8 @@ public class FloatConstant implements CustomConstant<Float> {
         this.value = value;
     }
 
+    @Override
+    public Float get() {
+        return 0f;
+    }
 }

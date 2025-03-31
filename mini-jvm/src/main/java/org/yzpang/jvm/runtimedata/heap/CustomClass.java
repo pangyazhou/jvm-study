@@ -6,7 +6,7 @@ import org.yzpang.jvm.classfile.ClassFile;
 import org.yzpang.jvm.classfile.FieldInfo;
 import org.yzpang.jvm.classfile.MethodInfo;
 import org.yzpang.jvm.classfile.attribute.CodeAttribute;
-import org.yzpang.jvm.classpath.CustomClassloader;
+import org.yzpang.jvm.classpath.CustomClassLoader;
 import org.yzpang.jvm.runtimedata.thread.CustomSlot;
 
 /**
@@ -22,7 +22,7 @@ public class CustomClass {
     private CustomField[] fields;
     private CustomMethod[] methods;
     private AttributeInfo[] attributes;
-    private CustomClassloader classloader;
+    private CustomClassLoader classloader;
     private CustomClass superClass;
     private CustomClass[] interfaces;
     private int instanceSlotCount;
@@ -36,7 +36,7 @@ public class CustomClass {
         customClass.setSuperClassName(classFile.getSuperClassName());
         customClass.setInterfaceNames(classFile.getInterfacesNames());
 
-        customClass.setConstantPool(CustomConstantPool.newConstantPool(customClass, classFile.getConstantPoolInfos()));
+        customClass.setConstantPool(CustomConstantPool.newConstantPool(customClass, classFile.getConstantInfos()));
         customClass.setFields(customClass.newFields(customClass, classFile.getFields()));
         customClass.setMethods(customClass.newMethods(customClass, classFile.getMethods()));
         return customClass;

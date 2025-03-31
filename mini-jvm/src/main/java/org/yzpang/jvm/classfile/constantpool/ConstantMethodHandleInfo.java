@@ -1,6 +1,9 @@
 package org.yzpang.jvm.classfile.constantpool;
 
 import lombok.Data;
+import org.yzpang.jvm.classfile.ClassReader;
+import org.yzpang.jvm.classfile.ConstantInfo;
+import org.yzpang.jvm.classfile.ConstantPoolInfo;
 import org.yzpang.jvm.constant.ConstantPoolConstants;
 
 /**
@@ -9,8 +12,8 @@ import org.yzpang.jvm.constant.ConstantPoolConstants;
  * Date: 2025/3/18 上午10:26
  **/
 @Data
-public class ConstantMethodHandleInfo extends ConstantPoolInfo {
-    private int tag = ConstantPoolConstants.METHOD_HANDLE;
+public class ConstantMethodHandleInfo extends ConstantInfo {
+    protected int tag = ConstantPoolConstants.METHOD_HANDLE;
     /**
      * 1-9范围内,表示方法句柄的类型
      */
@@ -27,4 +30,16 @@ public class ConstantMethodHandleInfo extends ConstantPoolInfo {
      *    8              Constant_Methodref_info          此结构表示的方法,名称必须为<init>
      */
     private int referenceIndex;
+
+    private ConstantPoolInfo constantPool;
+
+    public ConstantMethodHandleInfo(ConstantPoolInfo constantPool) {
+        this.constantPool = constantPool;
+    }
+
+    @Override
+    public void readInfo(ClassReader reader) {
+        this.referenceKind = reader.readUShort();
+        this.referenceIndex = reader.readUShort();
+    }
 }

@@ -2,16 +2,13 @@ package org.yzpang.jvm.classloader;
 
 import cn.hutool.core.bean.BeanUtil;
 import lombok.Data;
-import org.yzpang.jvm.classfile.AttributeInfo;
-import org.yzpang.jvm.classfile.ClassFile;
-import org.yzpang.jvm.classfile.FieldInfo;
-import org.yzpang.jvm.classfile.MethodInfo;
+import org.yzpang.jvm.classfile.*;
 import org.yzpang.jvm.classfile.attribute.*;
 import org.yzpang.jvm.classfile.constant.AttributeNameConstants;
 import org.yzpang.jvm.classfile.constantpool.*;
 import org.yzpang.jvm.classfile.util.ClassFileUtil;
-import org.yzpang.jvm.classpath.CustomClassloader;
-import org.yzpang.jvm.classpath.DirCustomClassloader;
+import org.yzpang.jvm.classpath.CustomClassLoader;
+import org.yzpang.jvm.classpath.DirCustomClassLoader;
 import org.yzpang.jvm.constant.ConstantPoolConstants;
 import org.yzpang.jvm.constant.JvmConstants;
 
@@ -25,7 +22,7 @@ import java.util.Arrays;
  * Date: 2025/3/18 上午8:46
  **/
 @Data
-public class CustomClassFileLoader extends CustomClassLoader {
+public class CustomClassFileLoader extends org.yzpang.jvm.classloader.CustomClassLoader {
 
     /**
      * 读取字节码文件为字节数组
@@ -34,7 +31,7 @@ public class CustomClassFileLoader extends CustomClassLoader {
      */
     public byte[] loadFile(String fileName){
         try {
-            CustomClassloader classloader = new DirCustomClassloader();
+            CustomClassLoader classloader = new DirCustomClassLoader();
             return classloader.readClass(fileName);
 //            return Files.readAllBytes(Paths.get(fileName));
         } catch (IOException e) {
@@ -65,16 +62,16 @@ public class CustomClassFileLoader extends CustomClassLoader {
             classFile.setConstantPoolCount(constantPoolCount);
             currentIndex += 2;
             // 常量池解析
-            ConstantPoolInfo[] constantPoolInfos = new ConstantPoolInfo[constantPoolCount];
+            ConstantInfo[] constantInfos = new ConstantInfo[constantPoolCount];
             int[] index = {currentIndex};
             for (int i = 1; i < constantPoolCount; i++) {
-                constantPoolInfos[i] = parseConstantPool(bytes, index);
+                constantInfos[i] = parseConstantPool(bytes, index);
                 // long和double占有两个表成员
-                if (constantPoolInfos[i].getTag() == ConstantPoolConstants.LONG || constantPoolInfos[i].getTag() == ConstantPoolConstants.DOUBLE) {
+                if (constantInfos[i].getTag() == ConstantPoolConstants.LONG || constantInfos[i].getTag() == ConstantPoolConstants.DOUBLE) {
                     i++;
                 }
             }
-            classFile.setConstantPoolInfos(constantPoolInfos);
+            classFile.setConstantInfos(constantInfos);
             currentIndex = index[0];
             // 访问标志
             classFile.setAccessFlags(ByteBuffer.wrap(Arrays.copyOfRange(bytes, currentIndex, currentIndex + 2)).getShort());
@@ -157,7 +154,7 @@ public class CustomClassFileLoader extends CustomClassLoader {
      * @param index 当前解析索引位置
      * @return ConstantPoolInfo
      */
-    private ConstantPoolInfo parseConstantPool(byte[] bytes, int[] index) throws Exception {
+    private ConstantInfo parseConstantPool(byte[] bytes, int[] index) throws Exception {
         int currentIndex = index[0];
         int tag = bytes[currentIndex];
         currentIndex++;
@@ -377,7 +374,7 @@ public class CustomClassFileLoader extends CustomClassLoader {
      * @return 具体属性
      */
     private AttributeInfo parseSpecificAttributeInfo(AttributeInfo attributeInfo, ClassFile classFile){
-        String attributeName = ClassFileUtil.getUtf8Info(classFile.getConstantPoolInfos(), attributeInfo.getAttributeNameIndex());
+        String attributeName = ClassFileUtil.getUtf8Info(classFile.getConstantInfos(), attributeInfo.getAttributeNameIndex());
         int currentIndex = 0;
         switch (attributeName){
             case AttributeNameConstants.CODE:

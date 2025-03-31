@@ -9,4 +9,8 @@ public class DoubleConstant implements CustomConstant<Double> {
         this.value = value;
     }
 
+    @Override
+    public Double get() {
+        return 0.0;
+    }
 }

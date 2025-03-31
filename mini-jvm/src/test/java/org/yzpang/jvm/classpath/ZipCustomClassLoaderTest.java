@@ -8,16 +8,16 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 
 
-public class ZipCustomClassloaderTest {
+public class ZipCustomClassLoaderTest {
     @Test
     public void testReadClass() throws IOException {
-        ZipCustomClassloader classloader = new ZipCustomClassloader("D:\\dev\\java\\program\\study\\jvm-study\\mini-jvm\\target\\mini-jvm-1.0.0.jar");
+        ZipCustomClassLoader classloader = new ZipCustomClassLoader("D:\\dev\\java\\program\\study\\jvm-study\\mini-jvm\\target\\mini-jvm-1.0.0.jar");
         classloader.readClass("org/yzpang/jvm/JvmMain.class");
     }
 
     @Test
     public void testSeparator(){
-        System.out.println(CustomClassloader.PATH_LIST_SEPARATOR);
+        System.out.println(CustomClassLoader.PATH_LIST_SEPARATOR);
     }
 
     @Test
@@ -33,7 +33,7 @@ public class ZipCustomClassloaderTest {
     @Test
     public void testBootstrapClassloader() throws IOException {
         String className = "java/lang/String.class";
-        CustomClassloader bootClasspath = CustomClasspath.parse("", "").getBootClasspath();
+        CustomClassLoader bootClasspath = CustomClasspath.parse("", "").getBootClassLoader();
         byte[] classData = bootClasspath.findClass(className);
         System.out.println(Arrays.toString(classData));
     }

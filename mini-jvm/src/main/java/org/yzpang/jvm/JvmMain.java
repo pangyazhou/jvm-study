@@ -36,7 +36,7 @@ public class JvmMain {
         String className = command.getClazz().replaceAll("\\.", "/").concat(".class");
         System.out.println(className);
         CustomClassLoader customClassLoader = new CustomClassFileLoader();
-        customClassLoader.setCustomClassloader(classpath.getAppClasspath());
+        customClassLoader.setCustomClassloader(classpath.getAppClassLoader());
         Clazz clazz = customClassLoader.findClass(className);
         ClassFile classFile = clazz.getClassFile();
         MethodInfo mainMethod = classFile.getMainMethod();

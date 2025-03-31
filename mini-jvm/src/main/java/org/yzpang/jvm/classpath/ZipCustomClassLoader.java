@@ -2,9 +2,7 @@ package org.yzpang.jvm.classpath;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Enumeration;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -13,17 +11,17 @@ import java.util.zip.ZipFile;
  * Desc: zip/jar文件形式的类路径
  * Date: 2025/3/24 下午4:12
  **/
-public class ZipCustomClassloader extends CustomClassloader {
+public class ZipCustomClassLoader extends CustomClassLoader {
     /**
      * 存放zip或jar文件的绝对路径
      */
     private String absDir;
 
-    public ZipCustomClassloader() {
+    public ZipCustomClassLoader() {
         this.absDir = System.getProperty("user.dir");
     }
 
-    public ZipCustomClassloader(String absDir) {
+    public ZipCustomClassLoader(String absDir) {
         this.absDir = Paths.get(absDir).toAbsolutePath().toString();
     }
 

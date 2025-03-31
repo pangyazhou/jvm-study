@@ -35,11 +35,11 @@ public class MethodInfo {
     private ClassFile classFile;
 
     public String getName(){
-        return ClassFileUtil.getUtf8Info(classFile.getConstantPoolInfos(), nameIndex);
+        return ClassFileUtil.getUtf8Info(classFile.getConstantInfos(), nameIndex);
     }
 
     public String getDescriptor(){
-        return ClassFileUtil.getUtf8Info(classFile.getConstantPoolInfos(), descriptorIndex);
+        return ClassFileUtil.getUtf8Info(classFile.getConstantInfos(), descriptorIndex);
     }
 
     public CodeAttribute getCodeAttribute() {

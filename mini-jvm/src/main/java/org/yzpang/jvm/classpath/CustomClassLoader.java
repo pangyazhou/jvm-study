@@ -1,6 +1,7 @@
 package org.yzpang.jvm.classpath;
 
 import lombok.Data;
+import org.yzpang.jvm.runtimedata.heap.CustomClass;
 
 import java.io.IOException;
 
@@ -10,15 +11,18 @@ import java.io.IOException;
  * Date: 2025/3/24 下午3:56
  **/
 @Data
-public class CustomClassloader {
+public class CustomClassLoader {
     public static final String PATH_LIST_SEPARATOR = ";";
 
     private CustomClasspath classpath;
-
     /**
      * 父类加载器
      */
-    private CustomClassloader parent;
+    private CustomClassLoader parent;
+
+    public CustomClass loadNonArrayClass(String className) throws ClassNotFoundException {
+        return null;
+    }
 
     public byte[] findClass(String className) throws IOException {
         byte[] c = findLoadedClass(className);
@@ -44,18 +48,18 @@ public class CustomClassloader {
         return new byte[0];
     }
 
-    public static CustomClassloader getCustomClassloader(String path) {
+    public static CustomClassLoader getClassloader(String path) {
         if (path.contains(PATH_LIST_SEPARATOR)) {
-            return new CompositeCustomClassloader(path);
+            return new CompositeCustomClassLoader(path);
         }
         if (path.endsWith("*")){
-            return new  WildcardCustomClassloader(path);
+            return new WildcardCustomClassLoader(path);
         }
         if (path.endsWith(".jar") || path.endsWith(".zip") ||
         path.endsWith(".JAR") || path.endsWith(".ZIP")) {
-            return new ZipCustomClassloader(path);
+            return new ZipCustomClassLoader(path);
         }
-        return new DirCustomClassloader(path);
+        return new DirCustomClassLoader(path);
     }
 
     protected byte[] findBootstrapClass(String className) throws IOException {

@@ -9,4 +9,8 @@ public class LongConstant implements CustomConstant<Long> {
         this.value = value;
     }
 
+    @Override
+    public Long get() {
+        return 0L;
+    }
 }

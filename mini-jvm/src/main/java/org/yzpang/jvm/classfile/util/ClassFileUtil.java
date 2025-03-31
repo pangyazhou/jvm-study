@@ -1,12 +1,11 @@
 package org.yzpang.jvm.classfile.util;
 
-import com.sun.org.apache.bcel.internal.classfile.ConstantNameAndType;
+import org.yzpang.jvm.classfile.ConstantInfo;
 import org.yzpang.jvm.classfile.constant.ClassAccessConstants;
 import org.yzpang.jvm.classfile.constant.FieldAccessConstants;
 import org.yzpang.jvm.classfile.constant.MethodAccessConstants;
 import org.yzpang.jvm.classfile.constantpool.*;
 
-import java.lang.invoke.MethodHandleInfo;
 import java.nio.charset.StandardCharsets;
 
 /**
@@ -358,95 +357,95 @@ public class ClassFileUtil {
 
     /**
      * 解析常量池中utf8结构的字符串内容
-     * @param constantPoolInfos 常量池数组
+     * @param constantInfos 常量池数组
      * @param index 索引
      * @return 字符串
      */
-    public static String getUtf8Info(ConstantPoolInfo[] constantPoolInfos, int index) {
-        ConstantUtf8Info constantUtf8Info =  (ConstantUtf8Info)constantPoolInfos[index];
+    public static String getUtf8Info(ConstantInfo[] constantInfos, int index) {
+        ConstantUtf8Info constantUtf8Info =  (ConstantUtf8Info) constantInfos[index];
         return new String(constantUtf8Info.getBytes(), StandardCharsets.UTF_8);
     }
-    public static int getIntegerInfo(ConstantPoolInfo[] constantPoolInfos, int index) {
-        ConstantIntegerInfo constantIntegerInfo =  (ConstantIntegerInfo)constantPoolInfos[index];
+    public static int getIntegerInfo(ConstantInfo[] constantInfos, int index) {
+        ConstantIntegerInfo constantIntegerInfo =  (ConstantIntegerInfo) constantInfos[index];
         return constantIntegerInfo.getBytes();
     }
-    public static float getFloatInfo(ConstantPoolInfo[] constantPoolInfos, int index) {
-        ConstantFloatInfo constantFloatInfo =  (ConstantFloatInfo)constantPoolInfos[index];
+    public static float getFloatInfo(ConstantInfo[] constantInfos, int index) {
+        ConstantFloatInfo constantFloatInfo =  (ConstantFloatInfo) constantInfos[index];
         return constantFloatInfo.getBytes();
     }
-    public static long getLongInfo(ConstantPoolInfo[] constantPoolInfos, int index) {
-        ConstantLongInfo constantLongInfo =  (ConstantLongInfo)constantPoolInfos[index];
+    public static long getLongInfo(ConstantInfo[] constantInfos, int index) {
+        ConstantLongInfo constantLongInfo =  (ConstantLongInfo) constantInfos[index];
         return constantLongInfo.getBytes();
     }
-    public static double getDoubleInfo(ConstantPoolInfo[] constantPoolInfos, int index) {
-        ConstantDoubleInfo constantDoubleInfo =  (ConstantDoubleInfo)constantPoolInfos[index];
+    public static double getDoubleInfo(ConstantInfo[] constantInfos, int index) {
+        ConstantDoubleInfo constantDoubleInfo =  (ConstantDoubleInfo) constantInfos[index];
         return constantDoubleInfo.getBytes();
     }
-    public static String getStringInfo(ConstantPoolInfo[] constantPoolInfos, int index) {
-        ConstantStringInfo constantStringInfo =  (ConstantStringInfo)constantPoolInfos[index];
-        return getUtf8Info(constantPoolInfos, constantStringInfo.getStringIndex());
+    public static String getStringInfo(ConstantInfo[] constantInfos, int index) {
+        ConstantStringInfo constantStringInfo =  (ConstantStringInfo) constantInfos[index];
+        return getUtf8Info(constantInfos, constantStringInfo.getStringIndex());
     }
-    public static String getClassInfo(ConstantPoolInfo[] constantPoolInfos, int index) {
-        ConstantClassInfo classInfo =  (ConstantClassInfo)constantPoolInfos[index];
-        return getUtf8Info(constantPoolInfos, classInfo.getNameIndex());
+    public static String getClassInfo(ConstantInfo[] constantInfos, int index) {
+        ConstantClassInfo classInfo =  (ConstantClassInfo) constantInfos[index];
+        return getUtf8Info(constantInfos, classInfo.getNameIndex());
     }
-    public static String getNameAndTypeInfo(ConstantPoolInfo[] constantPoolInfos, int index) {
-        ConstantNameAndTypeInfo constantNameAndTypeInfo =  (ConstantNameAndTypeInfo)constantPoolInfos[index];
-        return String.join(":", getUtf8Info(constantPoolInfos, constantNameAndTypeInfo.getNameIndex()), getUtf8Info(constantPoolInfos, constantNameAndTypeInfo.getDescriptorIndex()));
+    public static String getNameAndTypeInfo(ConstantInfo[] constantInfos, int index) {
+        ConstantNameAndTypeInfo constantNameAndTypeInfo =  (ConstantNameAndTypeInfo) constantInfos[index];
+        return String.join(":", getUtf8Info(constantInfos, constantNameAndTypeInfo.getNameIndex()), getUtf8Info(constantInfos, constantNameAndTypeInfo.getDescriptorIndex()));
     }
-    public static String getMethodRefInfo(ConstantPoolInfo[] constantPoolInfos, int index) {
-        ConstantMethodRefInfo methodRefInfo =  (ConstantMethodRefInfo)constantPoolInfos[index];
-        return String.join(".", getClassInfo(constantPoolInfos, methodRefInfo.getClassIndex()), getNameAndTypeInfo(constantPoolInfos, methodRefInfo.getNameAndTypeIndex()));
+    public static String getMethodRefInfo(ConstantInfo[] constantInfos, int index) {
+        ConstantMethodRefInfo methodRefInfo =  (ConstantMethodRefInfo) constantInfos[index];
+        return String.join(".", getClassInfo(constantInfos, methodRefInfo.getClassIndex()), getNameAndTypeInfo(constantInfos, methodRefInfo.getNameAndTypeIndex()));
     }
-    public static String getMethodTypeInfo(ConstantPoolInfo[] constantPoolInfos, int index) {
-        ConstantMethodTypeInfo methodTypeInfo =  (ConstantMethodTypeInfo)constantPoolInfos[index];
-        return getUtf8Info(constantPoolInfos, methodTypeInfo.getDescriptorIndex());
+    public static String getMethodTypeInfo(ConstantInfo[] constantInfos, int index) {
+        ConstantMethodTypeInfo methodTypeInfo =  (ConstantMethodTypeInfo) constantInfos[index];
+        return getUtf8Info(constantInfos, methodTypeInfo.getDescriptorIndex());
     }
-    public static String getMethodHandleInfo(ConstantPoolInfo[] constantPoolInfos, int index) {
-        ConstantMethodHandleInfo methodHandleInfo =  (ConstantMethodHandleInfo)constantPoolInfos[index];
+    public static String getMethodHandleInfo(ConstantInfo[] constantInfos, int index) {
+        ConstantMethodHandleInfo methodHandleInfo =  (ConstantMethodHandleInfo) constantInfos[index];
         int referenceKind = methodHandleInfo.getReferenceKind();
         int referenceIndex = methodHandleInfo.getReferenceIndex();
-        return String.join(" ", getByteCodeBehavior(referenceKind), parseConstantPoolIndex(constantPoolInfos, referenceIndex));
+        return String.join(" ", getByteCodeBehavior(referenceKind), parseConstantPoolIndex(constantInfos, referenceIndex));
     }
 
     /**
      * 根据index解析常量池中的值
-     * @param constantPoolInfos 常量池
+     * @param constantInfos 常量池
      * @param index 索引
      * @return str
      */
-    public static String parseConstantPoolIndex(ConstantPoolInfo[] constantPoolInfos, int index) {
-        ConstantPoolInfo constantPoolInfo = constantPoolInfos[index];
-        if (constantPoolInfo instanceof ConstantUtf8Info) {
+    public static String parseConstantPoolIndex(ConstantInfo[] constantInfos, int index) {
+        ConstantInfo constantInfo = constantInfos[index];
+        if (constantInfo instanceof ConstantUtf8Info) {
             // utf8
-            return getUtf8Info(constantPoolInfos, index);
-        } else if (constantPoolInfo instanceof ConstantIntegerInfo) {
+            return getUtf8Info(constantInfos, index);
+        } else if (constantInfo instanceof ConstantIntegerInfo) {
             // integer
-            return String.valueOf(getIntegerInfo(constantPoolInfos, index));
-        } else if (constantPoolInfo instanceof ConstantLongInfo) {
+            return String.valueOf(getIntegerInfo(constantInfos, index));
+        } else if (constantInfo instanceof ConstantLongInfo) {
             // long
-            return String.valueOf(getLongInfo(constantPoolInfos, index));
-        } else if (constantPoolInfo instanceof ConstantFloatInfo) {
+            return String.valueOf(getLongInfo(constantInfos, index));
+        } else if (constantInfo instanceof ConstantFloatInfo) {
             // float
-            return String.valueOf(getFloatInfo(constantPoolInfos, index));
-        } else if (constantPoolInfo instanceof ConstantDoubleInfo) {
+            return String.valueOf(getFloatInfo(constantInfos, index));
+        } else if (constantInfo instanceof ConstantDoubleInfo) {
             // double
-            return String.valueOf(getDoubleInfo(constantPoolInfos, index));
-        } else if (constantPoolInfo instanceof ConstantStringInfo) {
+            return String.valueOf(getDoubleInfo(constantInfos, index));
+        } else if (constantInfo instanceof ConstantStringInfo) {
             // String
-            return getStringInfo(constantPoolInfos, index);
-        } else if (constantPoolInfo instanceof ConstantMethodHandleInfo) {
+            return getStringInfo(constantInfos, index);
+        } else if (constantInfo instanceof ConstantMethodHandleInfo) {
             // methodhandle
-            return getMethodHandleInfo(constantPoolInfos, index);
-        } else if (constantPoolInfo instanceof ConstantMethodTypeInfo) {
+            return getMethodHandleInfo(constantInfos, index);
+        } else if (constantInfo instanceof ConstantMethodTypeInfo) {
             // methodtype
-            return getMethodTypeInfo(constantPoolInfos, index);
-        } else if (constantPoolInfo instanceof ConstantMethodRefInfo) {
+            return getMethodTypeInfo(constantInfos, index);
+        } else if (constantInfo instanceof ConstantMethodRefInfo) {
             // methodref
-            return getMethodRefInfo(constantPoolInfos, index);
-        } else if (constantPoolInfo instanceof ConstantNameAndTypeInfo) {
+            return getMethodRefInfo(constantInfos, index);
+        } else if (constantInfo instanceof ConstantNameAndTypeInfo) {
             // nameAndType
-            return getNameAndTypeInfo(constantPoolInfos, index);
+            return getNameAndTypeInfo(constantInfos, index);
         }
         return "";
     }

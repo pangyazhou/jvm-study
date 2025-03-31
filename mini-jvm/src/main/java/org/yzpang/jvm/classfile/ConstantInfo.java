@@ -1,4 +1,4 @@
-package org.yzpang.jvm.classfile.constantpool;
+package org.yzpang.jvm.classfile;
 
 import lombok.Data;
 
@@ -8,9 +8,13 @@ import lombok.Data;
  * Date: 2025/3/18 上午9:00
  **/
 @Data
-public class ConstantPoolInfo {
+public class ConstantInfo {
     /**
      * u1 常量标志
      */
     protected int tag;
+
+    public void readInfo(ClassReader reader){
+    }
+
 }

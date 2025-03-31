@@ -6,26 +6,25 @@ import lombok.Data;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Objects;
 
 /**
  * 类加载器加载文件路径
  */
 @Data
 public class CustomClasspath {
-    private CustomClassloader bootClasspath;
-    private CustomClassloader extClasspath;
-    private CustomClassloader appClasspath;
+    private CustomClassLoader bootClassLoader;
+    private CustomClassLoader extClassLoader;
+    private CustomClassLoader appClassLoader;
 
     public static CustomClasspath parse(String jreOption, String cpOption) throws IOException {
         CustomClasspath cp = new CustomClasspath();
-        cp.parseBootAndExtClasspath(jreOption);
-        cp.parseAppClasspath(cpOption);
-        cp.appClasspath.setParent(cp.extClasspath);
-        cp.extClasspath.setParent(cp.bootClasspath);
-        cp.appClasspath.setClasspath(cp);
-        cp.bootClasspath.setClasspath(cp);
-        cp.extClasspath.setClasspath(cp);
+        cp.parseBootAndextClassLoader(jreOption);
+        cp.parseappClassLoader(cpOption);
+        cp.appClassLoader.setParent(cp.extClassLoader);
+        cp.extClassLoader.setParent(cp.bootClassLoader);
+        cp.appClassLoader.setClasspath(cp);
+        cp.bootClassLoader.setClasspath(cp);
+        cp.extClassLoader.setClasspath(cp);
         return cp;
     }
 
@@ -34,22 +33,22 @@ public class CustomClasspath {
      * @param jreOption
      * @return
      */
-    private void parseBootAndExtClasspath(String jreOption) throws IOException {
+    private void parseBootAndextClassLoader(String jreOption) throws IOException {
         String jreDir = getJreDir(jreOption);
         String jreLibPath = Paths.get(jreDir, "jre", "lib").toString();
 
         // 引导类加载器
-        this.bootClasspath = CustomClassloader.getCustomClassloader(jreLibPath + "*");
+        this.bootClassLoader = CustomClassLoader.getClassloader(jreLibPath + "*");
         String jreExtPath = Paths.get(jreDir, "jre", "lib", "ext").toString();
         // 附加类加载器
-        this.extClasspath = CustomClassloader.getCustomClassloader(jreExtPath + "*");
+        this.extClassLoader = CustomClassLoader.getClassloader(jreExtPath + "*");
     }
 
-    private void parseAppClasspath(String cpOption) throws IOException {
+    private void parseappClassLoader(String cpOption) throws IOException {
         if (StrUtil.isEmpty(cpOption)){
             cpOption = ".";
         }
-        this.appClasspath = CustomClassloader.getCustomClassloader(cpOption);
+        this.appClassLoader = CustomClassLoader.getClassloader(cpOption);
     }
 
 
