@@ -83,10 +83,10 @@ public class ConstantPoolInfo {
                 ConstantInvokeDynamicInfo constantInvokeDynamicInfo = new ConstantInvokeDynamicInfo(constantPoolInfo);
                 return constantInvokeDynamicInfo;
             case ConstantPoolConstants.MODULE:
-                ConstantModuleInfo constantModuleInfo = new ConstantModuleInfo();
+                ConstantModuleInfo constantModuleInfo = new ConstantModuleInfo(constantPoolInfo);
                 return constantModuleInfo;
             case ConstantPoolConstants.PACKAGE:
-                ConstantPackageInfo constantPackageInfo = new ConstantPackageInfo();
+                ConstantPackageInfo constantPackageInfo = new ConstantPackageInfo(constantPoolInfo);
                 return constantPackageInfo;
             default:
                 throw new Exception("标志错误: " + tag);

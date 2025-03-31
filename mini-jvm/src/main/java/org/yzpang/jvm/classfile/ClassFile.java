@@ -77,7 +77,7 @@ public class ClassFile {
     /**
      * 字段表
      */
-    private FieldInfo[] fields;
+    private MemberInfo[] fields;
     /**
      * u2 方法表数量
      */
@@ -85,7 +85,7 @@ public class ClassFile {
     /**
      * 方法表
      */
-    private MethodInfo[] methods;
+    private MemberInfo[] methods;
     /**
      * u2 属性表数量
      */
@@ -129,60 +129,21 @@ public class ClassFile {
         // 父索引
         this.superClass = reader.readUShort();
         // 接口索引个数
-        int interfacesCount = ByteBuffer.wrap(Arrays.copyOfRange(bytes, currentIndex, currentIndex + 2)).getShort();
-        classFile.setInterfacesCount(interfacesCount);
-        currentIndex += 2;
+        this.interfacesCount = reader.readUShort();
         // 接口索引列表
-        if (interfacesCount > 0) {
+        if (this.interfacesCount > 0) {
             int[] interfaces = new int[interfacesCount];
             for (int i = 0; i < interfacesCount; i++) {
-                interfaces[i] = ByteBuffer.wrap(Arrays.copyOfRange(bytes, currentIndex, currentIndex + 2)).getShort();
-                currentIndex += 2;
+                interfaces[i] = reader.readUShort();
             }
-            classFile.setInterfaces(interfaces);
         }
-        // 字段表数量
-        int fieldsCount = ByteBuffer.wrap(Arrays.copyOfRange(bytes, currentIndex, currentIndex + 2)).getShort();
-        classFile.setFieldsCount(fieldsCount);
-        currentIndex += 2;
         // 字段表
-        if (fieldsCount > 0) {
-            index = new int[]{currentIndex};
-            FieldInfo[] fields = new FieldInfo[fieldsCount];
-            for (int i = 0; i < fieldsCount; i++) {
-                fields[i] = parseFieldInfo(bytes, index, classFile);
-            }
-            classFile.setFields(fields);
-            currentIndex = index[0];
-        }
-        // 方法表数量
-        int methodsCount = ByteBuffer.wrap(Arrays.copyOfRange(bytes, currentIndex, currentIndex + 2)).getShort();
-        classFile.setMethodsCount(methodsCount);
-        currentIndex += 2;
+        this.fields = MemberInfo.readMembers(reader, this.constantPool);
         // 方法表
-        if (methodsCount > 0) {
-            index = new int[]{currentIndex};
-            MethodInfo[] methods = new MethodInfo[methodsCount];
-            for (int i = 0; i < methodsCount; i++) {
-                methods[i] = parseMethodInfo(bytes, index, classFile);
-            }
-            classFile.setMethods(methods);
-            currentIndex = index[0];
-        }
-        // 属性表数量
-        int attributesCount = ByteBuffer.wrap(Arrays.copyOfRange(bytes, currentIndex, currentIndex + 2)).getShort();
-        classFile.setAttributesCount(attributesCount);
-        currentIndex += 2;
+        this.methods = MemberInfo.readMembers(reader, this.constantPool);
+
         // 属性表
-        if (attributesCount > 0) {
-            index = new int[]{currentIndex};
-            AttributeInfo[] attributes = new AttributeInfo[attributesCount];
-            for (int i = 0; i < attributesCount; i++) {
-                attributes[i] = parseAttributeInfo(bytes, index, classFile);
-            }
-            classFile.setAttributes(attributes);
-            currentIndex = index[0];
-        }
+
 
     }
 
