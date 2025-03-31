@@ -13,6 +13,7 @@ public class MemberInfo {
     protected int accessFlags;
     protected int nameIndex;
     protected int descriptorIndex;
+    @Getter
     protected AttributeInfo[] attributes;
 
     public static MemberInfo readMember(ClassReader reader, ConstantPoolInfo constantPoolInfo) {
@@ -21,7 +22,7 @@ public class MemberInfo {
         memberInfo.accessFlags = reader.readUShort();
         memberInfo.nameIndex = reader.readUShort();
         memberInfo.descriptorIndex = reader.readUShort();
-        // todo readAttributes();
+        memberInfo.attributes = AttributeInfo.readAttributes(reader, constantPoolInfo);
         return memberInfo;
     }
 

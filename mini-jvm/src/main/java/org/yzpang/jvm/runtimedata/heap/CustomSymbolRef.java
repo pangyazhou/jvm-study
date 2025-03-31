@@ -7,5 +7,4 @@ public class CustomSymbolRef{
     protected CustomConstantPool constantPool;
     protected String className;
     protected CustomClass clazz;
-
 }

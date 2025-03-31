@@ -1,6 +1,7 @@
 package org.yzpang.jvm.classfile.attribute;
 
 import lombok.Data;
+import org.yzpang.jvm.classfile.ClassReader;
 
 /**
  * Author: yzpang
@@ -26,4 +27,22 @@ public class ExceptionInfo {
      *      ==0: 所有异常抛出都调用此异常处理器, 用于处理finally语句.
      */
     private int catchType;
+
+    public static ExceptionInfo[] readExceptionInfos(ClassReader reader){
+        int count = reader.readUShort();
+        ExceptionInfo[] infos = new ExceptionInfo[count];
+        for(int i = 0; i < count; i++){
+            infos[i] = readExceptionInfo(reader);
+        }
+        return infos;
+    }
+
+    public static ExceptionInfo readExceptionInfo(ClassReader reader){
+        ExceptionInfo exceptionInfo = new ExceptionInfo();
+        exceptionInfo.startPc = reader.readUShort();
+        exceptionInfo.endPc = reader.readUShort();
+        exceptionInfo.handlerPc = reader.readUShort();
+        exceptionInfo.catchType = reader.readUShort();
+        return exceptionInfo;
+    }
 }

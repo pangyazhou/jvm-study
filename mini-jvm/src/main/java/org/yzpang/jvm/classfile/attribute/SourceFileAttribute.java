@@ -1,7 +1,8 @@
 package org.yzpang.jvm.classfile.attribute;
 
-import lombok.Data;
 import org.yzpang.jvm.classfile.AttributeInfo;
+import org.yzpang.jvm.classfile.ClassReader;
+import org.yzpang.jvm.classfile.ConstantPoolInfo;
 
 /**
  * Author: yzpang
@@ -9,10 +10,18 @@ import org.yzpang.jvm.classfile.AttributeInfo;
  *          ClassFile结构
  * Date: 2025/3/19 上午11:19
  **/
-@Data
 public class SourceFileAttribute extends AttributeInfo {
     /**
-     * 常量池有效索引, 指向Constant_Utf8_info结构, 常量值是源码文件的文件名
+     * u2 '常量池有效索引, 指向Constant_Utf8_info结构, 常量值是源码文件的文件名
      */
     private int sourceFileIndex;
+
+    @Override
+    protected void readInfo(ClassReader reader) {
+        this.sourceFileIndex = reader.readUShort();
+    }
+
+    public String fileName(){
+        return this.constantPool.getUtf8(sourceFileIndex);
+    }
 }

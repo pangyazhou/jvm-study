@@ -50,4 +50,13 @@ public class ClassReader {
         offset += length;
         return bytes;
     }
+
+    public short[] readShorts(){
+        int count = readUShort();
+        short[] shorts = new short[count];
+        for (int i = 0; i < count; i++) {
+            shorts[i] = this.readShort();
+        }
+        return shorts;
+    }
 }

@@ -1,7 +1,5 @@
 package org.yzpang.jvm.classfile;
 
-import org.yzpang.jvm.classfile.attribute.CodeAttribute;
-
 /**
  * Author: yzpang
  * Desc: 方法表
@@ -9,12 +7,4 @@ import org.yzpang.jvm.classfile.attribute.CodeAttribute;
  **/
 public class MethodInfo extends MemberInfo{
 
-    public CodeAttribute getCodeAttribute() {
-        for (AttributeInfo attribute : attributes) {
-            if (attribute instanceof CodeAttribute) {
-                return (CodeAttribute) attribute;
-            }
-        }
-        return null;
-    }
 }

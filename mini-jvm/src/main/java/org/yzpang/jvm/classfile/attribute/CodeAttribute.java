@@ -2,6 +2,7 @@ package org.yzpang.jvm.classfile.attribute;
 
 import lombok.Data;
 import org.yzpang.jvm.classfile.AttributeInfo;
+import org.yzpang.jvm.classfile.ClassReader;
 
 /**
  * Author: yzpang
@@ -38,10 +39,20 @@ public class CodeAttribute extends AttributeInfo {
     /**
      * code[]数组中的一个异常处理器, 顺序不可改动
      */
-    private ExceptionInfo[] exceptionInfo;
+    private ExceptionInfo[] exceptionInfos;
     /**
      * u2 属性表数量
      */
     private int attributesCount;
     private AttributeInfo[] attributes;
+
+    @Override
+    protected void readInfo(ClassReader reader) {
+        this.maxStack = reader.readUShort();
+        this.maxLocals = reader.readUShort();
+        this.codeLength = reader.readInt();
+        this.code = reader.readBytes(codeLength);
+        this.exceptionInfos = ExceptionInfo.readExceptionInfos(reader);
+        this.attributes = AttributeInfo.readAttributes(reader, this.constantPool);
+    }
 }

@@ -2,6 +2,7 @@ package org.yzpang.jvm.runtimedata.heap;
 
 import lombok.Getter;
 import org.yzpang.jvm.classfile.ConstantInfo;
+import org.yzpang.jvm.classfile.ConstantPoolInfo;
 import org.yzpang.jvm.classfile.constantpool.*;
 import org.yzpang.jvm.classfile.util.ClassFileUtil;
 import org.yzpang.jvm.runtimedata.heap.constantpool.*;
@@ -18,48 +19,50 @@ public class CustomConstantPool {
     /**
      * 将class文件的常量池转化为运行时常量池
      */
-    public static CustomConstantPool newConstantPool(CustomClass clazz, ConstantInfo[] constantInfos) {
-        CustomConstantPool customConstantPool = new CustomConstantPool();
-        customConstantPool.clazz = clazz;
-        customConstantPool.constants = new CustomConstant[constantInfos.length];
+    public CustomConstantPool(CustomClass clazz, ConstantPoolInfo constantPoolInfo) {
+        this.clazz = clazz;
+
+        ConstantInfo[] constantInfos = constantPoolInfo.getConstantInfos();
+        this.constants = new CustomConstant[constantInfos.length];
         for (int i = 0; i < constantInfos.length; i++) {
             if (constantInfos[i] instanceof ConstantIntegerInfo) {
                 // int
                 int value = ClassFileUtil.getIntegerInfo(constantInfos, i);
-                customConstantPool.constants[i] = new IntegerConstant(value);
+                this.constants[i] = new IntegerConstant(value);
             } else if (constantInfos[i] instanceof ConstantLongInfo) {
                 // long
                 long value = ClassFileUtil.getLongInfo(constantInfos, i);
-                customConstantPool.constants[i] = new LongConstant(value);
+                this.constants[i] = new LongConstant(value);
                 i++;
             } else if (constantInfos[i] instanceof ConstantFloatInfo) {
                 // float
                 float value = ClassFileUtil.getFloatInfo(constantInfos, i);
-                customConstantPool.constants[i] = new FloatConstant(value);
+                this.constants[i] = new FloatConstant(value);
             } else if (constantInfos[i] instanceof ConstantDoubleInfo) {
                 // double
                 double value = ClassFileUtil.getDoubleInfo(constantInfos, i);
-                customConstantPool.constants[i] = new DoubleConstant(value);
+                this.constants[i] = new DoubleConstant(value);
                 i++;
             } else if (constantInfos[i] instanceof ConstantUtf8Info) {
-                // string
-                String str = ClassFileUtil.getUtf8Info(constantInfos, i);
-                customConstantPool.constants[i] = new StringConstant(str);
+                // utf8
+                String str = ((ConstantUtf8Info) constantInfos[i]).getStr();
+                this.constants[i] = new StringConstant(str);
             } else if (constantInfos[i] instanceof ConstantStringInfo) {
                 // string
-                String str = ClassFileUtil.getStringInfo(constantInfos, i);
-                customConstantPool.constants[i] = new StringConstant(str);
+                String str = ((ConstantStringInfo) constantInfos[i]).getString();
+                this.constants[i] = new StringConstant(str);
             } else if (constantInfos[i] instanceof ConstantClassInfo) {
-//                customConstantPool.constants[i] = new ClassRefConstant(new Object());
+                // class
+                new ClassRef(this, (ConstantClassInfo) constantInfos[i]);
             } else if (constantInfos[i] instanceof ConstantFieldRefInfo) {
-//                customConstantPool.constants[i] = new FieldRefConstant(new Object());
+                // field
+                new FieldRef(this, (ConstantFieldRefInfo) constantInfos[i]);
             } else if (constantInfos[i] instanceof ConstantMethodRefInfo) {
-//                customConstantPool.constants[i] = new MethodRefConstant(new Object());
+                new MethodRef(this, (ConstantMethodRefInfo) constantInfos[i]);
             } else if (constantInfos[i] instanceof ConstantInterfaceMethodRefInfo) {
-//                customConstantPool.constants[i] = new InterfaceMethodRefConstant(new Object());
+
             }
         }
-        return customConstantPool;
     }
 
 

@@ -2,6 +2,7 @@ package org.yzpang.jvm.classfile.attribute;
 
 import lombok.Data;
 import org.yzpang.jvm.classfile.AttributeInfo;
+import org.yzpang.jvm.classfile.ClassReader;
 
 /**
  * Author: yzpang
@@ -15,12 +16,21 @@ import org.yzpang.jvm.classfile.AttributeInfo;
 @Data
 public class ConstantValueAttribute extends AttributeInfo {
     /**
-     * 常量池有效索引, 索引处成员为该属性的常量值.
+     * u2 常量池有效索引, 索引处成员为该属性的常量值.
      * long: Constant_Long
      * float: Constant_Float
      * double: Constant_Double
      * int, short, char, byte, boolean: Constant_Integer
      * String: Constant_String
      */
-    private int ConstantValueIndex;
+    private int constantValueIndex;
+
+    @Override
+    protected void readInfo(ClassReader reader) {
+        this.constantValueIndex = reader.readUShort();
+    }
+
+    public int constantValueIndex() {
+        return constantValueIndex;
+    }
 }

@@ -1,5 +1,7 @@
 package org.yzpang.jvm.classfile;
 
+import lombok.Data;
+import lombok.Getter;
 import org.yzpang.jvm.classfile.constantpool.*;
 import org.yzpang.jvm.classfile.util.ClassFileUtil;
 import org.yzpang.jvm.constant.ConstantPoolConstants;
@@ -9,8 +11,8 @@ import org.yzpang.jvm.constant.ConstantPoolConstants;
  * Desc:
  * Date: 2025/3/31 下午4:01
  **/
+@Getter
 public class ConstantPoolInfo {
-
     private ConstantInfo[] constantInfos;
 
     public ConstantPoolInfo readConstantPoolInfo(ClassReader reader) throws Exception {
