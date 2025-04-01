@@ -13,7 +13,7 @@ public class CustomLocalVariableTest {
         localVariable.setLong(1, 9999888999988899L);
         localVariable.setFloat(3, 100.23F);
         localVariable.setDouble(4, 1123456789.12345);
-        localVariable.setReference(6, "hello,world");
+//        localVariable.setReference(6, "hello,world");
 
         System.out.println(localVariable.getInt(0));
         System.out.println(localVariable.getLong(1));
@@ -29,7 +29,7 @@ public class CustomLocalVariableTest {
         operandStack.pushLong(9999888999988899L);
         operandStack.pushFloat(3.23F);
         operandStack.pushDouble(456.456);
-        operandStack.pushReference("hello,world");
+//        operandStack.pushReference("hello,world");
 
         System.out.println(operandStack.popReference());
         System.out.println(operandStack.popDouble());

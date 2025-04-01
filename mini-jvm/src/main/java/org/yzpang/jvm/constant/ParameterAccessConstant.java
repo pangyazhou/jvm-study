@@ -1,4 +1,4 @@
-package org.yzpang.jvm.classfile.constant;
+package org.yzpang.jvm.constant;
 
 /**
  * 参数修饰符

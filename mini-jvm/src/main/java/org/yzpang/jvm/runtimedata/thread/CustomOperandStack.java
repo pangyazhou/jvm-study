@@ -2,6 +2,7 @@ package org.yzpang.jvm.runtimedata.thread;
 
 import lombok.Data;
 import org.yzpang.jvm.runtimedata.CustomSlot;
+import org.yzpang.jvm.runtimedata.heap.CustomObject;
 
 /**
  * Author: yzpang
@@ -53,13 +54,13 @@ public class CustomOperandStack {
     public double popDouble() {
         return Double.longBitsToDouble(popLong());
     }
-    public void pushReference(Object value) {
+    public void pushReference(CustomObject value) {
         slots[size].setReference(value);
         size++;
     }
-    public Object popReference() {
+    public CustomObject popReference() {
         size--;
-        Object obj =  slots[size].getReference();
+        CustomObject obj =  slots[size].getReference();
         slots[size].setReference(null);
         return obj;
     }

@@ -1,6 +1,7 @@
 package org.yzpang.jvm.runtimedata;
 
 import lombok.Data;
+import org.yzpang.jvm.runtimedata.heap.CustomObject;
 
 /**
  * Author: yzpang
@@ -12,5 +13,5 @@ public class CustomSlot {
     // 基本类型
     private int intValue;
     // 引用类型
-    private Object reference;
+    private CustomObject reference;
 }

@@ -4,6 +4,7 @@ import lombok.Data;
 import org.yzpang.jvm.classfile.AttributeInfo;
 import org.yzpang.jvm.classfile.MemberInfo;
 import org.yzpang.jvm.classfile.attribute.CodeAttribute;
+import org.yzpang.jvm.constant.MethodAccessConstants;
 
 /**
  * 方法对象
@@ -34,5 +35,13 @@ public class CustomMethod extends CustomClassMember {
                 this.code = codeAttribute.getCode();
             }
         }
+    }
+
+    public boolean isSynthetic(){
+        return (this.accessFlags & MethodAccessConstants.ACC_SYNTHETIC) != 0;
+    }
+
+    public boolean isSynchronized(){
+        return (this.accessFlags & MethodAccessConstants.ACC_SYNCHRONIZED) != 0;
     }
 }

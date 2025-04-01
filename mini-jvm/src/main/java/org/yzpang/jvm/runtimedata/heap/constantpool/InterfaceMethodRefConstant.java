@@ -6,16 +6,11 @@ import org.yzpang.jvm.runtimedata.heap.CustomConstantPool;
 import org.yzpang.jvm.runtimedata.heap.CustomMemberRef;
 import org.yzpang.jvm.runtimedata.heap.CustomMethod;
 
-public class InterfaceMethodRefConstant extends CustomMemberRef implements CustomConstant<Object> {
+public class InterfaceMethodRefConstant extends CustomMemberRef implements CustomConstant {
     private CustomMethod method;
 
     public InterfaceMethodRefConstant(CustomConstantPool constantPool, ConstantMemberRefInfo memberRefInfo) {
         this.constantPool = constantPool;
         this.copyMemberRefInfo(memberRefInfo);
-    }
-
-    @Override
-    public Object get() {
-        return null;
     }
 }

@@ -1,14 +1,9 @@
-package org.yzpang.jvm.classfile.constant;
+package org.yzpang.jvm.constant;
 
 /**
  * 方法修饰符
  */
-public interface MethodAccessConstants {
-    int ACC_PUBLIC = 0x0001;
-    int ACC_PRIVATE = 0x0002;
-    int ACC_PROTECTED = 0x0004;
-    int ACC_STATIC = 0x0008;
-    int ACC_FINAL = 0x0010;
+public interface MethodAccessConstants extends AccessConstants {
     int ACC_SYNCHRONIZED = 0x0020;
     /**
      * 是否为编译器产生的桥接方法

@@ -44,7 +44,7 @@ public class WideExtendedInstruction extends NoOperandsInstruction {
     }
 
     @Override
-    public void execute(CustomFrame frame) {
+    public void execute(CustomFrame frame) throws Exception {
         this.modifiedInstruction.execute(frame);
     }
 }

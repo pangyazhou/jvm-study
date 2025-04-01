@@ -18,7 +18,7 @@ public class CustomSymbolRef {
     /**
      * 解析类符号引用
      */
-    public void resolveClassRef() throws Exception {
+    private void resolveClassRef() throws Exception {
         CustomClass d = this.constantPool.getClazz();
         CustomClass c = d.getClassloader().loadClass(this.className);
         if (c.isAccessibleTo(d)){

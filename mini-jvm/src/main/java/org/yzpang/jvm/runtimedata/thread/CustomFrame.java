@@ -1,6 +1,7 @@
 package org.yzpang.jvm.runtimedata.thread;
 
 import lombok.Data;
+import org.yzpang.jvm.runtimedata.heap.CustomMethod;
 
 /**
  * Author: yzpang
@@ -27,11 +28,26 @@ public class CustomFrame {
      */
     private CustomThread thread;
 
+    /**
+     * 帧所属方法
+     */
+    private CustomMethod method;
+
+    /**
+     * 下一条指令索引
+     */
     private int nextPC;
 
-    public CustomFrame(CustomThread thread, int maxLocal, int maxStack) {
-        this.thread = thread;
+    public CustomFrame(int maxLocal, int maxStack) {
         localVariable = new CustomLocalVariable(maxLocal);
         operandStack = new CustomOperandStack(maxStack);
     }
+
+     public CustomFrame(CustomThread thread, CustomMethod method) {
+        this(method.getMaxLocal(), method.getMaxStack());
+        this.thread = thread;
+        this.method = method;
+    }
+
+
 }

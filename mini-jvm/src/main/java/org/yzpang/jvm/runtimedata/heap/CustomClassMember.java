@@ -2,6 +2,7 @@ package org.yzpang.jvm.runtimedata.heap;
 
 import lombok.Data;
 import org.yzpang.jvm.classfile.MemberInfo;
+import org.yzpang.jvm.constant.AccessConstants;
 
 import java.util.Objects;
 
@@ -35,7 +36,7 @@ public class CustomClassMember {
         // protected 可被子类或同一包下的类访问
         if (isProtected()){
             return clazz == this.clazz
-                    || clazz.isSubclassOf(this.clazz)
+                    || clazz.isSubClassOf(this.clazz)
                     || Objects.equals(clazz.getPackageName(), this.clazz.getPackageName());
         }
         // 非private可被同一包下的类访问
@@ -47,16 +48,22 @@ public class CustomClassMember {
     }
 
     public boolean isPublic(){
-        // todo
-        return true;
+        return (this.accessFlags & AccessConstants.ACC_PUBLIC) != 0;
     }
 
     public boolean isProtected(){
-        return false;
+        return (this.accessFlags & AccessConstants.ACC_PROTECTED) != 0;
     }
 
     public boolean isPrivate(){
-        return false;
+        return (this.accessFlags & AccessConstants.ACC_PRIVATE) != 0;
     }
 
+    public boolean isStatic(){
+        return (this.accessFlags & AccessConstants.ACC_STATIC) != 0;
+    }
+
+    public boolean isFinal(){
+        return (this.accessFlags & AccessConstants.ACC_FINAL) != 0;
+    }
 }

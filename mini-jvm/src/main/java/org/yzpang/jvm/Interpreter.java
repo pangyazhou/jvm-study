@@ -17,8 +17,8 @@ public class Interpreter {
      * 解释执行方法
      * @param methodInfo 方法信息
      */
-    public void interpret(MethodInfo methodInfo) {
-        CodeAttribute codeAttribute = new CodeAttribute();
+    public void interpret(MethodInfo methodInfo) throws Exception {
+       /* CodeAttribute codeAttribute = new CodeAttribute();
         // 操作数栈
         int maxStack = codeAttribute.getMaxStack();
         // 局部变量表
@@ -31,7 +31,7 @@ public class Interpreter {
         thread.pushFrame(frame);
 
         // 解析执行字节码
-        loop(thread, bytecode);
+        loop(thread, bytecode);*/
     }
 
     /**
@@ -39,7 +39,7 @@ public class Interpreter {
      * @param thread
      * @param bytecode
      */
-    private void loop(CustomThread thread, byte[] bytecode) {
+    private void loop(CustomThread thread, byte[] bytecode) throws Exception {
         // 当前帧
         CustomFrame frame = thread.popFrame();
         BytecodeReader reader = new BytecodeReader(bytecode);

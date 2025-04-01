@@ -1,31 +1,11 @@
-package org.yzpang.jvm.classfile.constant;
+package org.yzpang.jvm.constant;
 
 /**
  * Author: yzpang
  * Desc: 类或接口层次的访问信息
  * Date: 2025/3/18 上午10:57
  **/
-public interface ClassAccessConstants {
-    /**
-     * 是否为public类型
-     */
-    int ACC_PUBLIC = 0x0001;
-    /**
-     * 是否为private
-     */
-    int ACC_PRIVATE = 0x0002;
-    /**
-     * 是否为protected
-     */
-    int ACC_PROTECTED = 0x0004;
-    /**
-     * 是否为static
-     */
-    int ACC_STATIC = 0x0008;
-    /**
-     * 是否被声明为final, 只有类可以被设置
-     */
-    int ACC_FINAL = 0x0010;
+public interface ClassAccessConstants extends AccessConstants{
     /**
      * 是否允许使用invokespecial字节码指令的新语义, 常为True
      */

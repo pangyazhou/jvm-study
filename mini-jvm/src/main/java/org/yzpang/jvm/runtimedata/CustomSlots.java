@@ -1,5 +1,7 @@
 package org.yzpang.jvm.runtimedata;
 
+import org.yzpang.jvm.runtimedata.heap.CustomObject;
+
 /**
  * Author: yzpang
  * Desc: 存放变量的槽
@@ -40,10 +42,10 @@ public class CustomSlots {
     public double getDouble(int index) {
         return Double.longBitsToDouble(getLong(index));
     }
-    public void setReference(int index, Object value) {
+    public void setReference(int index, CustomObject value) {
         slots[index].setReference(value);
     }
-    public Object getReference(int index) {
+    public CustomObject getReference(int index) {
         return slots[index].getReference();
     }
 }

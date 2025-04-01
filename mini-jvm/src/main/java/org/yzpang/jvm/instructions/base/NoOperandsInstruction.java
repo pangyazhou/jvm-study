@@ -1,5 +1,6 @@
 package org.yzpang.jvm.instructions.base;
 
+import org.yzpang.jvm.runtimedata.heap.CustomObject;
 import org.yzpang.jvm.runtimedata.thread.CustomFrame;
 import org.yzpang.jvm.runtimedata.thread.CustomOperandStack;
 
@@ -15,7 +16,7 @@ public class NoOperandsInstruction implements CustomInstruction{
     }
 
     @Override
-    public void execute(CustomFrame frame) {
+    public void execute(CustomFrame frame) throws Exception {
     }
 
     protected final void iload(CustomFrame frame, int index) {
@@ -35,7 +36,7 @@ public class NoOperandsInstruction implements CustomInstruction{
         frame.getOperandStack().pushDouble(value);
     }
     protected final void aload(CustomFrame frame, int index) {
-        Object value = frame.getLocalVariable().getReference(index);
+        CustomObject value = frame.getLocalVariable().getReference(index);
         frame.getOperandStack().pushReference(value);
     }
     protected final void istore(CustomFrame frame, int index) {
@@ -55,7 +56,7 @@ public class NoOperandsInstruction implements CustomInstruction{
         frame.getLocalVariable().setDouble(index, value);
     }
     protected final void astore(CustomFrame frame, int index) {
-        Object value = frame.getOperandStack().popReference();
+        CustomObject value = frame.getOperandStack().popReference();
         frame.getLocalVariable().setReference(index, value);
     }
 

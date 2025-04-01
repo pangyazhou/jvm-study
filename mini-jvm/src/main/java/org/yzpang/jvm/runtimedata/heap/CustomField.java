@@ -4,6 +4,7 @@ package org.yzpang.jvm.runtimedata.heap;
 import lombok.Data;
 import org.yzpang.jvm.classfile.MemberInfo;
 import org.yzpang.jvm.classfile.attribute.ConstantValueAttribute;
+import org.yzpang.jvm.constant.FieldAccessConstants;
 
 import java.util.Objects;
 
@@ -27,14 +28,20 @@ public class CustomField extends CustomClassMember {
         return fields;
     }
 
-    public boolean isStatic(){
-        // todo
-        return false;
+    public boolean isEnum() {
+        return (this.accessFlags & FieldAccessConstants.ACC_ENUM) != 0;
     }
 
-    public boolean isFinal(){
-        // todo
-        return false;
+    public boolean isVolatile() {
+        return (this.accessFlags & FieldAccessConstants.ACC_VOLATILE) != 0;
+    }
+
+    public boolean isTransient() {
+        return (this.accessFlags & FieldAccessConstants.ACC_TRANSIENT) != 0;
+    }
+
+    public boolean isSynthetic(){
+        return (this.accessFlags & FieldAccessConstants.ACC_SYNTHETIC) != 0;
     }
 
     public boolean isLongOrDouble(){

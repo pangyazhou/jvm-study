@@ -2,15 +2,14 @@ package org.yzpang.jvm.runtimedata.heap.constantpool;
 
 import org.yzpang.jvm.runtimedata.heap.CustomConstant;
 
-public class LongConstant implements CustomConstant<Long> {
+public class LongConstant implements CustomConstant {
     private long value;
 
     public LongConstant(long value) {
         this.value = value;
     }
 
-    @Override
-    public Long get() {
+    public long get() {
         return value;
     }
 }

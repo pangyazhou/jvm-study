@@ -28,6 +28,7 @@ public class CustomStack {
 
     public CustomStack(int maxSize) {
         this.maxSize = maxSize;
+        this.size = 0;
     }
 
     /**

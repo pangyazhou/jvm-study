@@ -1,6 +1,7 @@
 package org.yzpang.jvm.runtimedata.thread;
 
 import lombok.Data;
+import org.yzpang.jvm.runtimedata.heap.CustomMethod;
 
 /**
  * Author: yzpang
@@ -45,11 +46,10 @@ public class CustomThread {
 
     /**
      * 新建帧
-     * @param maxLocal 局部变量表个数
-     * @param maxStack 操作数栈深度
+     * @param method 方法对象
      * @return frame
      */
-    public CustomFrame newFrame(int maxLocal, int maxStack){
-        return new CustomFrame(this, maxLocal, maxStack);
+    public CustomFrame newFrame(CustomMethod method){
+        return new CustomFrame(this, method);
     }
 }

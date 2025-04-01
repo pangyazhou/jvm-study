@@ -1,9 +1,9 @@
 package org.yzpang.jvm.classfile.util;
 
 import org.yzpang.jvm.classfile.ConstantInfo;
-import org.yzpang.jvm.classfile.constant.ClassAccessConstants;
-import org.yzpang.jvm.classfile.constant.FieldAccessConstants;
-import org.yzpang.jvm.classfile.constant.MethodAccessConstants;
+import org.yzpang.jvm.constant.ClassAccessConstants;
+import org.yzpang.jvm.constant.FieldAccessConstants;
+import org.yzpang.jvm.constant.MethodAccessConstants;
 import org.yzpang.jvm.classfile.constantpool.*;
 
 import java.nio.charset.StandardCharsets;

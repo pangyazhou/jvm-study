@@ -3,7 +3,7 @@ package org.yzpang.jvm.runtimedata.heap.constantpool;
 import org.yzpang.jvm.classfile.constantpool.ConstantFieldRefInfo;
 import org.yzpang.jvm.runtimedata.heap.*;
 
-public class FieldRefConstant extends CustomMemberRef implements CustomConstant<CustomField> {
+public class FieldRefConstant extends CustomMemberRef implements CustomConstant {
     private CustomField field;
 
     public FieldRefConstant(CustomConstantPool customConstantPool, ConstantFieldRefInfo fieldRefInfo) {
@@ -21,7 +21,7 @@ public class FieldRefConstant extends CustomMemberRef implements CustomConstant<
     /**
      * 解析字段引用
      */
-    public void resolveFieldRef() throws Exception {
+    private void resolveFieldRef() throws Exception {
         CustomClass d = this.constantPool.getClazz();
         CustomClass c = resolvedClass();
         CustomField lookupField = lookupField(c, this.name, this.descriptor);
@@ -42,7 +42,7 @@ public class FieldRefConstant extends CustomMemberRef implements CustomConstant<
      * @param descriptor 字段描述符
      * @return 查找到的字段对象
      */
-    public CustomField lookupField(CustomClass clazz, String name, String descriptor) {
+    private CustomField lookupField(CustomClass clazz, String name, String descriptor) {
         // 1.先从本类中查找
         for (CustomField field : clazz.getFields()) {
             if (field.getName().equals(name) && field.getDescriptor().equals(descriptor)) {
@@ -61,10 +61,5 @@ public class FieldRefConstant extends CustomMemberRef implements CustomConstant<
             return lookupField(clazz.getSuperClass(), name, descriptor);
         }
         return null;
-    }
-
-    @Override
-    public CustomField get() {
-        return this.field;
     }
 }

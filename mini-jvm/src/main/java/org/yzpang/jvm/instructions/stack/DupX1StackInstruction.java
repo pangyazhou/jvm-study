@@ -14,6 +14,6 @@ import org.yzpang.jvm.runtimedata.thread.CustomFrame;
 public class DupX1StackInstruction extends NoOperandsInstruction {
     @Override
     public void execute(CustomFrame frame) {
-        super.execute(frame);
+
     }
 }

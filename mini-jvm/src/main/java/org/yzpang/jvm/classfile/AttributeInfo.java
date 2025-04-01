@@ -1,7 +1,7 @@
 package org.yzpang.jvm.classfile;
 
 import org.yzpang.jvm.classfile.attribute.*;
-import org.yzpang.jvm.classfile.constant.AttributeNameConstants;
+import org.yzpang.jvm.constant.AttributeNameConstants;
 
 /**
  * Author: yzpang

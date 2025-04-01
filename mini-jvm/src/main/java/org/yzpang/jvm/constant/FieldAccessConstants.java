@@ -1,25 +1,9 @@
-package org.yzpang.jvm.classfile.constant;
+package org.yzpang.jvm.constant;
 
 /**
  * 字段修饰符常量
  */
-public interface FieldAccessConstants {
-    /**
-     * 是否public
-     */
-    int ACC_PUBLIC = 0x0001;
-    /**
-     * 是否private
-     */
-    int ACC_PRIVATE = 0x0002;
-    /**
-     * 是否protected
-     */
-    int ACC_PROTECTED = 0x0004;
-    /**
-     * 是否static
-     */
-    int ACC_STATIC = 0x0008;
+public interface FieldAccessConstants extends AccessConstants{
     /**
      * 是否final
      */
