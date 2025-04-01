@@ -11,6 +11,6 @@ public class DoubleConstant implements CustomConstant<Double> {
 
     @Override
     public Double get() {
-        return 0.0;
+        return value;
     }
 }

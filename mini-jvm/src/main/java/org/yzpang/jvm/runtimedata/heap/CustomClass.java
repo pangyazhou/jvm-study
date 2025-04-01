@@ -4,6 +4,8 @@ import lombok.Data;
 import org.yzpang.jvm.classfile.ClassFile;
 import org.yzpang.jvm.runtimedata.CustomSlots;
 
+import java.util.Objects;
+
 /**
  * 自定义Class文件
  */
@@ -33,5 +35,28 @@ public class CustomClass {
         this.fields = CustomField.newFields(this, classFile.getFields());
         this.methods = CustomMethod.newMethods(this, classFile.getMethods());
         this.attributes = CustomAttribute.newAttributes(this, classFile.getAttributes());
+    }
+
+    /**
+     * 类是否可访问
+     * public 或者与另一个类在同一个包中
+     */
+    public boolean isAccessibleTo(CustomClass otherClass) {
+        return this.isPublic() || Objects.equals(this.getPackageName(), otherClass.getPackageName());
+    }
+
+    public boolean isSubclassOf(CustomClass otherClass) {
+        // todo
+        return true;
+    }
+
+    public boolean isPublic(){
+        // todo
+        return true;
+    }
+
+    public String getPackageName() {
+        // java/lang/String
+        return this.name.substring(0, this.name.lastIndexOf("/"));
     }
 }

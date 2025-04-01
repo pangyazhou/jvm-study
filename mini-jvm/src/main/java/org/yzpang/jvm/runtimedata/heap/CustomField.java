@@ -46,6 +46,7 @@ public class CustomField extends CustomClassMember {
         if (constantValueAttribute != null) {
             this.constantValueIndex = constantValueAttribute.constantValueIndex();
         }
-        // todo
+        // todo 其他字段属性
     }
+
 }

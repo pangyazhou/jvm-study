@@ -1,11 +1,12 @@
 package org.yzpang.jvm.runtimedata.heap.constantpool;
 
 import org.yzpang.jvm.classfile.constantpool.ConstantClassInfo;
+import org.yzpang.jvm.runtimedata.heap.CustomClass;
 import org.yzpang.jvm.runtimedata.heap.CustomConstant;
 import org.yzpang.jvm.runtimedata.heap.CustomConstantPool;
 import org.yzpang.jvm.runtimedata.heap.CustomSymbolRef;
 
-public class ClassRefConstant extends CustomSymbolRef implements CustomConstant<Object> {
+public class ClassRefConstant extends CustomSymbolRef implements CustomConstant<CustomClass> {
 
     public ClassRefConstant(CustomConstantPool constantPool, ConstantClassInfo classInfo) {
         this.constantPool = constantPool;
@@ -13,7 +14,7 @@ public class ClassRefConstant extends CustomSymbolRef implements CustomConstant<
     }
 
     @Override
-    public Object get() {
-        return null;
+    public CustomClass get() {
+        return this.clazz;
     }
 }

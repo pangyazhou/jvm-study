@@ -11,6 +11,6 @@ public class FloatConstant implements CustomConstant<Float> {
 
     @Override
     public Float get() {
-        return 0f;
+        return value;
     }
 }

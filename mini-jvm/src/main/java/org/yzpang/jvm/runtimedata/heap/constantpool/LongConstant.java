@@ -11,6 +11,6 @@ public class LongConstant implements CustomConstant<Long> {
 
     @Override
     public Long get() {
-        return 0L;
+        return value;
     }
 }
