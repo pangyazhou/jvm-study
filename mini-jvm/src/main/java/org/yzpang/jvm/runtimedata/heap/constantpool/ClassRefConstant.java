@@ -5,11 +5,15 @@ import org.yzpang.jvm.runtimedata.heap.CustomConstant;
 import org.yzpang.jvm.runtimedata.heap.CustomConstantPool;
 import org.yzpang.jvm.runtimedata.heap.CustomSymbolRef;
 
-public class ClassRef<T> extends CustomSymbolRef{
+public class ClassRefConstant extends CustomSymbolRef implements CustomConstant<Object> {
 
-    public ClassRef(CustomConstantPool constantPool, ConstantClassInfo classInfo) {
+    public ClassRefConstant(CustomConstantPool constantPool, ConstantClassInfo classInfo) {
         this.constantPool = constantPool;
         this.className = classInfo.getName();
     }
 
+    @Override
+    public Object get() {
+        return null;
+    }
 }

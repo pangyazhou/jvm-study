@@ -11,6 +11,6 @@ public class IntegerConstant implements CustomConstant<Integer> {
 
     @Override
     public Integer get() {
-        return 0;
+        return value;
     }
 }

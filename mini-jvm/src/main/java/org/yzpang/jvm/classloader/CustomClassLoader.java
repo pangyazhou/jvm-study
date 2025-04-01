@@ -1,6 +1,7 @@
 package org.yzpang.jvm.classloader;
 
 import lombok.Data;
+import org.yzpang.jvm.classpath.CustomEntry;
 
 import java.io.IOException;
 
@@ -12,7 +13,7 @@ import java.io.IOException;
 @Data
 public abstract class CustomClassLoader {
 
-    protected org.yzpang.jvm.classpath.CustomClassLoader customClassloader;
+    protected CustomEntry customClassloader;
 
     public Clazz loadClass(String name) throws ClassNotFoundException, IOException {
         Clazz clazz = null;

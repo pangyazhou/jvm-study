@@ -1,6 +1,7 @@
 package org.yzpang.jvm.runtimedata.thread;
 
 import lombok.Data;
+import org.yzpang.jvm.runtimedata.CustomSlot;
 
 /**
  * Author: yzpang

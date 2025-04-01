@@ -3,7 +3,7 @@ package org.yzpang.jvm.instructions.stack;
 import org.yzpang.jvm.instructions.base.NoOperandsInstruction;
 import org.yzpang.jvm.runtimedata.thread.CustomFrame;
 import org.yzpang.jvm.runtimedata.thread.CustomOperandStack;
-import org.yzpang.jvm.runtimedata.thread.CustomSlot;
+import org.yzpang.jvm.runtimedata.CustomSlot;
 
 /**
  * Author: yzpang

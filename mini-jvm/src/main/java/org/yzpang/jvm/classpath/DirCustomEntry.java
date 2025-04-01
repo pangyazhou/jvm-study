@@ -9,17 +9,17 @@ import java.nio.file.Paths;
  * Desc: 目录加载  dir/clazz.class
  * Date: 2025/3/24 下午3:58
  **/
-public class DirCustomClassLoader extends CustomClassLoader {
+public class DirCustomEntry extends CustomEntry {
     /**
      * 类文件所在绝对路径
      */
     private String absDir;
 
-    public DirCustomClassLoader() {
+    public DirCustomEntry() {
         this.absDir = System.getProperty("user.dir");
     }
 
-    public DirCustomClassLoader(String absDir) {
+    public DirCustomEntry(String absDir) {
         this.absDir = Paths.get(absDir).toAbsolutePath().toString();
     }
 
@@ -32,8 +32,9 @@ public class DirCustomClassLoader extends CustomClassLoader {
         try {
             return Files.readAllBytes(Paths.get(fileName));
         } catch (IOException e) {
-            throw new IOException("class not found: " + className);
+            e.printStackTrace();
         }
+        return null;
     }
 
     @Override

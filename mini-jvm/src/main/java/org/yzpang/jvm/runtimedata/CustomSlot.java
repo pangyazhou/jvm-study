@@ -1,4 +1,4 @@
-package org.yzpang.jvm.runtimedata.thread;
+package org.yzpang.jvm.runtimedata;
 
 import lombok.Data;
 

@@ -1,6 +1,7 @@
 package org.yzpang.jvm.classfile;
 
 import lombok.Getter;
+import org.yzpang.jvm.classfile.attribute.ConstantValueAttribute;
 
 /**
  * Author: yzpang
@@ -41,5 +42,17 @@ public class MemberInfo {
 
     public String getDescriptor(){
         return this.constantPoolInfo.getUtf8(this.descriptorIndex);
+    }
+
+    /**
+     * 返回静态常量属性
+     */
+    public ConstantValueAttribute constantValueAttribute(){
+        for (AttributeInfo attribute : this.attributes) {
+            if (attribute instanceof ConstantValueAttribute) {
+                return (ConstantValueAttribute) attribute;
+            }
+        }
+        return null;
     }
 }

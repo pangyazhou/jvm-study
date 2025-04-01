@@ -8,7 +8,7 @@ import org.yzpang.jvm.classfile.MemberInfo;
  * field/method
  */
 @Data
-public class ClassMember {
+public class CustomClassMember {
     protected int accessFlags;
     protected String name;
     protected String descriptor;
@@ -19,5 +19,6 @@ public class ClassMember {
         this.name = memberInfo.getName();
         this.descriptor = memberInfo.getDescriptor();
     }
+
 
 }

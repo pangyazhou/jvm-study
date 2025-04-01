@@ -13,7 +13,6 @@ import org.yzpang.jvm.classfile.ClassReader;
  * field_info属性表中最多一个ConstantValue属性
  * Date: 2025/3/18 下午1:41
  **/
-@Data
 public class ConstantValueAttribute extends AttributeInfo {
     /**
      * u2 常量池有效索引, 索引处成员为该属性的常量值.

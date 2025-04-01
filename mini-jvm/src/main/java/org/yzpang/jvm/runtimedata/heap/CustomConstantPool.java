@@ -53,14 +53,18 @@ public class CustomConstantPool {
                 this.constants[i] = new StringConstant(str);
             } else if (constantInfos[i] instanceof ConstantClassInfo) {
                 // class
-                new ClassRef(this, (ConstantClassInfo) constantInfos[i]);
+                ClassRefConstant classRefConstant = new ClassRefConstant(this, (ConstantClassInfo) constantInfos[i]);
+                this.constants[i] = classRefConstant;
             } else if (constantInfos[i] instanceof ConstantFieldRefInfo) {
                 // field
-                new FieldRef(this, (ConstantFieldRefInfo) constantInfos[i]);
+                FieldRefConstant fieldRefConstant = new FieldRefConstant(this, (ConstantFieldRefInfo) constantInfos[i]);
+                this.constants[i] = fieldRefConstant;
             } else if (constantInfos[i] instanceof ConstantMethodRefInfo) {
-                new MethodRef(this, (ConstantMethodRefInfo) constantInfos[i]);
+                MethodRefConstant methodRefConstant = new MethodRefConstant(this, (ConstantMethodRefInfo) constantInfos[i]);
+                this.constants[i] = methodRefConstant;
             } else if (constantInfos[i] instanceof ConstantInterfaceMethodRefInfo) {
-
+                InterfaceMethodRefConstant interfaceMethodRefConstant = new InterfaceMethodRefConstant(this, (ConstantInterfaceMethodRefInfo) constantInfos[i]);
+                this.constants[i] = interfaceMethodRefConstant;
             }
         }
     }

@@ -11,17 +11,17 @@ import java.util.zip.ZipFile;
  * Desc: zip/jar文件形式的类路径
  * Date: 2025/3/24 下午4:12
  **/
-public class ZipCustomClassLoader extends CustomClassLoader {
+public class ZipCustomEntry extends CustomEntry {
     /**
      * 存放zip或jar文件的绝对路径
      */
     private String absDir;
 
-    public ZipCustomClassLoader() {
+    public ZipCustomEntry() {
         this.absDir = System.getProperty("user.dir");
     }
 
-    public ZipCustomClassLoader(String absDir) {
+    public ZipCustomEntry(String absDir) {
         this.absDir = Paths.get(absDir).toAbsolutePath().toString();
     }
 

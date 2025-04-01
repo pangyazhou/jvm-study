@@ -100,7 +100,7 @@ public class ClassFile {
      * @param bytes Class二进制流
      * @return ClassFile对象
      */
-    public ClassFile parse(byte[] bytes) throws Exception {
+    public static ClassFile parse(byte[] bytes) throws Exception {
         ClassReader reader = new ClassReader(bytes);
         ClassFile classFile = new ClassFile();
         classFile.read(reader);

@@ -18,7 +18,7 @@ public class Interpreter {
      * @param methodInfo 方法信息
      */
     public void interpret(MethodInfo methodInfo) {
-        CodeAttribute codeAttribute = methodInfo.getCodeAttribute();
+        CodeAttribute codeAttribute = new CodeAttribute();
         // 操作数栈
         int maxStack = codeAttribute.getMaxStack();
         // 局部变量表

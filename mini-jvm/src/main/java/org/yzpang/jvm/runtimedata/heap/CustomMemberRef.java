@@ -2,6 +2,7 @@ package org.yzpang.jvm.runtimedata.heap;
 
 import org.yzpang.jvm.classfile.constantpool.ConstantMemberRefInfo;
 
+
 /**
  * 类成员引用父类
  */
@@ -15,5 +16,6 @@ public class CustomMemberRef extends CustomSymbolRef{
         this.name = nameAndType[0];
         this.descriptor = nameAndType[1];
     }
+
 
 }

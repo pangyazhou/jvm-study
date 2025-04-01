@@ -9,10 +9,21 @@ import org.yzpang.jvm.classfile.attribute.CodeAttribute;
  * 方法对象
  */
 @Data
-public class CustomMethod extends ClassMember{
+public class CustomMethod extends CustomClassMember {
     private int maxLocal;
     private int maxStack;
     private byte[] code;
+
+    public static CustomMethod[] newMethods(CustomClass clazz, MemberInfo[] methodInfos){
+        CustomMethod[] methods = new CustomMethod[methodInfos.length];
+        for(int i = 0; i < methodInfos.length; i++){
+            methods[i] = new CustomMethod();
+            methods[i].setClazz(clazz);
+            methods[i].copyMemberInfo(methodInfos[i]);
+            methods[i].copyCodeAttribute(methodInfos[i]);
+        }
+        return methods;
+    }
 
     public void copyCodeAttribute(MemberInfo memberInfo) {
         for (AttributeInfo attributeInfo : memberInfo.getAttributes()) {
