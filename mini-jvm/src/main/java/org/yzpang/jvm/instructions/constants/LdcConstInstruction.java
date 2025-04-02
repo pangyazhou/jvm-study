@@ -28,8 +28,8 @@ public class LdcConstInstruction extends Index8Instruction {
         } else if (constant instanceof StringConstant) {
             StringConstant stringConstant = (StringConstant) constant;
             // todo
-        } else if (constant instanceof ClassRefConstant) {
-            ClassRefConstant classRefConstant = (ClassRefConstant) constant;
+        } else if (constant instanceof ClassRef) {
+            ClassRef classRef = (ClassRef) constant;
             // todo
         }
     }

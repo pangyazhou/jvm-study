@@ -1,9 +1,8 @@
 package org.yzpang.jvm.instructions.references;
 
-import jdk.nashorn.internal.runtime.regexp.joni.constants.OPCode;
 import org.yzpang.jvm.instructions.base.Index16Instruction;
 import org.yzpang.jvm.runtimedata.heap.*;
-import org.yzpang.jvm.runtimedata.heap.constantpool.FieldRefConstant;
+import org.yzpang.jvm.runtimedata.heap.constantpool.FieldRef;
 import org.yzpang.jvm.runtimedata.thread.CustomFrame;
 import org.yzpang.jvm.runtimedata.thread.CustomOperandStack;
 
@@ -21,7 +20,7 @@ public class PutFieldReferenceInstruction extends Index16Instruction {
         CustomMethod currentMethod = frame.getMethod();
         CustomClass currentClazz = currentMethod.getClazz();
         CustomConstantPool constantPool = currentClazz.getConstantPool();
-        FieldRefConstant fieldRef = (FieldRefConstant) constantPool.getConstant(this.index);
+        FieldRef fieldRef = (FieldRef) constantPool.getConstant(this.index);
         CustomField field = fieldRef.resolvedField();
         // 必须是实例变量
         if (field.isStatic()) {

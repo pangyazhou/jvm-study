@@ -4,7 +4,6 @@ import lombok.Getter;
 import org.yzpang.jvm.classfile.ConstantInfo;
 import org.yzpang.jvm.classfile.ConstantPoolInfo;
 import org.yzpang.jvm.classfile.constantpool.*;
-import org.yzpang.jvm.classfile.util.ClassFileUtil;
 import org.yzpang.jvm.classfile.util.ConstantPoolUtil;
 import org.yzpang.jvm.runtimedata.heap.constantpool.*;
 
@@ -54,18 +53,18 @@ public class CustomConstantPool {
                 this.constants[i] = new StringConstant(str);
             } else if (constantInfos[i] instanceof ConstantClassInfo) {
                 // class
-                ClassRefConstant classRefConstant = new ClassRefConstant(this, (ConstantClassInfo) constantInfos[i]);
-                this.constants[i] = classRefConstant;
+                ClassRef classRef = new ClassRef(this, (ConstantClassInfo) constantInfos[i]);
+                this.constants[i] = classRef;
             } else if (constantInfos[i] instanceof ConstantFieldRefInfo) {
                 // field
-                FieldRefConstant fieldRefConstant = new FieldRefConstant(this, (ConstantFieldRefInfo) constantInfos[i]);
-                this.constants[i] = fieldRefConstant;
+                FieldRef fieldRef = new FieldRef(this, (ConstantFieldRefInfo) constantInfos[i]);
+                this.constants[i] = fieldRef;
             } else if (constantInfos[i] instanceof ConstantMethodRefInfo) {
-                MethodRefConstant methodRefConstant = new MethodRefConstant(this, (ConstantMethodRefInfo) constantInfos[i]);
-                this.constants[i] = methodRefConstant;
+                MethodRef methodRef = new MethodRef(this, (ConstantMethodRefInfo) constantInfos[i]);
+                this.constants[i] = methodRef;
             } else if (constantInfos[i] instanceof ConstantInterfaceMethodRefInfo) {
-                InterfaceMethodRefConstant interfaceMethodRefConstant = new InterfaceMethodRefConstant(this, (ConstantInterfaceMethodRefInfo) constantInfos[i]);
-                this.constants[i] = interfaceMethodRefConstant;
+                InterfaceMethodRef interfaceMethodRef = new InterfaceMethodRef(this, (ConstantInterfaceMethodRefInfo) constantInfos[i]);
+                this.constants[i] = interfaceMethodRef;
             }
         }
     }

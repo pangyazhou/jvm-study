@@ -4,7 +4,7 @@ import org.yzpang.jvm.instructions.base.Index16Instruction;
 import org.yzpang.jvm.runtimedata.heap.CustomClass;
 import org.yzpang.jvm.runtimedata.heap.CustomConstantPool;
 import org.yzpang.jvm.runtimedata.heap.CustomObject;
-import org.yzpang.jvm.runtimedata.heap.constantpool.ClassRefConstant;
+import org.yzpang.jvm.runtimedata.heap.constantpool.ClassRef;
 import org.yzpang.jvm.runtimedata.thread.CustomFrame;
 import org.yzpang.jvm.runtimedata.thread.CustomOperandStack;
 
@@ -25,7 +25,7 @@ public class InstanceOfReferenceInstruction extends Index16Instruction {
             return;
         }
         CustomConstantPool constantPool = frame.getMethod().getClazz().getConstantPool();
-        ClassRefConstant classRef = (ClassRefConstant) constantPool.getConstant(this.index);
+        ClassRef classRef = (ClassRef) constantPool.getConstant(this.index);
         CustomClass clazz = classRef.resolvedClass();
         if (reference.isInstanceOf(clazz)){
             operandStack.pushInt(1);

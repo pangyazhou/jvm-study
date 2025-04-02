@@ -3,7 +3,7 @@ package org.yzpang.jvm.instructions.constants;
 import org.yzpang.jvm.instructions.base.Index16Instruction;
 import org.yzpang.jvm.runtimedata.heap.CustomConstant;
 import org.yzpang.jvm.runtimedata.heap.CustomConstantPool;
-import org.yzpang.jvm.runtimedata.heap.constantpool.ClassRefConstant;
+import org.yzpang.jvm.runtimedata.heap.constantpool.ClassRef;
 import org.yzpang.jvm.runtimedata.heap.constantpool.FloatConstant;
 import org.yzpang.jvm.runtimedata.heap.constantpool.IntegerConstant;
 import org.yzpang.jvm.runtimedata.heap.constantpool.StringConstant;
@@ -31,8 +31,8 @@ public class LdcWConstInstruction extends Index16Instruction {
         } else if (constant instanceof StringConstant) {
             StringConstant stringConstant = (StringConstant) constant;
             // todo
-        } else if (constant instanceof ClassRefConstant) {
-            ClassRefConstant classRefConstant = (ClassRefConstant) constant;
+        } else if (constant instanceof ClassRef) {
+            ClassRef classRef = (ClassRef) constant;
             // todo
         }
     }

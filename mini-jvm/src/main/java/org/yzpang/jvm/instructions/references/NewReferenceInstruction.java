@@ -4,7 +4,7 @@ import org.yzpang.jvm.instructions.base.Index16Instruction;
 import org.yzpang.jvm.runtimedata.heap.CustomClass;
 import org.yzpang.jvm.runtimedata.heap.CustomConstantPool;
 import org.yzpang.jvm.runtimedata.heap.CustomObject;
-import org.yzpang.jvm.runtimedata.heap.constantpool.ClassRefConstant;
+import org.yzpang.jvm.runtimedata.heap.constantpool.ClassRef;
 import org.yzpang.jvm.runtimedata.thread.CustomFrame;
 
 /**
@@ -17,7 +17,7 @@ public class NewReferenceInstruction extends Index16Instruction {
     @Override
     public void execute(CustomFrame frame) throws Exception {
         CustomConstantPool constantPool = frame.getMethod().getClazz().getConstantPool();
-        ClassRefConstant classRef = (ClassRefConstant) constantPool.getConstant(this.index);
+        ClassRef classRef = (ClassRef) constantPool.getConstant(this.index);
         CustomClass clazz = classRef.resolvedClass();
         // 不能是接口与抽象类
         if (clazz.isInterface() || clazz.isAbstract()) {

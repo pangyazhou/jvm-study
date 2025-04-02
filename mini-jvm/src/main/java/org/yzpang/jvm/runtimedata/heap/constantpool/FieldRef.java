@@ -3,10 +3,10 @@ package org.yzpang.jvm.runtimedata.heap.constantpool;
 import org.yzpang.jvm.classfile.constantpool.ConstantFieldRefInfo;
 import org.yzpang.jvm.runtimedata.heap.*;
 
-public class FieldRefConstant extends CustomMemberRef implements CustomConstant {
+public class FieldRef extends CustomMemberRef implements CustomConstant {
     private CustomField field;
 
-    public FieldRefConstant(CustomConstantPool customConstantPool, ConstantFieldRefInfo fieldRefInfo) {
+    public FieldRef(CustomConstantPool customConstantPool, ConstantFieldRefInfo fieldRefInfo) {
         this.constantPool = customConstantPool;
         this.copyMemberRefInfo(fieldRefInfo);
     }

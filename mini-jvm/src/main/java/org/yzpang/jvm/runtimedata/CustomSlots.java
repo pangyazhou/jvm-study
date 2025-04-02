@@ -48,4 +48,8 @@ public class CustomSlots {
     public CustomObject getReference(int index) {
         return slots[index].getReference();
     }
+
+    public void setSlot(int index, CustomSlot slot) {
+        slots[index] = slot;
+    }
 }

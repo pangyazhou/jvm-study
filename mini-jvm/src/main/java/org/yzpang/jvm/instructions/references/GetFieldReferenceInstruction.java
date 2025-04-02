@@ -5,7 +5,7 @@ import org.yzpang.jvm.runtimedata.CustomSlots;
 import org.yzpang.jvm.runtimedata.heap.CustomConstantPool;
 import org.yzpang.jvm.runtimedata.heap.CustomField;
 import org.yzpang.jvm.runtimedata.heap.CustomObject;
-import org.yzpang.jvm.runtimedata.heap.constantpool.FieldRefConstant;
+import org.yzpang.jvm.runtimedata.heap.constantpool.FieldRef;
 import org.yzpang.jvm.runtimedata.thread.CustomFrame;
 import org.yzpang.jvm.runtimedata.thread.CustomOperandStack;
 
@@ -19,7 +19,7 @@ public class GetFieldReferenceInstruction extends Index16Instruction {
     @Override
     public void execute(CustomFrame frame) throws Exception {
         CustomConstantPool constantPool = frame.getMethod().getClazz().getConstantPool();
-        FieldRefConstant fieldRef = (FieldRefConstant) constantPool.getConstant(this.index);
+        FieldRef fieldRef = (FieldRef) constantPool.getConstant(this.index);
         CustomField field = fieldRef.resolvedField();
         // 必须为实例变量
         if (field.isStatic()){

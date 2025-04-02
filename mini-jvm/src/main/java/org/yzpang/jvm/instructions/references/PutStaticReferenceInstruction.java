@@ -6,7 +6,7 @@ import org.yzpang.jvm.runtimedata.heap.CustomClass;
 import org.yzpang.jvm.runtimedata.heap.CustomConstantPool;
 import org.yzpang.jvm.runtimedata.heap.CustomField;
 import org.yzpang.jvm.runtimedata.heap.CustomMethod;
-import org.yzpang.jvm.runtimedata.heap.constantpool.FieldRefConstant;
+import org.yzpang.jvm.runtimedata.heap.constantpool.FieldRef;
 import org.yzpang.jvm.runtimedata.thread.CustomFrame;
 import org.yzpang.jvm.runtimedata.thread.CustomOperandStack;
 
@@ -26,7 +26,7 @@ public class PutStaticReferenceInstruction extends Index16Instruction {
         // 当前类结构
         CustomClass currentClazz = customMethod.getClazz();
         CustomConstantPool constantPool = currentClazz.getConstantPool();
-        FieldRefConstant fieldRef = (FieldRefConstant) constantPool.getConstant(this.index);
+        FieldRef fieldRef = (FieldRef) constantPool.getConstant(this.index);
         CustomField field = fieldRef.resolvedField();
         // 字段所属类结构
         CustomClass fieldClazz = field.getClazz();

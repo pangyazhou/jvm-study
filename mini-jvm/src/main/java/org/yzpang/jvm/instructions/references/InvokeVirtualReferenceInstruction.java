@@ -1,9 +1,8 @@
 package org.yzpang.jvm.instructions.references;
 
 import org.yzpang.jvm.instructions.base.Index16Instruction;
-import org.yzpang.jvm.runtimedata.heap.CustomConstant;
 import org.yzpang.jvm.runtimedata.heap.CustomConstantPool;
-import org.yzpang.jvm.runtimedata.heap.constantpool.MethodRefConstant;
+import org.yzpang.jvm.runtimedata.heap.constantpool.MethodRef;
 import org.yzpang.jvm.runtimedata.thread.CustomFrame;
 import org.yzpang.jvm.runtimedata.thread.CustomOperandStack;
 
@@ -17,7 +16,7 @@ public class InvokeVirtualReferenceInstruction extends Index16Instruction {
     @Override
     public void execute(CustomFrame frame) throws Exception {
         CustomConstantPool constantPool = frame.getMethod().getClazz().getConstantPool();
-        MethodRefConstant methodRef = (MethodRefConstant) constantPool.getConstant(this.index);
+        MethodRef methodRef = (MethodRef) constantPool.getConstant(this.index);
         if (methodRef.getName().equals("println")) {
             CustomOperandStack operandStack = frame.getOperandStack();
             switch (methodRef.getDescriptor()){

@@ -79,4 +79,8 @@ public class CustomOperandStack {
         size--;
         return slots[size];
     }
+
+    public CustomObject getRefFromTop(int index) {
+        return slots[size - index - 1].getReference();
+    }
 }

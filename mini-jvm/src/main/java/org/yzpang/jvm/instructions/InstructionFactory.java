@@ -4,9 +4,7 @@ import org.yzpang.jvm.instructions.base.CustomInstruction;
 import org.yzpang.jvm.instructions.base.NoOperandsInstruction;
 import org.yzpang.jvm.instructions.comparisons.*;
 import org.yzpang.jvm.instructions.constants.*;
-import org.yzpang.jvm.instructions.control.GotoControlInstruction;
-import org.yzpang.jvm.instructions.control.LookupSwitchControlInstruction;
-import org.yzpang.jvm.instructions.control.TableSwitchControlInstruction;
+import org.yzpang.jvm.instructions.control.*;
 import org.yzpang.jvm.instructions.conversions.*;
 import org.yzpang.jvm.instructions.extended.GotowExtendedInstruction;
 import org.yzpang.jvm.instructions.extended.IfNonNullExtendedInstruction;
@@ -356,12 +354,17 @@ public class InstructionFactory {
             case 0xab:
                 return new LookupSwitchControlInstruction();
             case 0xac:
+                return new IReturnControlInstruction();
             case 0xad:
+                return new LReturnControlInstruction();
             case 0xae:
+                return new FReturnControlInstruction();
             case 0xaf:
+                return new DReturnControlInstruction();
             case 0xb0:
+                return new AReturnControlInstruction();
             case 0xb1:
-                return null;
+                return new ReturnControlInstruction();
             case 0xb2:
                 return new GetStaticReferenceInstruction();
             case 0xb3:

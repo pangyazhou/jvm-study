@@ -66,6 +66,13 @@ public class CustomClass {
     }
 
     /**
+     * 超类判断
+     */
+    public boolean isSuperClassOf(CustomClass otherClass) {
+        return otherClass.isSubClassOf(this);
+    }
+
+    /**
      * 判断当前类是否实现了接口otherClass
      */
     public boolean isImplements(CustomClass otherClass) {
@@ -108,6 +115,10 @@ public class CustomClass {
             // 接口则为此接口的实现
             return other.isImplements(this);
         }
+    }
+
+    public boolean isSuper() {
+        return (this.accessFlags & ClassAccessConstants.ACC_SUPER) != 0;
     }
 
     public boolean isInterface(){

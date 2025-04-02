@@ -44,6 +44,10 @@ public class CustomThread {
         return customStack.top();
     }
 
+    public CustomFrame topFrame(){
+        return customStack.top();
+    }
+
     /**
      * 新建帧
      * @param method 方法对象
