@@ -154,4 +154,27 @@ public class CustomClass {
         // java/lang/String
         return this.name.substring(0, this.name.lastIndexOf("/"));
     }
+
+    /**
+     * 返回静态方法对象
+     * @param name 方法名
+     * @param descriptor 方法描述符
+     * @return method
+     */
+    public CustomMethod getStaticMethod(String name, String descriptor) {
+        for (CustomMethod method : this.methods) {
+            if (method.isStatic() && method.getName().equals(name) && method.getDescriptor().equals(descriptor)) {
+                return method;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 返回主方法对象
+     * @return method
+     */
+    public CustomMethod getMainMethod(){
+        return getStaticMethod("main", "([Ljava/lang/String;)V");
+    }
 }

@@ -19,6 +19,6 @@ public class DupStackInstruction extends NoOperandsInstruction {
         CustomOperandStack operandStack = frame.getOperandStack();
         CustomSlot slot = operandStack.popSlot();
         operandStack.pushSlot(slot);
-        operandStack.pushSlot(slot);
+        operandStack.pushSlot(slot.clone());
     }
 }

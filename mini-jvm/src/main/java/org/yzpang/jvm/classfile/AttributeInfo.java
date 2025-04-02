@@ -1,5 +1,6 @@
 package org.yzpang.jvm.classfile;
 
+import lombok.Data;
 import org.yzpang.jvm.classfile.attribute.*;
 import org.yzpang.jvm.constant.AttributeNameConstants;
 
@@ -7,7 +8,8 @@ import org.yzpang.jvm.constant.AttributeNameConstants;
  * Author: yzpang
  * Desc: 属性表
  * Date: 2025/3/18 上午11:30
- **/
+ * **/
+@Data
 public class AttributeInfo {
     /**
      * 属性名 u2 常量池有效索引 指向Constant_Utf8_info结构
@@ -22,13 +24,17 @@ public class AttributeInfo {
 
     protected ConstantPoolInfo constantPool;
 
-    protected void readInfo(ClassReader reader) {}
+    protected void readInfo(ClassReader reader) {
+        info = reader.readBytes(attributeLength);
+    }
 
     public static AttributeInfo readAttribute(ClassReader reader, ConstantPoolInfo constantPoolInfo) {
         int attributeNameIndex = reader.readUShort();
         int attributeLength = reader.readInt();
         String attributeName = constantPoolInfo.getUtf8(attributeNameIndex);
-        AttributeInfo attributeInfo = newAttributeInfo(attributeName, attributeLength, constantPoolInfo);
+        AttributeInfo attributeInfo = newAttributeInfo(attributeName);
+        attributeInfo.setConstantPool(constantPoolInfo);
+        attributeInfo.setAttributeLength(attributeLength);
         attributeInfo.readInfo(reader);
         return attributeInfo;
     }
@@ -42,7 +48,7 @@ public class AttributeInfo {
         return attributeInfos;
     }
 
-    public static AttributeInfo newAttributeInfo(String attributeName, int attributeLength, ConstantPoolInfo constantPoolInfo){
+    public static AttributeInfo newAttributeInfo(String attributeName){
         switch (attributeName){
             case AttributeNameConstants.CODE:
                 /* Code属性 */

@@ -24,8 +24,8 @@ public class ConstantMemberRefInfo extends ConstantInfo {
 
     @Override
     public void readInfo(ClassReader reader) {
-        this.classIndex = reader.readUByte();
-        this.nameAndTypeIndex = reader.readUByte();
+        this.classIndex = reader.readUShort();
+        this.nameAndTypeIndex = reader.readUShort();
     }
 
     public String getClassName(){

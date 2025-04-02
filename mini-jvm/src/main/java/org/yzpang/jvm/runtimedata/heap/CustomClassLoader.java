@@ -50,7 +50,7 @@ public class CustomClassLoader {
      * @return CustomClass 对象
      * @throws IOException e
      */
-    public CustomClass loadNonArrayClass(String name) throws Exception {
+    private CustomClass loadNonArrayClass(String name) throws Exception {
         byte[] bytes = readClass(name);
         CustomClass clazz = defineClass(bytes);
         link(clazz);
@@ -63,11 +63,11 @@ public class CustomClassLoader {
      * @return byte[]
      * @throws IOException e
      */
-    public byte[] readClass(String name) throws IOException {
+    private byte[] readClass(String name) throws IOException {
         return this.classpath.readClass(name);
     }
 
-    public CustomClass defineClass(byte[] bytes) throws Exception {
+    private CustomClass defineClass(byte[] bytes) throws Exception {
         CustomClass clazz = parseClass(bytes);
         clazz.setClassloader(this);
         resolveSuperClass(clazz);
@@ -118,7 +118,7 @@ public class CustomClassLoader {
     /**
      * 类链接
      */
-    public void link(CustomClass clazz) {
+    private void link(CustomClass clazz) {
         verify(clazz);
         prepare(clazz);
     }

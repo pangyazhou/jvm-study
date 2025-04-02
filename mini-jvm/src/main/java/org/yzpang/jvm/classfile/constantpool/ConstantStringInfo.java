@@ -15,7 +15,7 @@ import org.yzpang.jvm.constant.ConstantPoolConstants;
 public class ConstantStringInfo extends ConstantInfo {
     private int tag = ConstantPoolConstants.STRING;
     /**
-     * 常量池的索引值, 指向常量池中一个CONSTANT_Utf8_info类型常量
+     * u2 常量池的索引值, 指向常量池中一个CONSTANT_Utf8_info类型常量
      */
     private int stringIndex;
 

@@ -5,6 +5,7 @@ import org.yzpang.jvm.classfile.ConstantInfo;
 import org.yzpang.jvm.classfile.ConstantPoolInfo;
 import org.yzpang.jvm.classfile.constantpool.*;
 import org.yzpang.jvm.classfile.util.ClassFileUtil;
+import org.yzpang.jvm.classfile.util.ConstantPoolUtil;
 import org.yzpang.jvm.runtimedata.heap.constantpool.*;
 
 /**
@@ -27,20 +28,20 @@ public class CustomConstantPool {
         for (int i = 0; i < constantInfos.length; i++) {
             if (constantInfos[i] instanceof ConstantIntegerInfo) {
                 // int
-                int value = ClassFileUtil.getIntegerInfo(constantInfos, i);
+                int value = ConstantPoolUtil.getInteger(constantPoolInfo, i);
                 this.constants[i] = new IntegerConstant(value);
             } else if (constantInfos[i] instanceof ConstantLongInfo) {
                 // long
-                long value = ClassFileUtil.getLongInfo(constantInfos, i);
+                long value = ConstantPoolUtil.getLong(constantPoolInfo, i);
                 this.constants[i] = new LongConstant(value);
                 i++;
             } else if (constantInfos[i] instanceof ConstantFloatInfo) {
                 // float
-                float value = ClassFileUtil.getFloatInfo(constantInfos, i);
+                float value = ConstantPoolUtil.getFloat(constantPoolInfo, i);
                 this.constants[i] = new FloatConstant(value);
             } else if (constantInfos[i] instanceof ConstantDoubleInfo) {
                 // double
-                double value = ClassFileUtil.getDoubleInfo(constantInfos, i);
+                double value = ConstantPoolUtil.getDouble(constantPoolInfo, i);
                 this.constants[i] = new DoubleConstant(value);
                 i++;
             } else if (constantInfos[i] instanceof ConstantUtf8Info) {

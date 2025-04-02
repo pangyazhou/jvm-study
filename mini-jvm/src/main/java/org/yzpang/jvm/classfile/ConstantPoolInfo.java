@@ -1,10 +1,12 @@
 package org.yzpang.jvm.classfile;
 
-import lombok.Data;
 import lombok.Getter;
 import org.yzpang.jvm.classfile.constantpool.*;
 import org.yzpang.jvm.classfile.util.ClassFileUtil;
+import org.yzpang.jvm.classfile.util.ConstantPoolUtil;
 import org.yzpang.jvm.constant.ConstantPoolConstants;
+
+import java.nio.charset.StandardCharsets;
 
 /**
  * Author: yzpang
@@ -95,8 +97,6 @@ public class ConstantPoolInfo {
         }
     }
 
-
-
     public ConstantInfo getConstantPoolInfo(int index) {
         if (index < 0 || index >= constantInfos.length){
             throw new IndexOutOfBoundsException("No constants at index: " + index);
@@ -105,11 +105,15 @@ public class ConstantPoolInfo {
     }
 
     public String getUtf8(int index) {
-        return ClassFileUtil.getUtf8Info(constantInfos, index);
+        return ConstantPoolUtil.getUtf8(this, index);
     }
 
     public String getClassName(int index) {
-        return ClassFileUtil.getClassInfo(constantInfos, index);
+        if (index > 0 && index < constantInfos.length) {
+            ConstantClassInfo constantClassInfo = (ConstantClassInfo) constantInfos[index];
+            return constantClassInfo.getName();
+        }
+        return "";
     }
 
     public String[] getNameAndType(int index) {

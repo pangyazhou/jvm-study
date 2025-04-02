@@ -1,11 +1,13 @@
 package org.yzpang.jvm.runtimedata.heap;
 
+import lombok.Data;
 import org.yzpang.jvm.classfile.constantpool.ConstantMemberRefInfo;
 
 
 /**
  * 类成员引用父类
  */
+@Data
 public class CustomMemberRef extends CustomSymbolRef{
     protected String name;
     protected String descriptor;

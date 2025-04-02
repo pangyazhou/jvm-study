@@ -15,7 +15,7 @@ import org.yzpang.jvm.constant.ConstantPoolConstants;
 public class ConstantClassInfo extends ConstantInfo {
     private int tag = ConstantPoolConstants.CLASS;
     /**
-     * 常量池的索引值, 指向常量池中一个CONSTANT_Utf8_info类型常量.此常量代表了这个类(或接口)的全限定名.
+     * u2 常量池的索引值, 指向常量池中一个CONSTANT_Utf8_info类型常量.此常量代表了这个类(或接口)的全限定名.
      */
     private int nameIndex;
 

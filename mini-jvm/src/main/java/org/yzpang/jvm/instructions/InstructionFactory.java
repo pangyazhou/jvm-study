@@ -14,6 +14,7 @@ import org.yzpang.jvm.instructions.extended.IfNullExtendedInstruction;
 import org.yzpang.jvm.instructions.extended.WideExtendedInstruction;
 import org.yzpang.jvm.instructions.loads.*;
 import org.yzpang.jvm.instructions.math.*;
+import org.yzpang.jvm.instructions.references.*;
 import org.yzpang.jvm.instructions.stack.*;
 import org.yzpang.jvm.instructions.stores.*;
 
@@ -62,9 +63,11 @@ public class InstructionFactory {
             case 0x11:
                 return new SipushConstantInstruction();
             case 0x12:
+                return new LdcConstInstruction();
             case 0x13:
+                return new LdcWConstInstruction();
             case 0x14:
-                return null;
+                return new Ldc2WConstInstruction();
             case 0x15:
                 return new ILoadInstruction();
             case 0x16:
@@ -358,22 +361,34 @@ public class InstructionFactory {
             case 0xaf:
             case 0xb0:
             case 0xb1:
+                return null;
             case 0xb2:
+                return new GetStaticReferenceInstruction();
             case 0xb3:
+                return new PutStaticReferenceInstruction();
             case 0xb4:
+                return new GetFieldReferenceInstruction();
             case 0xb5:
+                return new PutFieldReferenceInstruction();
             case 0xb6:
+                return new InvokeVirtualReferenceInstruction();
             case 0xb7:
+                return new InvokeSpecialReferenceInstruction();
             case 0xb8:
             case 0xb9:
             case 0xba:
+                return null;
             case 0xbb:
+                return new NewReferenceInstruction();
             case 0xbc:
             case 0xbd:
             case 0xbe:
             case 0xbf:
+                return null;
             case 0xc0:
+                return new CheckCastReferenceInstruction();
             case 0xc1:
+                return new InstanceOfReferenceInstruction();
             case 0xc2:
             case 0xc3:
                 return null;

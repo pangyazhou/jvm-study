@@ -149,7 +149,7 @@ public class ClassFile {
     }
 
     public String getSuperClassName(){
-        return this.constantPool.getClassName(thisClass);
+        return this.constantPool.getClassName(superClass);
     }
 
     public String[] getInterfacesNames(){

@@ -1,10 +1,9 @@
 package org.yzpang.jvm;
 
-import org.yzpang.jvm.classfile.MethodInfo;
-import org.yzpang.jvm.classfile.attribute.CodeAttribute;
 import org.yzpang.jvm.instructions.InstructionFactory;
 import org.yzpang.jvm.instructions.base.BytecodeReader;
 import org.yzpang.jvm.instructions.base.CustomInstruction;
+import org.yzpang.jvm.runtimedata.heap.CustomMethod;
 import org.yzpang.jvm.runtimedata.thread.CustomFrame;
 import org.yzpang.jvm.runtimedata.thread.CustomThread;
 
@@ -15,23 +14,13 @@ public class Interpreter {
 
     /**
      * 解释执行方法
-     * @param methodInfo 方法信息
+     * @param method 方法信息
      */
-    public void interpret(MethodInfo methodInfo) throws Exception {
-       /* CodeAttribute codeAttribute = new CodeAttribute();
-        // 操作数栈
-        int maxStack = codeAttribute.getMaxStack();
-        // 局部变量表
-        int maxLocals = codeAttribute.getMaxLocals();
-        // 字节码数组
-        byte[] bytecode = codeAttribute.getCode();
-
+    public void interpret(CustomMethod method) throws Exception {
         CustomThread thread = new CustomThread();
-        CustomFrame frame = thread.newFrame(maxLocals, maxStack);
+        CustomFrame frame = thread.newFrame(method);
         thread.pushFrame(frame);
-
-        // 解析执行字节码
-        loop(thread, bytecode);*/
+        loop(thread, method.getCode());
     }
 
     /**

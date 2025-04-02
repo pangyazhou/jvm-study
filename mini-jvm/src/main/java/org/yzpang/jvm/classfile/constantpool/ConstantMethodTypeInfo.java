@@ -15,7 +15,7 @@ import org.yzpang.jvm.constant.ConstantPoolConstants;
 public class ConstantMethodTypeInfo extends ConstantInfo {
     protected int tag = ConstantPoolConstants.METHOD_TYPE;
     /**
-     * 常量池的有效索引, 指向Constant_Utf8_info结构, 此结构表示方法的描述符
+     * u2 常量池的有效索引, 指向Constant_Utf8_info结构, 此结构表示方法的描述符
      */
     private int descriptorIndex;
 

@@ -21,7 +21,7 @@ public class Dup2StackInstruction extends NoOperandsInstruction {
         CustomSlot slot2 = operandStack.popSlot();
         operandStack.pushSlot(slot2);
         operandStack.pushSlot(slot1);
-        operandStack.pushSlot(slot2);
-        operandStack.pushSlot(slot1);
+        operandStack.pushSlot(slot2.clone());
+        operandStack.pushSlot(slot1.clone());
     }
 }

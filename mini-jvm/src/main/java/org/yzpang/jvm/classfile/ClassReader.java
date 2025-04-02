@@ -29,7 +29,7 @@ public class ClassReader {
     }
 
     public short readShort(){
-        return (short) ((this.readByte() << 8) | this.readByte());
+        return (short)( this.readUByte() << 8 | this.readUByte());
     }
 
     public int readUShort(){
@@ -38,7 +38,7 @@ public class ClassReader {
     }
 
     public int readInt(){
-        return this.readByte() << 24 | this.readByte() << 16 | this.readByte() << 8 | this.readByte();
+        return this.readUByte() << 24 | this.readUByte() << 16 | this.readUByte() << 8 | this.readUByte();
     }
 
     public long readLong(){

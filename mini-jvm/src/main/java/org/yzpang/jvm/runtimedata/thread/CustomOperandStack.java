@@ -31,7 +31,9 @@ public class CustomOperandStack {
     }
     public int popInt() {
         size--;
-        return slots[size].getIntValue();
+        int value = slots[size].getIntValue();
+        slots[size].clear();
+        return value;
     }
     public void pushFloat(float value) {
         pushInt(Float.floatToIntBits(value));
@@ -46,7 +48,10 @@ public class CustomOperandStack {
     }
     public long popLong() {
         size -= 2;
-        return (slots[size].getIntValue() & 0XFFFFFFFFL) | ((long) slots[size+1].getIntValue() << 32);
+        long value = (slots[size].getIntValue() & 0XFFFFFFFFL) | ((long) slots[size+1].getIntValue() << 32);
+        slots[size].clear();
+        slots[size+1].clear();
+        return value;
     }
     public void pushDouble(double value) {
         pushLong(Double.doubleToLongBits(value));
@@ -61,7 +66,7 @@ public class CustomOperandStack {
     public CustomObject popReference() {
         size--;
         CustomObject obj =  slots[size].getReference();
-        slots[size].setReference(null);
+        slots[size].clear();
         return obj;
     }
 

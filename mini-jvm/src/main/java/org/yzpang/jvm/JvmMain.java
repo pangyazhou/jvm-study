@@ -3,8 +3,10 @@ package org.yzpang.jvm;
 
 import org.yzpang.jvm.classpath.Command;
 import org.yzpang.jvm.classpath.CustomClasspath;
+import org.yzpang.jvm.runtimedata.heap.CustomClass;
+import org.yzpang.jvm.runtimedata.heap.CustomClassLoader;
+import org.yzpang.jvm.runtimedata.heap.CustomMethod;
 
-import java.io.IOException;
 import java.util.Arrays;
 
 /**
@@ -13,7 +15,7 @@ import java.util.Arrays;
  * Date: 2025/3/24 下午2:43
  **/
 public class JvmMain {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
         Command command = Command.parse(args);
         if (command.isHelpFlag()) {
             printHelp();
@@ -24,14 +26,22 @@ public class JvmMain {
         }
     }
 
-    public static void startJvm(Command command) throws IOException {
+    public static void startJvm(Command command) throws Exception {
+        // 类文件加载路径
         CustomClasspath classpath = CustomClasspath.parse(command.getJreOption(), command.getCpOption());
         System.out.printf("启动虚拟机. classpath:%s, className:%s, args:%s\n",
                 command.getCpOption(), command.getClazz(), Arrays.toString(command.getArgs()));
+        // 类加载器
+        CustomClassLoader classLoader = new CustomClassLoader(classpath);
         String className = command.getClazz().replaceAll("\\.", "/");
         System.out.println(className);
-        byte[] bytes = classpath.readClass(className);
-        System.out.println(Arrays.toString(bytes));
+        CustomClass mainClass = classLoader.loadClass(className);
+        CustomMethod mainMethod = mainClass.getMainMethod();
+        if (mainMethod != null) {
+            new Interpreter().interpret(mainMethod);
+        } else {
+            System.out.println("主方法为空");
+        }
     }
 
     public static void printHelp(){

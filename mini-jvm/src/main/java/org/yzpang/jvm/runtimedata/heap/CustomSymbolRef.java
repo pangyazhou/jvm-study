@@ -23,6 +23,7 @@ public class CustomSymbolRef {
         CustomClass c = d.getClassloader().loadClass(this.className);
         if (c.isAccessibleTo(d)){
             this.clazz = c;
+            return;
         }
         throw new IllegalAccessException();
     }
