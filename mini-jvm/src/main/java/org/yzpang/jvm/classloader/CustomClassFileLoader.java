@@ -15,7 +15,7 @@ import java.util.Arrays;
  * Desc: 类文件加载
  * Date: 2025/3/18 上午8:46
  **/
-public class CustomClassFileLoader extends org.yzpang.jvm.classloader.CustomClassLoader {
+public class CustomClassFileLoader {
 
     /**
      * 解析注解项
