@@ -70,4 +70,8 @@ public class CustomMethod extends CustomClassMember {
     public boolean isAbstract(){
         return (this.accessFlags & MethodAccessConstants.ACC_ABSTRACT) != 0;
     }
+
+    public boolean isNative() {
+        return (this.accessFlags & MethodAccessConstants.ACC_NATIVE) != 0;
+    }
 }

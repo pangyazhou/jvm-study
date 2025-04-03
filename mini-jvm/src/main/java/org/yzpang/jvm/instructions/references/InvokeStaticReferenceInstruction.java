@@ -1,7 +1,9 @@
 package org.yzpang.jvm.instructions.references;
 
+import org.yzpang.jvm.instructions.base.ClassInitLogic;
 import org.yzpang.jvm.instructions.base.Index16Instruction;
 import org.yzpang.jvm.instructions.base.MethodInvokeLogic;
+import org.yzpang.jvm.runtimedata.heap.CustomClass;
 import org.yzpang.jvm.runtimedata.heap.CustomConstantPool;
 import org.yzpang.jvm.runtimedata.heap.CustomMethod;
 import org.yzpang.jvm.runtimedata.heap.constantpool.MethodRef;
@@ -18,11 +20,18 @@ public class InvokeStaticReferenceInstruction extends Index16Instruction {
     public void execute(CustomFrame frame) throws Exception {
         CustomConstantPool constantPool = frame.getMethod().getClazz().getConstantPool();
         MethodRef methodRef = (MethodRef) constantPool.getConstant(this.index);
-        CustomMethod method = methodRef.resolvedMethod();
+        CustomMethod resolvedMethod = methodRef.resolvedMethod();
+        CustomClass methodClass = resolvedMethod.getClazz();
+        // 判断类有没有初始化
+        if (!methodClass.initStarted()){
+            frame.revertNextPC();
+            ClassInitLogic.initClass(frame.getThread(), methodClass);
+            return;
+        }
         // 必须是静态方法
-        if (!method.isStatic()) {
+        if (!resolvedMethod.isStatic()) {
             throw new IncompatibleClassChangeError();
         }
-        MethodInvokeLogic.invokeMethod(frame, method);
+        MethodInvokeLogic.invokeMethod(frame, resolvedMethod);
     }
 }

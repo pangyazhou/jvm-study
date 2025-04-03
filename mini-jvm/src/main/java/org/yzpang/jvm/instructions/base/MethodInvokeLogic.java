@@ -20,15 +20,24 @@ public class MethodInvokeLogic {
     public static void invokeMethod(CustomFrame frame, CustomMethod method) {
         // 当前线程
         CustomThread currentThread = frame.getThread();
-        // 调用方法 method 生成的帧
         CustomFrame methodFrame = currentThread.newFrame(method);
         currentThread.pushFrame(methodFrame);
+
+        // 参数传递, 从frame帧的操作数栈弹出到methodFrame帧的局部变量表
         int argSlotCount = method.getArgSlotCount();
         if (argSlotCount > 0) {
-            // 参数传递, 从frame帧的操作数栈弹出到methodFrame帧的局部变量表
             for (int i = argSlotCount - 1; i >= 0; i--) {
                 CustomSlot slot = frame.getOperandStack().popSlot();
                 methodFrame.getLocalVariable().setSlot(i, slot);
+            }
+        }
+
+        // 过滤本地方法
+        if (method.isNative()) {
+            if (method.getName().equals("registerNatives")) {
+                currentThread.popFrame();
+            } else {
+                System.out.println("native method invoked: " + method.getClazz().getName() +  ": " + method.getName());
             }
         }
     }

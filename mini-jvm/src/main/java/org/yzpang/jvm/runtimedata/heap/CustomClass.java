@@ -26,6 +26,8 @@ public class CustomClass {
     private int instanceSlotCount;
     private int staticSlotCount;
     private CustomSlots staticVariables;
+    // 是否类初始化<clinit>
+    private boolean initialized = false;
 
     public CustomClass(ClassFile classFile) {
         this.accessFlags = classFile.getAccessFlags();
@@ -166,6 +168,16 @@ public class CustomClass {
         return this.name.substring(0, this.name.lastIndexOf("/"));
     }
 
+    public boolean initStarted(){
+        return this.initialized;
+    }
+    /**
+     * 设置类初始化状态
+     */
+    public void startInit(){
+        this.initialized = true;
+    }
+
     /**
      * 返回静态方法对象
      * @param name 方法名
@@ -179,6 +191,14 @@ public class CustomClass {
             }
         }
         return null;
+    }
+
+    /**
+     * 返回类初始化方法
+     * @return method
+     */
+    public CustomMethod getClinitMethod() {
+        return getStaticMethod("<clinit>", "()V");
     }
 
     /**

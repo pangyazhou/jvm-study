@@ -49,5 +49,8 @@ public class CustomFrame {
         this.method = method;
     }
 
+    public void revertNextPC() {
+        this.nextPC = this.thread.getPc();
+    }
 
 }

@@ -1,5 +1,6 @@
 package org.yzpang.jvm.instructions.references;
 
+import org.yzpang.jvm.instructions.base.ClassInitLogic;
 import org.yzpang.jvm.instructions.base.Index16Instruction;
 import org.yzpang.jvm.runtimedata.CustomSlots;
 import org.yzpang.jvm.runtimedata.heap.CustomClass;
@@ -22,6 +23,12 @@ public class GetStaticReferenceInstruction extends Index16Instruction {
         FieldRef fieldRef = (FieldRef) constantPool.getConstant(this.index);
         CustomField field = fieldRef.resolvedField();
         CustomClass fieldClazz = field.getClazz();
+        // 判断类有没有初始化
+        if (!fieldClazz.initStarted()){
+            frame.revertNextPC();
+            ClassInitLogic.initClass(frame.getThread(), fieldClazz);
+            return;
+        }
         // 必须是静态变量
         if (!field.isStatic()) {
             throw new IncompatibleClassChangeError();

@@ -1,5 +1,6 @@
 package org.yzpang.jvm.instructions.references;
 
+import org.yzpang.jvm.instructions.base.ClassInitLogic;
 import org.yzpang.jvm.instructions.base.Index16Instruction;
 import org.yzpang.jvm.runtimedata.heap.CustomClass;
 import org.yzpang.jvm.runtimedata.heap.CustomConstantPool;
@@ -19,6 +20,12 @@ public class NewReferenceInstruction extends Index16Instruction {
         CustomConstantPool constantPool = frame.getMethod().getClazz().getConstantPool();
         ClassRef classRef = (ClassRef) constantPool.getConstant(this.index);
         CustomClass clazz = classRef.resolvedClass();
+        // 判断类有没有初始化
+        if (!clazz.initStarted()){
+            frame.revertNextPC();
+            ClassInitLogic.initClass(frame.getThread(), clazz);
+            return;
+        }
         // 不能是接口与抽象类
         if (clazz.isInterface() || clazz.isAbstract()) {
             throw new InstantiationError();
