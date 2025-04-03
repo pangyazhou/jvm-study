@@ -22,12 +22,13 @@ import java.util.Objects;
 @Data
 public class CustomClassLoader {
     private CustomClasspath classpath;
-
+    private boolean verboseFlag;
     private Map<String, CustomClass> classMap;
 
 
-    public CustomClassLoader(CustomClasspath classpath) {
+    public CustomClassLoader(CustomClasspath classpath, boolean verboseFlag) {
         this.classpath = classpath;
+        this.verboseFlag = verboseFlag;
         this.classMap = new HashMap<>();
     }
 
@@ -54,6 +55,9 @@ public class CustomClassLoader {
         byte[] bytes = readClass(name);
         CustomClass clazz = defineClass(bytes);
         link(clazz);
+        if (verboseFlag) {
+            System.out.println("Loaded class " + name + " from " + this.classpath.toString());
+        }
         return clazz;
     }
 

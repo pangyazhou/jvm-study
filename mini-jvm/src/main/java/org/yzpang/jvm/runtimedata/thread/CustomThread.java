@@ -56,4 +56,8 @@ public class CustomThread {
     public CustomFrame newFrame(CustomMethod method){
         return new CustomFrame(this, method);
     }
+
+    public boolean isStackEmpty(){
+        return customStack.isEmpty();
+    }
 }

@@ -32,13 +32,12 @@ public class JvmMain {
         System.out.printf("启动虚拟机. classpath:%s, className:%s, args:%s\n",
                 command.getCpOption(), command.getClazz(), Arrays.toString(command.getArgs()));
         // 类加载器
-        CustomClassLoader classLoader = new CustomClassLoader(classpath);
+        CustomClassLoader classLoader = new CustomClassLoader(classpath, command.isVerboseClassFlag());
         String className = command.getClazz().replaceAll("\\.", "/");
-        System.out.println(className);
         CustomClass mainClass = classLoader.loadClass(className);
         CustomMethod mainMethod = mainClass.getMainMethod();
         if (mainMethod != null) {
-            new Interpreter().interpret(mainMethod);
+            new Interpreter().interpret(mainMethod, command.isVerboseInstFlag());
         } else {
             System.out.println("主方法为空");
         }

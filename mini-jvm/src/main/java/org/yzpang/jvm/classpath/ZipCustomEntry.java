@@ -31,7 +31,6 @@ public class ZipCustomEntry extends CustomEntry {
         ZipFile zipFile = new ZipFile(this.absDir);
         ZipEntry entry = zipFile.getEntry(className);
         if (entry != null) {
-            System.out.println("entry: " + entry.getName());
             InputStream zipFileInputStream = zipFile.getInputStream(entry);
             byte[] data = new byte[zipFileInputStream.available()];
             zipFileInputStream.read(data);

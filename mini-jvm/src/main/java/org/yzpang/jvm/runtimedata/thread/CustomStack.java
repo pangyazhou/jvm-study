@@ -33,7 +33,6 @@ public class CustomStack {
 
     /**
      * 入栈
-     * @param frame
      */
     public void push(CustomFrame frame) {
         // 栈溢出
@@ -49,7 +48,7 @@ public class CustomStack {
 
     /**
      * 出栈
-     * @return
+     * @return frame
      */
     public CustomFrame pop() {
         if (top == null) {
@@ -64,12 +63,20 @@ public class CustomStack {
 
     /**
      * 栈顶元素
-     * @return
+     * @return frame
      */
     public CustomFrame top() {
         if (top == null) {
             throw new EmptyStackException();
         }
         return top;
+    }
+
+    /**
+     * 判断栈是否为空
+     * @return bool
+     */
+    public boolean isEmpty(){
+        return top == null;
     }
 }

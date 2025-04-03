@@ -16,28 +16,29 @@ public class Interpreter {
      * 解释执行方法
      * @param method 方法信息
      */
-    public void interpret(CustomMethod method) throws Exception {
+    public void interpret(CustomMethod method, boolean logInst) throws Exception {
         CustomThread thread = new CustomThread();
         CustomFrame frame = thread.newFrame(method);
         thread.pushFrame(frame);
-        loop(thread, method.getCode());
+        loop(thread, logInst);
     }
 
     /**
      * 循环执行字节码
-     * @param thread
-     * @param bytecode
+     * @param thread 执行线程
+     * @param logInst 是否打印日志
      */
-    private void loop(CustomThread thread, byte[] bytecode) throws Exception {
+    private void loop(CustomThread thread, boolean logInst) throws Exception {
         // 当前帧
-        CustomFrame frame = thread.popFrame();
-        BytecodeReader reader = new BytecodeReader(bytecode);
+        BytecodeReader reader = new BytecodeReader();
 
+        // 循环执行
         while (true) {
+            CustomFrame frame = thread.currentFrame();
             int pc = frame.getNextPC();
             thread.setPc(pc);
             // 解码
-            reader.reset(bytecode, pc);
+            reader.reset(frame.getMethod().getCode(), pc);
             int opcode = reader.readUByte();
             CustomInstruction instruction = InstructionFactory.newInstruction(opcode);
             if (instruction == null) {
@@ -46,8 +47,23 @@ public class Interpreter {
             }
             instruction.fetchOperands(reader);
             frame.setNextPC(reader.getPc());
+            if (logInst){
+                logInstruction(frame, instruction);
+            }
             // 执行
             instruction.execute(frame);
+            // 线程执行完毕
+            if (thread.isStackEmpty()){
+                break;
+            }
         }
+    }
+
+    private void logInstruction(CustomFrame frame, CustomInstruction instruction) throws Exception {
+        CustomMethod method = frame.getMethod();
+        String className = method.getClazz().getName();
+        String methodName = method.getName();
+        int pc = frame.getThread().getPc();
+        System.out.printf("%s: %s: %2d: %s\n", className, methodName, pc, instruction);
     }
 }

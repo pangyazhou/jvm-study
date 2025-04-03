@@ -18,6 +18,9 @@ public class BytecodeReader {
     @Getter
     private int pc;
 
+    public BytecodeReader() {
+    }
+
     public BytecodeReader(byte[] code) {
         this.code = code;
         this.pc = 0;

@@ -17,6 +17,8 @@ import java.util.Arrays;
 public class Command {
     private boolean helpFlag;
     private boolean versionFlag;
+    private boolean verboseClassFlag;
+    private boolean verboseInstFlag;
     private String cpOption;
     private String jreOption;
     private String clazz;
@@ -27,6 +29,8 @@ public class Command {
         Options options = new Options();
         options.addOption("h", "help", false, "显示帮助信息");
         options.addOption("v", "version", false, "显示版本信息");
+        options.addOption("verbose", false, "显示类加载信息");
+        options.addOption("verbose_inst", false, "显示指令执行信息");
         options.addOption("cp", "classpath", true, "执行类路径");
         options.addOption("Xjre", "JRE路径");
 
@@ -39,6 +43,12 @@ public class Command {
             }
             if (cmd.hasOption("h")) {
                 command.setHelpFlag(true);
+            }
+            if (cmd.hasOption("verbose")) {
+                command.setVerboseClassFlag(true);
+            }
+            if (cmd.hasOption("verbose_inst")) {
+                command.setVerboseInstFlag(true);
             }
             if (cmd.hasOption("cp")) {
                 command.setCpOption(cmd.getOptionValue("cp"));

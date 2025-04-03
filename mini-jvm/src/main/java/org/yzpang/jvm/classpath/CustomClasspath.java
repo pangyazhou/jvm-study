@@ -92,6 +92,6 @@ public class CustomClasspath extends CustomEntry {
 
     @Override
     public String toString() {
-        return "CustomClasspath{}";
+        return this.appClasspath.toString();
     }
 }

@@ -13,6 +13,9 @@ import java.nio.charset.StandardCharsets;
 public class ConstantPoolUtil {
     public static String getUtf8(ConstantPoolInfo constantPool, int index) {
         ConstantUtf8Info constantUtf8Info =  (ConstantUtf8Info) constantPool.getConstantPoolInfo(index);
+        if (constantUtf8Info == null) {
+            return "";
+        }
         return new String(constantUtf8Info.getBytes(), StandardCharsets.UTF_8);
     }
     public static int getInteger(ConstantPoolInfo constantPool, int index) {
