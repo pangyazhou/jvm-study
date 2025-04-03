@@ -378,7 +378,9 @@ public class InstructionFactory {
             case 0xb7:
                 return new InvokeSpecialReferenceInstruction();
             case 0xb8:
+                return new InvokeStaticReferenceInstruction();
             case 0xb9:
+                return new InvokeInterfaceReferenceInstruction();
             case 0xba:
                 return null;
             case 0xbb:

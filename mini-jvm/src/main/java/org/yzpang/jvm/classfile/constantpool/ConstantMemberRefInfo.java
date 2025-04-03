@@ -9,6 +9,7 @@ import org.yzpang.jvm.classfile.ConstantPoolInfo;
 public class ConstantMemberRefInfo extends ConstantInfo {
     /**
      * u2 常量池的有效索引, 指向Constant_Class_Info结构, 可以是类或接口
+     * 当前字段或方法是这个类或接口的成员
      */
     protected int classIndex;
     /**

@@ -24,7 +24,7 @@ public class CustomClassMember {
     }
 
     /**
-     * 字段是否可被指定类访问
+     * 成员是否可被指定类访问
      * @param clazz 访问的类结构
      * @return bool
      */

@@ -27,10 +27,11 @@ public class MethodRef extends CustomMemberRef implements CustomConstant {
      * 解析方法引用
      */
     private void resolveMethodRef() throws Exception {
+        // d 解析方法引用的类
         CustomClass d = this.constantPool.getClazz();
-        // c 声明方法的类
+        // c 拥有此方法的类
         CustomClass c = this.resolvedClass();
-        // 非接口才能声明调用
+        // 非接口才能调用
         if (c.isInterface()) {
             throw new IncompatibleClassChangeError();
         }

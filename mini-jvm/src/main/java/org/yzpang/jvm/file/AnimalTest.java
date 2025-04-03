@@ -8,8 +8,12 @@ package org.yzpang.jvm.file;
 public class AnimalTest {
     public static void main(String[] args) {
         Dog dog = new Dog();
+       /* dog.name = "Pick";
         dog.eat();
         dog.sleep();
         dog.run();
+        Animal animal = new Animal();
+        animal.name = "Jack";
+        animal.sleep();*/
     }
 }

@@ -8,6 +8,7 @@ import org.yzpang.jvm.runtimedata.heap.CustomMethod;
 import org.yzpang.jvm.runtimedata.heap.CustomObject;
 import org.yzpang.jvm.runtimedata.heap.constantpool.MethodRef;
 import org.yzpang.jvm.runtimedata.thread.CustomFrame;
+import org.yzpang.jvm.runtimedata.util.LookupUtil;
 
 import java.util.Objects;
 
@@ -37,8 +38,8 @@ public class InvokeSpecialReferenceInstruction extends Index16Instruction {
             throw new IncompatibleClassChangeError();
         }
         // 获取方法调用对象的引用
-        CustomObject reference = frame.getOperandStack().getRefFromTop(resolvedMethod.getArgSlotCount() - 1);
-        if (reference == null) {
+        CustomObject objRef = frame.getOperandStack().getRefFromTop(resolvedMethod.getArgSlotCount() - 1);
+        if (objRef == null) {
             throw new NullPointerException();
         }
         // 调用的方法是protected,且该方法是当前类的父类成员,同时该方法未在同一个运行时包中声明过,
@@ -46,14 +47,21 @@ public class InvokeSpecialReferenceInstruction extends Index16Instruction {
         if (resolvedMethod.isProtected()
                 && resolvedMethod.getClazz().isSuperClassOf(currentClass)
                 && !Objects.equals(resolvedMethod.getClazz().getPackageName(), currentClass.getPackageName())) {
-            if (reference.getClazz() != currentClass && !reference.getClazz().isSubClassOf(currentClass)) {
+            if (objRef.getClazz() != currentClass && !objRef.getClazz().isSubClassOf(currentClass)) {
                 throw new IllegalAccessError();
             }
         }
-        // todo
-        if (resolvedMethod.isAbstract()){
+        // 调用的是超类中的方法,且不是构造方法,当前类的acc_super为True, 从当前类的超类中查找方法
+        CustomMethod methodToBeInvoked = resolvedMethod;
+        if (currentClass.isSuper()
+                && resolvedClass.isSuperClassOf(currentClass)
+                && !Objects.equals(resolvedMethod.getName(), "<init>")) {
+            methodToBeInvoked = LookupUtil.lookupMethodInClass(currentClass.getSuperClass(), methodRef.getName(), methodRef.getDescriptor());
+        }
+        if (methodToBeInvoked == null
+            || methodToBeInvoked.isAbstract()){
             throw new AbstractMethodError();
         }
-        MethodInvokeLogic.invokeMethod(frame, resolvedMethod);
+        MethodInvokeLogic.invokeMethod(frame, methodToBeInvoked);
     }
 }

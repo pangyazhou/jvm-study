@@ -12,7 +12,7 @@ public class Animal {
         System.out.println("Animal eat");
     }
 
-    protected final void sleep() {
-        System.out.println("Animal sleep");
+    protected void sleep() {
+        System.out.println("Animal sleep ");
     }
 }

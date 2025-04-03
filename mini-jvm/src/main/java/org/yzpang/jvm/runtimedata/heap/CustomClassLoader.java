@@ -104,9 +104,9 @@ public class CustomClassLoader {
     private void resolveInterfaces(CustomClass clazz) throws Exception {
         String[] interfaceNames = clazz.getInterfaceNames();
         int interfacesCount = interfaceNames.length;
+        CustomClass[] interfaces = new CustomClass[interfacesCount];
+        clazz.setInterfaces(interfaces);
         if (interfacesCount > 0) {
-            CustomClass[] interfaces = new CustomClass[interfacesCount];
-            clazz.setInterfaces(interfaces);
             for (int i = 0; i < interfacesCount; i++) {
                 String interfaceName = interfaceNames[i];
                 CustomClass loadClass = clazz.getClassloader().loadClass(interfaceName);
