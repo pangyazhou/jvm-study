@@ -5,10 +5,7 @@ import org.yzpang.jvm.classfile.ClassFile;
 import org.yzpang.jvm.classpath.*;
 import org.yzpang.jvm.constant.AccessConstants;
 import org.yzpang.jvm.runtimedata.CustomSlots;
-import org.yzpang.jvm.runtimedata.heap.constantpool.DoubleConstant;
-import org.yzpang.jvm.runtimedata.heap.constantpool.FloatConstant;
-import org.yzpang.jvm.runtimedata.heap.constantpool.IntegerConstant;
-import org.yzpang.jvm.runtimedata.heap.constantpool.LongConstant;
+import org.yzpang.jvm.runtimedata.heap.constantpool.*;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -148,7 +145,7 @@ public class CustomClassLoader {
     /**
      * 类链接
      */
-    private void link(CustomClass clazz) {
+    private void link(CustomClass clazz) throws Exception {
         verify(clazz);
         prepare(clazz);
     }
@@ -163,7 +160,7 @@ public class CustomClassLoader {
     /**
      * 准备阶段
      */
-    private void prepare(CustomClass clazz) {
+    private void prepare(CustomClass clazz) throws Exception {
         calcInstanceFieldSlotIds(clazz);
         calcStaticFieldSlotIds(clazz);
         allocAndInitStaticVars(clazz);
@@ -211,7 +208,7 @@ public class CustomClassLoader {
     /**
      * 初始化类变量并分配空间
      */
-    private void allocAndInitStaticVars(CustomClass clazz) {
+    private void allocAndInitStaticVars(CustomClass clazz) throws Exception {
         clazz.setStaticVariables(new CustomSlots(clazz.getStaticSlotCount()));
         for (CustomField field : clazz.getFields()) {
             // static final 值在常量池中
@@ -224,7 +221,7 @@ public class CustomClassLoader {
     /**
      * 将常量池中的 static final 值填充到分配的类变量空间中
      */
-    private void initStaticFinalVars(CustomClass clazz, CustomField field) {
+    private void initStaticFinalVars(CustomClass clazz, CustomField field) throws Exception {
         CustomSlots staticVariables = clazz.getStaticVariables();
         CustomConstantPool constantPool = clazz.getConstantPool();
         int constantValueIndex = field.getConstantValueIndex();
@@ -253,6 +250,9 @@ public class CustomClassLoader {
                     staticVariables.setDouble(slotId, doubleConstant.get());
                     break;
                 case "Ljava/lang/String;":
+                    StringConstant stringConstant = (StringConstant) constantPool.getConstant(constantValueIndex);
+                    CustomObject internedStr = StringPool.jString(clazz.getClassloader(), stringConstant.getValue());
+                    staticVariables.setReference(slotId, internedStr);
                     break;
             }
         }

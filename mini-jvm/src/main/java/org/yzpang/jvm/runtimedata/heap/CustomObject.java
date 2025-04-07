@@ -25,5 +25,25 @@ public class CustomObject {
         return clazz.isAssignableFrom(this.clazz);
     }
 
+    /**
+     * 设置对象引用值
+     * @param name 字段名
+     * @param descriptor 字段描述符
+     * @param refObj 引用值
+     */
+    public void setRefVar(String name, String descriptor, CustomObject refObj) {
+        CustomField field = this.clazz.getField(name, descriptor, false);
+        if (field != null) {
+            fields.setReference(field.getSlotId(), refObj);
+        }
+    }
+
+    public CustomObject getRefVar(String name, String descriptor) {
+        CustomField field = this.clazz.getField(name, descriptor, false);
+        if (field != null) {
+            return fields.getReference(field.getSlotId());
+        }
+        return null;
+    }
 
 }

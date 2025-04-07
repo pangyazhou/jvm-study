@@ -20,7 +20,7 @@ public class AastoreInstruction extends NoOperandsInstruction {
         int index = operandStack.popInt();
         CustomArrayObject arrayObject = (CustomArrayObject) operandStack.popReference();
         checkNotNull(arrayObject);
-        CustomObject[] array = arrayObject.getCustomObjects();
+        CustomObject[] array = arrayObject.getRefs();
         checkIndex(array.length, index);
         array[index] = objRef;
     }

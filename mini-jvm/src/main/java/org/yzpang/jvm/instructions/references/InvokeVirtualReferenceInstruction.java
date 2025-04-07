@@ -2,10 +2,7 @@ package org.yzpang.jvm.instructions.references;
 
 import org.yzpang.jvm.instructions.base.Index16Instruction;
 import org.yzpang.jvm.instructions.base.MethodInvokeLogic;
-import org.yzpang.jvm.runtimedata.heap.CustomClass;
-import org.yzpang.jvm.runtimedata.heap.CustomConstantPool;
-import org.yzpang.jvm.runtimedata.heap.CustomMethod;
-import org.yzpang.jvm.runtimedata.heap.CustomObject;
+import org.yzpang.jvm.runtimedata.heap.*;
 import org.yzpang.jvm.runtimedata.heap.constantpool.MethodRef;
 import org.yzpang.jvm.runtimedata.thread.CustomFrame;
 import org.yzpang.jvm.runtimedata.thread.CustomOperandStack;
@@ -73,6 +70,11 @@ public class InvokeVirtualReferenceInstruction extends Index16Instruction {
                     break;
                 case "(D)V":
                     System.out.printf("%s\n", operandStack.popDouble());
+                    break;
+                case "(Ljava/lang/String;)V":
+                    CustomObject jStr = operandStack.popReference();
+                    String str = StringPool.goString(jStr);
+                    System.out.println(str);
                     break;
                 default:
                     System.out.println("error: " + methodRef.getDescriptor());

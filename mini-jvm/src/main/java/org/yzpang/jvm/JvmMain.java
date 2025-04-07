@@ -1,6 +1,7 @@
 package org.yzpang.jvm;
 
 
+import com.sun.org.apache.xml.internal.dtm.ref.CustomStringPool;
 import org.yzpang.jvm.classpath.Command;
 import org.yzpang.jvm.classpath.CustomClasspath;
 import org.yzpang.jvm.runtimedata.heap.CustomClass;
@@ -37,7 +38,7 @@ public class JvmMain {
         CustomClass mainClass = classLoader.loadClass(className);
         CustomMethod mainMethod = mainClass.getMainMethod();
         if (mainMethod != null) {
-            new Interpreter().interpret(mainMethod, command.isVerboseInstFlag());
+            new Interpreter().interpret(mainMethod, command.isVerboseInstFlag(), command.getArgs());
         } else {
             System.out.println("主方法为空");
         }

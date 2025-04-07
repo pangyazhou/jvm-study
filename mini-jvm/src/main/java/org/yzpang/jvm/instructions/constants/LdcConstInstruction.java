@@ -1,8 +1,7 @@
 package org.yzpang.jvm.instructions.constants;
 
 import org.yzpang.jvm.instructions.base.Index8Instruction;
-import org.yzpang.jvm.runtimedata.heap.CustomConstant;
-import org.yzpang.jvm.runtimedata.heap.CustomConstantPool;
+import org.yzpang.jvm.runtimedata.heap.*;
 import org.yzpang.jvm.runtimedata.heap.constantpool.*;
 import org.yzpang.jvm.runtimedata.thread.CustomFrame;
 import org.yzpang.jvm.runtimedata.thread.CustomOperandStack;
@@ -17,7 +16,8 @@ public class LdcConstInstruction extends Index8Instruction {
     @Override
     public void execute(CustomFrame frame) throws Exception {
         CustomOperandStack operandStack = frame.getOperandStack();
-        CustomConstantPool constantPool = frame.getMethod().getClazz().getConstantPool();
+        CustomClass clazz = frame.getMethod().getClazz();
+        CustomConstantPool constantPool = clazz.getConstantPool();
         CustomConstant constant = constantPool.getConstant(this.index);
         if (constant instanceof IntegerConstant) {
             IntegerConstant integerConstant = (IntegerConstant) constant;
@@ -27,7 +27,8 @@ public class LdcConstInstruction extends Index8Instruction {
             operandStack.pushFloat(floatConstant.get());
         } else if (constant instanceof StringConstant) {
             StringConstant stringConstant = (StringConstant) constant;
-            // todo
+            CustomObject internedStr = StringPool.jString(clazz.getClassloader(), stringConstant.getValue());
+            operandStack.pushReference(internedStr);
         } else if (constant instanceof ClassRef) {
             ClassRef classRef = (ClassRef) constant;
             // todo

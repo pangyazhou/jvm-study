@@ -66,7 +66,7 @@ public class MultiAnewArrayReferenceInstruction extends NoOperandsInstruction {
     private CustomArrayObject newMultiDimensionalArray(int[] counts, CustomArrayClass arrayClass) throws Exception {
         CustomArrayObject arrayObject = (CustomArrayObject) arrayClass.newArray(counts[0]);
         if (counts.length > 1) {
-            CustomObject[] array = arrayObject.getCustomObjects();
+            CustomObject[] array = arrayObject.getRefs();
             for (int i = 0; i < array.length; i++) {
                 array[i] = newMultiDimensionalArray(Arrays.copyOfRange(counts, 1, counts.length ), (CustomArrayClass) arrayClass.getComponentClass());
             }

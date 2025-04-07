@@ -19,6 +19,11 @@ public class CustomArrayObject extends CustomObject{
         this.clazz = clazz;
     }
 
+    public CustomArrayObject(CustomClass clazz, Object array) {
+        this.clazz = clazz;
+        this.array = array;
+    }
+
     public byte[] getBytes(){
         return (byte[]) array;
     }
@@ -47,7 +52,7 @@ public class CustomArrayObject extends CustomObject{
         return (double[]) array;
     }
 
-    public CustomObject[] getCustomObjects(){
+    public CustomObject[] getRefs(){
         return (CustomObject[]) array;
     }
 

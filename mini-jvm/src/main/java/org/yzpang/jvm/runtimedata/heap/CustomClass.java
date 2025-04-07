@@ -244,6 +244,26 @@ public class CustomClass {
     }
 
     /**
+     * 根据字段名和描述符查找字段
+     * @param name 字段名
+     * @param descriptor 描述符
+     * @param isStatic 是否静态字段
+     * @return field
+     */
+    public CustomField getField(String name, String descriptor, boolean isStatic) {
+        for (CustomClass c = this; c != null; c = c.getSuperClass()) {
+            for (CustomField field : c.fields) {
+                if (field.isStatic() == isStatic
+                        &&field.getName().equals(name)
+                        && field.getDescriptor().equals(descriptor)) {
+                    return field;
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
      * 返回静态方法对象
      * @param name 方法名
      * @param descriptor 方法描述符
