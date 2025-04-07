@@ -56,7 +56,7 @@ public class CustomConstantPool {
                 ClassRef classRef = new ClassRef(this, (ConstantClassInfo) constantInfos[i]);
                 this.constants[i] = classRef;
             } else if (constantInfos[i] instanceof ConstantFieldRefInfo) {
-                // field
+                // fields
                 FieldRef fieldRef = new FieldRef(this, (ConstantFieldRefInfo) constantInfos[i]);
                 this.constants[i] = fieldRef;
             } else if (constantInfos[i] instanceof ConstantMethodRefInfo) {

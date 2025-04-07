@@ -2,11 +2,8 @@ package org.yzpang.jvm.classfile;
 
 import lombok.Getter;
 import org.yzpang.jvm.classfile.constantpool.*;
-import org.yzpang.jvm.classfile.util.ClassFileUtil;
 import org.yzpang.jvm.classfile.util.ConstantPoolUtil;
 import org.yzpang.jvm.constant.ConstantPoolConstants;
-
-import java.nio.charset.StandardCharsets;
 
 /**
  * Author: yzpang

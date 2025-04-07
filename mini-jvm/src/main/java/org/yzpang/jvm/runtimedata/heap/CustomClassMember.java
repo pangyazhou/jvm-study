@@ -8,7 +8,7 @@ import java.util.Objects;
 
 /**
  * 类成员
- * field/method
+ * fields/method
  */
 @Data
 public class CustomClassMember {

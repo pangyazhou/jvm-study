@@ -15,11 +15,11 @@ import org.yzpang.jvm.constant.ConstantPoolConstants;
 public class ConstantMethodHandleInfo extends ConstantInfo {
     protected int tag = ConstantPoolConstants.METHOD_HANDLE;
     /**
-     * 1-9范围内,表示方法句柄的类型
+     * u1 1-9范围内,表示方法句柄的类型
      */
     private int referenceKind;
     /**
-     * 常量池的有效索引
+     * u2 常量池的有效索引
      *
      * referenceKind值             指向                        说明
      *    1,2,3,4        Constant_Fieldref_info          此结构表示某个字段
@@ -39,7 +39,7 @@ public class ConstantMethodHandleInfo extends ConstantInfo {
 
     @Override
     public void readInfo(ClassReader reader) {
-        this.referenceKind = reader.readUShort();
+        this.referenceKind = reader.readUByte();
         this.referenceIndex = reader.readUShort();
     }
 }

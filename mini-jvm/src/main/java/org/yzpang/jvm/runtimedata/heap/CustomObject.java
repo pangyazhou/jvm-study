@@ -13,12 +13,15 @@ public class CustomObject {
     protected CustomClass clazz;
     protected CustomSlots fields;
 
+    public CustomObject() {
+    }
+
     public CustomObject(CustomClass clazz) {
         this.clazz = clazz;
         fields = new CustomSlots(clazz.getInstanceSlotCount());
     }
 
-    public boolean isInstanceOf(CustomClass clazz) {
+    public boolean isInstanceOf(CustomClass clazz) throws Exception {
         return clazz.isAssignableFrom(this.clazz);
     }
 

@@ -4,6 +4,7 @@ import lombok.Data;
 import org.yzpang.jvm.classfile.ClassFile;
 import org.yzpang.jvm.constant.ClassAccessConstants;
 import org.yzpang.jvm.runtimedata.CustomSlots;
+import org.yzpang.jvm.runtimedata.util.ClassNameHelper;
 
 import java.util.Objects;
 
@@ -12,22 +13,25 @@ import java.util.Objects;
  */
 @Data
 public class CustomClass {
-    private int accessFlags;
-    private String name;
-    private String superClassName;
-    private String[] interfaceNames;
-    private CustomConstantPool constantPool;
-    private CustomField[] fields;
-    private CustomMethod[] methods;
-    private CustomAttribute[] attributes;
-    private CustomClassLoader classloader;
-    private CustomClass superClass;
-    private CustomClass[] interfaces;
-    private int instanceSlotCount;
-    private int staticSlotCount;
-    private CustomSlots staticVariables;
+    protected int accessFlags;
+    protected String name;
+    protected String superClassName;
+    protected String[] interfaceNames;
+    protected CustomConstantPool constantPool;
+    protected CustomField[] fields;
+    protected CustomMethod[] methods;
+    protected CustomAttribute[] attributes;
+    protected CustomClassLoader classloader;
+    protected CustomClass superClass;
+    protected CustomClass[] interfaces;
+    protected int instanceSlotCount;
+    protected int staticSlotCount;
+    protected CustomSlots staticVariables;
     // 是否类初始化<clinit>
-    private boolean initialized = false;
+    protected boolean initialized = false;
+
+    public CustomClass() {
+    }
 
     public CustomClass(ClassFile classFile) {
         this.accessFlags = classFile.getAccessFlags();
@@ -74,6 +78,10 @@ public class CustomClass {
         return otherClass.isSubClassOf(this);
     }
 
+    public boolean isSuperInterfaceOf(CustomClass otherClass) {
+        return otherClass.isSubInterfaceOf(this);
+    }
+
     /**
      * 判断当前类是否实现了接口otherClass
      */
@@ -106,17 +114,74 @@ public class CustomClass {
      * 当前类是否适配other
      * other 是当前类的子类或实现
      */
-    public boolean isAssignableFrom(CustomClass other) {
+    public boolean isAssignableFrom(CustomClass other) throws Exception {
         if (other == this){
             return true;
         }
-        if (!isInterface()) {
-            // 非接口则为此类的子类
-            return other.isSubClassOf(this);
+        if (!other.isArray()) {
+            if (!other.isInterface()) {
+                if (!this.isInterface()) {
+                    // 非接口则为此类的子类
+                    return other.isSubClassOf(this);
+                }  else {
+                    // 接口为此接口的实现
+                    return other.isImplements(this);
+                }
+            } else {
+                if (!this.isInterface()) {
+                    // 接口是Object类的子类
+                    return this.isJ1Object();
+                } else {
+                    // 接口的子类
+                    return this.isSuperInterfaceOf(other);
+                }
+            }
         } else {
-            // 接口则为此接口的实现
-            return other.isImplements(this);
+            if (!this.isArray()) {
+                // 数组可以转换为Object类/Cloneable接口/Serializable接口
+                if (!this.isInterface()) {
+                    return this.isJ1Object();
+                } else {
+                    return this.isJ1Cloneable() || this.isJ1Serializable();
+                }
+            } else {
+                CustomClass otherComponentClass = ((CustomArrayClass) other).getComponentClass();
+                CustomClass thisComponentClass = ((CustomArrayClass) this).getComponentClass();
+                return otherComponentClass == thisComponentClass || thisComponentClass.isAssignableFrom(otherComponentClass);
+            }
         }
+    }
+
+    /**
+     * 类型是否是数组
+     * 判断方式为类名第一个字符是否为 '['
+     */
+    protected boolean isArray(){
+        return this.name.startsWith("[");
+    }
+
+    /**
+     * 判断该类是否为Object
+     * @return bool
+     */
+    protected boolean isJ1Object() {
+        return this.name.equals("java/lang/Object");
+    }
+
+    /**
+     * 判断该类是否为Cloneable接口
+     * @return bool
+     */
+    protected boolean isJ1Cloneable(){
+        return this.name.equals("java/lang/Cloneable");
+    }
+
+    /**
+     * 判断该类是否为Serializable接口
+     * @return bool
+     */
+    protected boolean isJ1Serializable(){
+        return this.name.equals("java/io/Serializable");
     }
 
     public boolean isSuper() {
@@ -207,5 +272,14 @@ public class CustomClass {
      */
     public CustomMethod getMainMethod(){
         return getStaticMethod("main", "([Ljava/lang/String;)V");
+    }
+
+    /**
+     * 返回数组类结构
+     * @return arrayClass
+     */
+    public CustomArrayClass getArrayClass() throws Exception {
+        String arrayClassName = ClassNameHelper.getArrayClassName(this.name);
+        return (CustomArrayClass) classloader.loadClass(arrayClassName);
     }
 }

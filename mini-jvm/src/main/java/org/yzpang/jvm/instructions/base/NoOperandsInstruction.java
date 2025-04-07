@@ -100,5 +100,16 @@ public class NoOperandsInstruction implements CustomInstruction{
         }
     }
 
+    protected void checkNotNull(CustomObject object) {
+        if (object == null) {
+            throw new NullPointerException();
+        }
+    }
+
+    protected void checkIndex(int length, int index){
+        if (index < 0 || index >= length) {
+            throw new IndexOutOfBoundsException();
+        }
+    }
 
 }

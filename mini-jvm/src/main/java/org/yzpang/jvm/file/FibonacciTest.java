@@ -6,6 +6,10 @@ package org.yzpang.jvm.file;
  * Date: 2025/4/3 下午2:27
  **/
 public class FibonacciTest {
+    static {
+        int a = 10;
+    }
+
     public static void main(String[] args) {
         long x = fibonacci(30);
         System.out.println(x);

@@ -3,6 +3,7 @@ package org.yzpang.jvm.runtimedata.heap;
 import lombok.Data;
 import org.yzpang.jvm.classfile.ClassFile;
 import org.yzpang.jvm.classpath.*;
+import org.yzpang.jvm.constant.AccessConstants;
 import org.yzpang.jvm.runtimedata.CustomSlots;
 import org.yzpang.jvm.runtimedata.heap.constantpool.DoubleConstant;
 import org.yzpang.jvm.runtimedata.heap.constantpool.FloatConstant;
@@ -42,6 +43,11 @@ public class CustomClassLoader {
         if (classMap.containsKey(name)) {
             return classMap.get(name);
         }
+        // 数组类
+        if (name.startsWith("[")) {
+            return loadArrayClass(name);
+        }
+        // 普通类
         return loadNonArrayClass(name);
     }
 
@@ -58,6 +64,26 @@ public class CustomClassLoader {
         if (verboseFlag) {
             System.out.println("Loaded class " + name + " from " + this.classpath.toString());
         }
+        return clazz;
+    }
+
+    /**
+     * 加载数组类
+     * @param name 类名 [开头
+     * @return arrayClass
+     */
+    private CustomClass loadArrayClass(String name) throws Exception {
+        CustomArrayClass clazz = new CustomArrayClass();
+        clazz.setAccessFlags(AccessConstants.ACC_PUBLIC);
+        clazz.setName(name);
+        clazz.setClassloader(this);
+        clazz.setInitialized(true);
+        clazz.setSuperClass(this.loadClass("java/lang/Object"));
+        clazz.setInterfaces(new CustomClass[] {
+                this.loadClass("java/lang/Cloneable"),
+                this.loadClass("java/io/Serializable")
+        });
+        this.classMap.put(name, clazz);
         return clazz;
     }
 

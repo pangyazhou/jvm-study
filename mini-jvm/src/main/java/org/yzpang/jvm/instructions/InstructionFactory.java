@@ -117,14 +117,21 @@ public class InstructionFactory {
             case 0x2d:
                 return new ALoad3Instruction();
             case 0x2e:
+                return new IaloadInstruction();
             case 0x2f:
+                return new LaloadInstruction();
             case 0x30:
+                return new FaloadInstruction();
             case 0x31:
+                return new DaloadInstruction();
             case 0x32:
+                return new AaloadInstruction();
             case 0x33:
+                return new BaloadInstruction();
             case 0x34:
+                return new CaloadInstruction();
             case 0x35:
-                return null;
+                return new SaloadInstruction();
             case 0x36:
                 return new IStoreInstruction();
             case 0x37:
@@ -176,14 +183,21 @@ public class InstructionFactory {
             case 0x4e:
                 return new AStore3Instruction();
             case 0x4f:
+                return new IastoreInstruction();
             case 0x50:
+                return new LastoreInstruction();
             case 0x51:
+                return new FastoreInstruction();
             case 0x52:
+                return new DastoreInstruction();
             case 0x53:
+                return new AastoreInstruction();
             case 0x54:
+                return new BastoreInstruction();
             case 0x55:
+                return new CastoreInstruction();
             case 0x56:
-                return null;
+                return new SastoreInstruction();
             case 0x57:
                 return new PopStackInstruction();
             case 0x58:
@@ -386,8 +400,11 @@ public class InstructionFactory {
             case 0xbb:
                 return new NewReferenceInstruction();
             case 0xbc:
+                return new NewArrayReferenceInstruction();
             case 0xbd:
+                return new AnewArrayReferenceInstruction();
             case 0xbe:
+                return new ArrayLengthReferenceInstruction();
             case 0xbf:
                 return null;
             case 0xc0:
@@ -400,7 +417,7 @@ public class InstructionFactory {
             case 0xc4:
                 return new WideExtendedInstruction();
             case 0xc5:
-                return null;
+                return new MultiAnewArrayReferenceInstruction();
             case 0xc6:
                 return new IfNullExtendedInstruction();
             case 0xc7:
