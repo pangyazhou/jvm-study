@@ -5,6 +5,8 @@ import org.yzpang.jvm.classfile.constantpool.*;
 import org.yzpang.jvm.classfile.util.ConstantPoolUtil;
 import org.yzpang.jvm.constant.ConstantPoolConstants;
 
+import java.util.Arrays;
+
 /**
  * Author: yzpang
  * Desc:

@@ -1,8 +1,10 @@
 package org.yzpang.jvm.classpath;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -32,9 +34,13 @@ public class ZipCustomEntry extends CustomEntry {
         ZipEntry entry = zipFile.getEntry(className);
         if (entry != null) {
             InputStream zipFileInputStream = zipFile.getInputStream(entry);
-            byte[] data = new byte[zipFileInputStream.available()];
-            zipFileInputStream.read(data);
-            return data;
+            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+            byte[] temp = new byte[4096];
+            int read = 0;
+            while ((read = zipFileInputStream.read(temp)) != -1) {
+                buffer.write(temp, 0, read);
+            }
+            return buffer.toByteArray();
         }
         return null;
     }

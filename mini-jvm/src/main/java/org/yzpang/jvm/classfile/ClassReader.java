@@ -1,5 +1,7 @@
 package org.yzpang.jvm.classfile;
 
+import lombok.Data;
+
 import java.util.Arrays;
 
 /**
