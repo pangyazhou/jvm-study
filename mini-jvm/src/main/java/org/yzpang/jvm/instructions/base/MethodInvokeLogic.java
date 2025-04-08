@@ -31,14 +31,5 @@ public class MethodInvokeLogic {
                 methodFrame.getLocalVariable().setSlot(i, slot);
             }
         }
-
-        // 过滤本地方法
-        if (method.isNative()) {
-            if (method.getName().equals("registerNatives")) {
-                currentThread.popFrame();
-            } else {
-                System.out.println("native method invoked: " + method.getClazz().getName() +  ": " + method.getName());
-            }
-        }
     }
 }

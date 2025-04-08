@@ -2,10 +2,12 @@ package org.yzpang.jvm.runtimedata.heap;
 
 import lombok.Data;
 import org.yzpang.jvm.classfile.ClassFile;
-import org.yzpang.jvm.classpath.*;
+import org.yzpang.jvm.classpath.CustomClasspath;
 import org.yzpang.jvm.constant.AccessConstants;
+import org.yzpang.jvm.constant.ClassConstants;
 import org.yzpang.jvm.runtimedata.CustomSlots;
 import org.yzpang.jvm.runtimedata.heap.constantpool.*;
+import org.yzpang.jvm.runtimedata.util.ClassNameHelper;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -24,10 +26,45 @@ public class CustomClassLoader {
     private Map<String, CustomClass> classMap;
 
 
-    public CustomClassLoader(CustomClasspath classpath, boolean verboseFlag) {
+    public CustomClassLoader(CustomClasspath classpath, boolean verboseFlag) throws Exception {
         this.classpath = classpath;
         this.verboseFlag = verboseFlag;
         this.classMap = new HashMap<>();
+        loadBasicClasses();
+        loadPrimitiveClasses();
+    }
+
+    /**
+     * 加载类类型
+     */
+    private void loadBasicClasses() throws Exception {
+        CustomClass j1ClassClass = this.loadClass(ClassConstants.CLASS_CLASS);
+        for (CustomClass clazz : this.classMap.values()) {
+            if (clazz.getJClass() == null) {
+                clazz.setJClass(j1ClassClass.newObject());
+                clazz.getJClass().setExtra(clazz);
+            }
+        }
+    }
+
+    /**
+     * 加载基本类型
+     */
+    private void loadPrimitiveClasses() throws Exception {
+        for (String primitiveType : ClassNameHelper.primitiveTypes.keySet()) {
+            loadPrimitiveClass(primitiveType);
+        }
+    }
+
+    private void loadPrimitiveClass(String className) throws Exception {
+        CustomClass clazz = new CustomClass();
+        clazz.setName(className);
+        clazz.setAccessFlags(AccessConstants.ACC_PUBLIC);
+        clazz.setClassloader(this);
+        clazz.setInitialized(true);
+        clazz.setJClass(this.classMap.get(ClassConstants.CLASS_CLASS).newObject());
+        clazz.getJClass().setExtra(clazz);
+        this.classMap.put(className, clazz);
     }
 
     /**
@@ -40,12 +77,20 @@ public class CustomClassLoader {
         if (classMap.containsKey(name)) {
             return classMap.get(name);
         }
+        CustomClass clazz;
         // 数组类
         if (name.startsWith("[")) {
-            return loadArrayClass(name);
+            clazz = loadArrayClass(name);
+        } else {
+            // 普通类
+            clazz = loadNonArrayClass(name);
         }
-        // 普通类
-        return loadNonArrayClass(name);
+        CustomClass j1ClassClass = this.classMap.get(ClassConstants.CLASS_CLASS);
+        if (j1ClassClass != null) {
+            clazz.setJClass(j1ClassClass.newObject());
+            clazz.getJClass().setExtra(clazz);
+        }
+        return clazz;
     }
 
     /**
@@ -75,10 +120,10 @@ public class CustomClassLoader {
         clazz.setName(name);
         clazz.setClassloader(this);
         clazz.setInitialized(true);
-        clazz.setSuperClass(this.loadClass("java/lang/Object"));
+        clazz.setSuperClass(this.loadClass(ClassConstants.OBJECT_CLASS));
         clazz.setInterfaces(new CustomClass[] {
-                this.loadClass("java/lang/Cloneable"),
-                this.loadClass("java/io/Serializable")
+                this.loadClass(ClassConstants.CLONEABLE_CLASS),
+                this.loadClass(ClassConstants.SERIALIZABLE_CLASS)
         });
         this.classMap.put(name, clazz);
         return clazz;
@@ -119,7 +164,7 @@ public class CustomClassLoader {
      * @param clazz 当前类结构
      */
     private void resolveSuperClass(CustomClass clazz) throws Exception {
-        if (!Objects.equals(clazz.getName(), "java/lang/Object")) {
+        if (!Objects.equals(clazz.getName(), ClassConstants.OBJECT_CLASS)) {
             clazz.setSuperClass(clazz.getClassloader().loadClass(clazz.getSuperClassName()));
         }
     }

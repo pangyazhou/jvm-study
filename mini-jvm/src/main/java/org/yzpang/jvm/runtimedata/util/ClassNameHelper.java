@@ -9,8 +9,8 @@ import java.util.Map;
  * Date: 2025/4/7 上午9:14
  **/
 public class ClassNameHelper {
-    private static final Map<String, String> primitiveTypes = new HashMap<>();
-    {
+    public static final Map<String, String> primitiveTypes = new HashMap<>();
+    static {
         primitiveTypes.put("boolean", "Z");
         primitiveTypes.put("byte", "B");
         primitiveTypes.put("char", "C");

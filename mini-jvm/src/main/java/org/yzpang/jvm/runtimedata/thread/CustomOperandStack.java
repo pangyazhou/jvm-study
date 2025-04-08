@@ -83,4 +83,12 @@ public class CustomOperandStack {
     public CustomObject getRefFromTop(int index) {
         return slots[size - index - 1].getReference();
     }
+
+    public void pushBoolean(boolean value) {
+        pushInt(value ? 1 : 0);
+    }
+
+    public boolean popBoolean() {
+        return popInt() == 1;
+    }
 }

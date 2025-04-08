@@ -31,7 +31,8 @@ public class LdcConstInstruction extends Index8Instruction {
             operandStack.pushReference(internedStr);
         } else if (constant instanceof ClassRef) {
             ClassRef classRef = (ClassRef) constant;
-            // todo
+            CustomObject classObject = classRef.resolvedClass().getJClass();
+            operandStack.pushReference(classObject);
         }
     }
 }

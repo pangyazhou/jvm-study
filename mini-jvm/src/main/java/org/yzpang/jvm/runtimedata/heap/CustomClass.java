@@ -3,6 +3,7 @@ package org.yzpang.jvm.runtimedata.heap;
 import lombok.Data;
 import org.yzpang.jvm.classfile.ClassFile;
 import org.yzpang.jvm.constant.ClassAccessConstants;
+import org.yzpang.jvm.constant.ClassConstants;
 import org.yzpang.jvm.runtimedata.CustomSlots;
 import org.yzpang.jvm.runtimedata.util.ClassNameHelper;
 
@@ -29,6 +30,8 @@ public class CustomClass {
     protected CustomSlots staticVariables;
     // 是否类初始化<clinit>
     protected boolean initialized = false;
+    // java/lang/Class实例
+    protected CustomObject jClass;
 
     public CustomClass() {
     }
@@ -165,7 +168,7 @@ public class CustomClass {
      * @return bool
      */
     protected boolean isJ1Object() {
-        return this.name.equals("java/lang/Object");
+        return this.name.equals(ClassConstants.OBJECT_CLASS);
     }
 
     /**
@@ -173,7 +176,7 @@ public class CustomClass {
      * @return bool
      */
     protected boolean isJ1Cloneable(){
-        return this.name.equals("java/lang/Cloneable");
+        return this.name.equals(ClassConstants.CLONEABLE_CLASS);
     }
 
     /**
@@ -181,7 +184,7 @@ public class CustomClass {
      * @return bool
      */
     protected boolean isJ1Serializable(){
-        return this.name.equals("java/io/Serializable");
+        return this.name.equals(ClassConstants.SERIALIZABLE_CLASS);
     }
 
     public boolean isSuper() {
@@ -231,6 +234,10 @@ public class CustomClass {
     public String getPackageName() {
         // java/lang/String
         return this.name.substring(0, this.name.lastIndexOf("/"));
+    }
+
+    public String getJavaName() {
+        return this.name.replaceAll("/", ".");
     }
 
     public boolean initStarted(){

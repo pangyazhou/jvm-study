@@ -13,7 +13,7 @@ public class Index16Instruction extends NoOperandsInstruction{
 
     @Override
     public void fetchOperands(BytecodeReader reader) {
-        index = reader.readShort();
+        index = reader.readUShort();
     }
 
 }

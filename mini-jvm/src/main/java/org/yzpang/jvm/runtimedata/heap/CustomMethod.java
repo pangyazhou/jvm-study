@@ -21,16 +21,25 @@ public class CustomMethod extends CustomClassMember {
     public static CustomMethod[] newMethods(CustomClass clazz, MemberInfo[] methodInfos){
         CustomMethod[] methods = new CustomMethod[methodInfos.length];
         for(int i = 0; i < methodInfos.length; i++){
-            methods[i] = new CustomMethod();
-            methods[i].setClazz(clazz);
-            methods[i].copyMemberInfo(methodInfos[i]);
-            methods[i].copyCodeAttribute(methodInfos[i]);
-            methods[i].calcArgSlotCount();
+            methods[i] = newMethod(clazz, methodInfos[i]);
         }
         return methods;
     }
+    
+    private static CustomMethod newMethod(CustomClass clazz, MemberInfo memberInfo){
+        CustomMethod method = new CustomMethod();
+        method.setClazz(clazz);
+        method.copyMemberInfo(memberInfo);
+        method.copyCodeAttribute(memberInfo);
+        CustomMethodDescriptor methodDescriptor = DescriptorParserUtil.parseMethodDescriptor(method.descriptor);
+        method.calcArgSlotCount(methodDescriptor.getParameterTypes());
+        if (method.isNative()) {
+            method.injectCodeAttribute(methodDescriptor.getReturnType());
+        }
+        return method;
+    }
 
-    public void copyCodeAttribute(MemberInfo memberInfo) {
+    private void copyCodeAttribute(MemberInfo memberInfo) {
         for (AttributeInfo attributeInfo : memberInfo.getAttributes()) {
             if (attributeInfo instanceof CodeAttribute) {
                 CodeAttribute codeAttribute = (CodeAttribute) attributeInfo;
@@ -44,9 +53,8 @@ public class CustomMethod extends CustomClassMember {
     /**
      * 计算方法参数slot数量
      */
-    private void calcArgSlotCount(){
-        CustomMethodDescriptor methodDescriptor = DescriptorParserUtil.parseMethodDescriptor(this.descriptor);
-        for (String parameterType : methodDescriptor.getParameterTypes()) {
+    private void calcArgSlotCount(String[] parameterTypes){
+        for (String parameterType : parameterTypes) {
             this.argSlotCount++;
             // long和double占用两个slot
             if (parameterType.equals("J") || parameterType.equals("D")) {
@@ -56,6 +64,35 @@ public class CustomMethod extends CustomClassMember {
         // 实例方法多一个obj引用
         if (!isStatic()){
             this.argSlotCount++;
+        }
+    }
+
+    /**
+     * 注入Code属性
+     * @param returnType 方法返回类型
+     */
+    private void injectCodeAttribute(String returnType) {
+        this.maxStack = 4;
+        this.maxLocal = this.argSlotCount;
+        switch(returnType.charAt(0)){
+            case 'V':
+                this.code = new byte[] {(byte) 0xfe, (byte) 0xb1};  // return
+                break;
+            case 'D':
+                this.code = new byte[] {(byte) 0xfe, (byte) 0xaf};  // dreturn
+                break;
+            case 'F':
+                this.code = new byte[] {(byte) 0xfe, (byte) 0xae};  // freturn
+                break;
+            case 'J':
+                this.code = new byte[] {(byte) 0xfe, (byte) 0xad};  // lreturn
+                break;
+            case 'L':
+            case '[':
+                this.code = new byte[] {(byte) 0xfe, (byte) 0xb0};  // areturn
+                break;
+            default:
+                this.code = new byte[] {(byte) 0xfe, (byte) 0xac};  // ireturn
         }
     }
 

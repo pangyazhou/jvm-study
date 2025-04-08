@@ -13,6 +13,7 @@ import org.yzpang.jvm.instructions.extended.WideExtendedInstruction;
 import org.yzpang.jvm.instructions.loads.*;
 import org.yzpang.jvm.instructions.math.*;
 import org.yzpang.jvm.instructions.references.*;
+import org.yzpang.jvm.instructions.reserved.InvokeNativeReservedInstruction;
 import org.yzpang.jvm.instructions.stack.*;
 import org.yzpang.jvm.instructions.stores.*;
 
@@ -432,6 +433,8 @@ public class InstructionFactory {
             case 0xce:
             case 0xcf:
                 return null;
+            case 0xfe:
+                return new InvokeNativeReservedInstruction();
             default:
                 break;
         }

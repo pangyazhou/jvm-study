@@ -26,5 +26,7 @@ public class Dog extends Animal {
         dog.eat();
         dog.run();
         dog.fuck();
+        Class<Dog> dogClass = Dog.class;
+        Class<? extends Dog> aClass = dog.getClass();
     }
 }

@@ -1,10 +1,8 @@
 package org.yzpang.jvm.runtimedata.util;
 
-import cn.hutool.core.collection.ListUtil;
 import org.yzpang.jvm.runtimedata.heap.CustomMethodDescriptor;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**

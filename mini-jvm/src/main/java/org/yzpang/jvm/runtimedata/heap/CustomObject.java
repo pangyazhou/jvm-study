@@ -11,6 +11,8 @@ import org.yzpang.jvm.runtimedata.CustomSlots;
 @Data
 public class CustomObject {
     protected CustomClass clazz;
+    // java/lang/Class 对象绑定的CustomClass
+    protected CustomClass extra;
     protected CustomSlots fields;
 
     public CustomObject() {

@@ -1,6 +1,7 @@
 package org.yzpang.jvm.runtimedata.thread;
 
 import org.yzpang.jvm.runtimedata.CustomSlots;
+import org.yzpang.jvm.runtimedata.heap.CustomObject;
 
 /**
  * Author: yzpang
@@ -13,6 +14,14 @@ public class CustomLocalVariable extends CustomSlots {
     public CustomLocalVariable(int maxLocals) {
         super(maxLocals);
         this.maxLocals = maxLocals;
+    }
+
+    /**
+     * 获取对象引用
+     * @return objRef
+     */
+    public CustomObject getThis(){
+        return getReference(0);
     }
 
 }
