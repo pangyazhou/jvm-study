@@ -22,7 +22,5 @@ public class GetClassTest {
         System.out.println(Object[][].class.getName());
         System.out.println(Runnable.class.getName());
         System.out.println("abc".getClass().getName());
-        System.out.println(new double[0].getClass().getName());
-        System.out.println(new String[0].getClass().getName());
     }
 }

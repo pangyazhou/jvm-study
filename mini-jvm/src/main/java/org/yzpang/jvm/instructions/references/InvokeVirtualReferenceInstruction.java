@@ -31,7 +31,10 @@ public class InvokeVirtualReferenceInstruction extends Index16Instruction {
         // 获取调用方法的对象引用
         CustomObject objRef = frame.getOperandStack().getRefFromTop(resolvedMethod.getArgSlotCount() - 1);
         if (objRef == null) {
-            println(frame, methodRef);
+            if (methodRef.getName().equals("println")) {
+                println(frame.getOperandStack(), methodRef.getDescriptor());
+                return;
+            }
             throw new NullPointerException();
         }
         // 调用的方法是protected,且该方法是当前类的父类成员,同时该方法未在同一个运行时包中声明过,
@@ -51,35 +54,32 @@ public class InvokeVirtualReferenceInstruction extends Index16Instruction {
         MethodInvokeLogic.invokeMethod(frame, methodToBeInvoked);
     }
 
-    private void println(CustomFrame frame, MethodRef methodRef){
-        if (methodRef.getName().equals("println")) {
-            CustomOperandStack operandStack = frame.getOperandStack();
-            switch (methodRef.getDescriptor()){
-                case "(Z)V":
-                case "(C)V":
-                case "(B)V":
-                case "(S)V":
-                case "(I)V":
-                    System.out.printf("%s\n", operandStack.popInt());
-                    break;
-                case "(J)V":
-                    System.out.printf("%s\n", operandStack.popLong());
-                    break;
-                case "(F)V":
-                    System.out.printf("%s\n", operandStack.popFloat());
-                    break;
-                case "(D)V":
-                    System.out.printf("%s\n", operandStack.popDouble());
-                    break;
-                case "(Ljava/lang/String;)V":
-                    CustomObject jStr = operandStack.popReference();
-                    String str = StringPool.goString(jStr);
-                    System.out.println(str);
-                    break;
-                default:
-                    System.out.println("error: " + methodRef.getDescriptor());
-            }
-            operandStack.popReference();
+    private void println(CustomOperandStack operandStack, String descriptor){
+        switch (descriptor){
+            case "(Z)V":
+            case "(C)V":
+            case "(B)V":
+            case "(S)V":
+            case "(I)V":
+                System.out.printf("%s\n", operandStack.popInt());
+                break;
+            case "(J)V":
+                System.out.printf("%s\n", operandStack.popLong());
+                break;
+            case "(F)V":
+                System.out.printf("%s\n", operandStack.popFloat());
+                break;
+            case "(D)V":
+                System.out.printf("%s\n", operandStack.popDouble());
+                break;
+            case "(Ljava/lang/String;)V":
+                CustomObject jStr = operandStack.popReference();
+                String str = StringPool.goString(jStr);
+                System.out.println(str);
+                break;
+            default:
+                System.out.println("error: " + descriptor);
         }
+        operandStack.popReference();
     }
 }
