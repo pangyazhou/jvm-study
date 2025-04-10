@@ -8,12 +8,12 @@ import java.util.Map;
  * Desc: 字符串池
  * Date: 2025/4/7 下午3:52
  **/
-public class StringPool {
+public class CustomStringPool {
     // 字符串池结构
     private static final Map<String, CustomObject> internedStrings = new HashMap<>();
 
     /**
-     * 从字符串池中获取字符串
+     * 从字符串池中获取字符串对象
      * @param classLoader 类加载器
      * @param name 字符串名称
      * @return String Object
@@ -48,5 +48,18 @@ public class StringPool {
     public static String goString(CustomObject jStr) {
         CustomArrayObject charArr = (CustomArrayObject) jStr.getRefVar("value", "[C");
         return utf16ToString(charArr.getChars());
+    }
+
+    /**
+     * 从字符串池中查找字符串对象,为入池则入池
+     */
+    public static CustomObject internedString(CustomObject strObj) {
+        String str = goString(strObj);
+        CustomObject internedStr = internedStrings.get(str);
+        if (internedStr == null) {
+            internedStrings.put(str, strObj);
+            return strObj;
+        }
+        return internedStr;
     }
 }

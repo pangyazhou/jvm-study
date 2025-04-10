@@ -27,7 +27,7 @@ public class LdcConstInstruction extends Index8Instruction {
             operandStack.pushFloat(floatConstant.get());
         } else if (constant instanceof StringConstant) {
             StringConstant stringConstant = (StringConstant) constant;
-            CustomObject internedStr = StringPool.jString(clazz.getClassloader(), stringConstant.getValue());
+            CustomObject internedStr = CustomStringPool.jString(clazz.getClassloader(), stringConstant.getValue());
             operandStack.pushReference(internedStr);
         } else if (constant instanceof ClassRef) {
             ClassRef classRef = (ClassRef) constant;

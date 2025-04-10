@@ -74,7 +74,7 @@ public class Interpreter {
         CustomArrayObject arrayObject = (CustomArrayObject) stringClass.getArrayClass().newArray(args.length);
         CustomObject[] array = arrayObject.getRefs();
         for (int i = 0; i < args.length; i++) {
-            array[i] = StringPool.jString(classLoader, args[i]);
+            array[i] = CustomStringPool.jString(classLoader, args[i]);
         }
         return arrayObject;
     }

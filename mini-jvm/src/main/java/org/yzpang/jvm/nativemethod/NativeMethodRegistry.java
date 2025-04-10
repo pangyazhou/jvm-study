@@ -1,7 +1,6 @@
 package org.yzpang.jvm.nativemethod;
 
-import org.yzpang.jvm.nativemethod.java.lang.ClassNativeMethod;
-import org.yzpang.jvm.nativemethod.java.lang.ObjectNativeMethod;
+import org.yzpang.jvm.nativemethod.java.lang.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -53,5 +52,9 @@ public class NativeMethodRegistry {
     public static void init() {
         ObjectNativeMethod.init();
         ClassNativeMethod.init();
+        SystemNativeMethod.init();
+        FloatNativeMethod.init();
+        DoubleNativeMethod.init();
+        StringNativeMethod.init();
     }
 }

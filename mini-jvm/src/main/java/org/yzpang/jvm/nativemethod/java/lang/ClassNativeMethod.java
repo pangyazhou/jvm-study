@@ -6,7 +6,7 @@ import org.yzpang.jvm.nativemethod.NativeMethodRegistry;
 import org.yzpang.jvm.runtimedata.heap.CustomClass;
 import org.yzpang.jvm.runtimedata.heap.CustomClassLoader;
 import org.yzpang.jvm.runtimedata.heap.CustomObject;
-import org.yzpang.jvm.runtimedata.heap.StringPool;
+import org.yzpang.jvm.runtimedata.heap.CustomStringPool;
 import org.yzpang.jvm.runtimedata.thread.CustomFrame;
 
 /**
@@ -32,7 +32,7 @@ public class ClassNativeMethod {
             @Override
             public void invokeNativeMethod(CustomFrame frame) throws Exception {
                 CustomObject nameObj = frame.getLocalVariable().getThis();
-                String name = StringPool.goString(nameObj);
+                String name = CustomStringPool.goString(nameObj);
                 CustomClassLoader classloader = frame.getMethod().getClazz().getClassloader();
                 CustomObject jClass = classloader.loadClass(name).getJClass();
                 frame.getOperandStack().pushReference(jClass);
@@ -48,7 +48,7 @@ public class ClassNativeMethod {
                 CustomObject thisObj = frame.getLocalVariable().getThis();
                 CustomClass extraClazz = thisObj.getExtra();
                 String name = extraClazz.getJavaName();
-                CustomObject nameObj = StringPool.jString(extraClazz.getClassloader(), name);
+                CustomObject nameObj = CustomStringPool.jString(extraClazz.getClassloader(), name);
                 frame.getOperandStack().pushReference(nameObj);
             }
         };

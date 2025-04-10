@@ -296,7 +296,7 @@ public class CustomClassLoader {
                     break;
                 case "Ljava/lang/String;":
                     StringConstant stringConstant = (StringConstant) constantPool.getConstant(constantValueIndex);
-                    CustomObject internedStr = StringPool.jString(clazz.getClassloader(), stringConstant.getValue());
+                    CustomObject internedStr = CustomStringPool.jString(clazz.getClassloader(), stringConstant.getValue());
                     staticVariables.setReference(slotId, internedStr);
                     break;
             }

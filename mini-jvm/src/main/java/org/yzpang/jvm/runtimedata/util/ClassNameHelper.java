@@ -1,6 +1,8 @@
 package org.yzpang.jvm.runtimedata.util;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -20,6 +22,10 @@ public class ClassNameHelper {
         primitiveTypes.put("float", "F");
         primitiveTypes.put("double", "D");
         primitiveTypes.put("void", "V");
+    }
+
+    public static List<String> getPrimitivesNames() {
+        return new ArrayList<>(primitiveTypes.keySet());
     }
 
     /**

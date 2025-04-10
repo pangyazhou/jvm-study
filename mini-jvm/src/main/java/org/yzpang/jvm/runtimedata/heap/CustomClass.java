@@ -7,6 +7,7 @@ import org.yzpang.jvm.constant.ClassConstants;
 import org.yzpang.jvm.runtimedata.CustomSlots;
 import org.yzpang.jvm.runtimedata.util.ClassNameHelper;
 
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -159,15 +160,24 @@ public class CustomClass {
      * 类型是否是数组
      * 判断方式为类名第一个字符是否为 '['
      */
-    protected boolean isArray(){
+    public boolean isArray(){
         return this.name.startsWith("[");
+    }
+
+    /**
+     * 是否为基本类型
+     * @return bool
+     */
+    public boolean isPrimitive(){
+        List<String> primitivesNames = ClassNameHelper.getPrimitivesNames();
+        return primitivesNames.contains(this.name);
     }
 
     /**
      * 判断该类是否为Object
      * @return bool
      */
-    protected boolean isJ1Object() {
+    public boolean isJ1Object() {
         return this.name.equals(ClassConstants.OBJECT_CLASS);
     }
 
@@ -175,7 +185,7 @@ public class CustomClass {
      * 判断该类是否为Cloneable接口
      * @return bool
      */
-    protected boolean isJ1Cloneable(){
+    public boolean isJ1Cloneable(){
         return this.name.equals(ClassConstants.CLONEABLE_CLASS);
     }
 

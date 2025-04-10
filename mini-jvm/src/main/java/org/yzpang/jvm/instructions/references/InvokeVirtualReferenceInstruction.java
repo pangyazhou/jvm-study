@@ -74,7 +74,7 @@ public class InvokeVirtualReferenceInstruction extends Index16Instruction {
                 break;
             case "(Ljava/lang/String;)V":
                 CustomObject jStr = operandStack.popReference();
-                String str = StringPool.goString(jStr);
+                String str = CustomStringPool.goString(jStr);
                 System.out.println(str);
                 break;
             default:
