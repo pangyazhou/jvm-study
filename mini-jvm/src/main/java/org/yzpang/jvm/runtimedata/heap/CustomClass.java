@@ -280,6 +280,17 @@ public class CustomClass {
         return null;
     }
 
+    public CustomMethod getMethod(String name, String descriptor, boolean isStatic) {
+        for (CustomClass c = this; c != null; c = c.getSuperClass()) {
+            for (CustomMethod method : c.methods) {
+                if (method.isStatic() == isStatic && method.getName().equals(name) && method.getDescriptor().equals(descriptor)) {
+                    return method;
+                }
+            }
+        }
+        return null;
+    }
+
     /**
      * 返回静态方法对象
      * @param name 方法名
@@ -287,12 +298,7 @@ public class CustomClass {
      * @return method
      */
     public CustomMethod getStaticMethod(String name, String descriptor) {
-        for (CustomMethod method : this.methods) {
-            if (method.isStatic() && method.getName().equals(name) && method.getDescriptor().equals(descriptor)) {
-                return method;
-            }
-        }
-        return null;
+        return getMethod(name, descriptor, true);
     }
 
     /**
@@ -309,6 +315,32 @@ public class CustomClass {
      */
     public CustomMethod getMainMethod(){
         return getStaticMethod("main", "([Ljava/lang/String;)V");
+    }
+
+    /**
+     * 返回实例方法
+     * @param name 方法名
+     * @param descriptor 方法描述符
+     * @return method
+     */
+    public CustomMethod getInstanceMethod(String name, String descriptor) {
+        return getMethod(name, descriptor, false);
+    }
+
+    /**
+     * 返回静态字段引用对象
+     */
+    public CustomObject getRefVar(String name, String descriptor) {
+        CustomField field = getField(name, descriptor, true);
+        return this.staticVariables.getReference(field.getSlotId());
+    }
+
+    /**
+     * 设置静态字段引用对象
+     */
+    public void setRefVar(String name, String descriptor, CustomObject refObj) {
+        CustomField field = getField(name, descriptor, true);
+        this.staticVariables.setReference(field.getSlotId(), refObj);
     }
 
     /**
