@@ -43,7 +43,10 @@ public class InvokeVirtualReferenceInstruction extends Index16Instruction {
                 && resolvedMethod.getClazz().isSuperClassOf(currentClass)
                 && !Objects.equals(resolvedMethod.getClazz().getPackageName(), currentClass.getPackageName())) {
             if (objRef.getClazz() != currentClass && !objRef.getClazz().isSubClassOf(currentClass)) {
-                throw new IllegalAccessError();
+                // 数组的Clone方法特殊处理
+                if (!(objRef.getClazz().isArray() && resolvedMethod.getName().equals("clone"))) {
+                    throw new IllegalAccessError();
+                }
             }
         }
         // 从对象引用中查找实际调用的方法

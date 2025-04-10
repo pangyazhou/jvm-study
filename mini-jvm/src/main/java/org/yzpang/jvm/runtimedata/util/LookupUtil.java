@@ -19,9 +19,11 @@ public class LookupUtil {
      */
     public static CustomMethod lookupMethodInClass(CustomClass clazz, String name, String descriptor) {
         for (CustomClass c = clazz; c != null; c = c.getSuperClass()) {
-            for (CustomMethod method : c.getMethods()) {
-                if (method.getName().equals(name) && method.getDescriptor().equals(descriptor)) {
-                    return method;
+            if (c.getMethods() != null) {
+                for (CustomMethod method : c.getMethods()) {
+                    if (method.getName().equals(name) && method.getDescriptor().equals(descriptor)) {
+                        return method;
+                    }
                 }
             }
         }
@@ -37,9 +39,11 @@ public class LookupUtil {
      */
     public static CustomMethod lookupMethodInInterfaces(CustomClass[] interfaces, String name, String descriptor) {
         for (CustomClass clazz : interfaces) {
-            for (CustomMethod method : clazz.getMethods()) {
-                if (method.getName().equals(name) && method.getDescriptor().equals(descriptor)) {
-                    return method;
+            if (clazz.getMethods() != null) {
+                for (CustomMethod method : clazz.getMethods()) {
+                    if (method.getName().equals(name) && method.getDescriptor().equals(descriptor)) {
+                        return method;
+                    }
                 }
             }
             CustomMethod method = lookupMethodInInterfaces(clazz.getInterfaces(), name, descriptor);

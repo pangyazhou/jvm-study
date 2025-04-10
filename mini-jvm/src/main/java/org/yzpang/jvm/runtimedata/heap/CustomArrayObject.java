@@ -14,6 +14,9 @@ import java.lang.reflect.Array;
 public class CustomArrayObject extends CustomObject{
     private Object array;
 
+    public CustomArrayObject() {
+    }
+
     public CustomArrayObject(CustomClass clazz, Class<?> arrayType, int count) {
         array = Array.newInstance(arrayType, count);
         this.clazz = clazz;

@@ -52,4 +52,16 @@ public class CustomSlots {
     public void setSlot(int index, CustomSlot slot) {
         slots[index] = slot;
     }
+
+    public int length() {
+        return slots.length;
+    }
+
+    public CustomSlots clone() {
+        CustomSlots clone = new CustomSlots(slots.length);
+        for (int i = 0; i < length(); i++) {
+            clone.setSlot(i, slots[i].clone());
+        }
+        return clone;
+    }
 }

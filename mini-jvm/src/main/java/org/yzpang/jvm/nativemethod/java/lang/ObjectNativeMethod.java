@@ -4,7 +4,9 @@ import cn.hutool.core.util.RandomUtil;
 import org.yzpang.jvm.constant.ClassConstants;
 import org.yzpang.jvm.nativemethod.NativeMethod;
 import org.yzpang.jvm.nativemethod.NativeMethodRegistry;
+import org.yzpang.jvm.runtimedata.heap.CustomClass;
 import org.yzpang.jvm.runtimedata.heap.CustomObject;
+import org.yzpang.jvm.runtimedata.heap.CustomObjectClone;
 import org.yzpang.jvm.runtimedata.thread.CustomFrame;
 
 import java.util.Random;
@@ -19,6 +21,7 @@ public class ObjectNativeMethod {
         // 注册getClass()方法
         NativeMethodRegistry.register(ClassConstants.OBJECT_CLASS, "getClass", "()Ljava/lang/Class;", getClassNativeMethod());
         NativeMethodRegistry.register(ClassConstants.OBJECT_CLASS, "hashCode", "()I", getHashCodeNativeMethod());
+        NativeMethodRegistry.register(ClassConstants.OBJECT_CLASS, "clone", "()Ljava/lang/Object;", getCloneNativeMethod());
     }
 
     // public final native Class<?> getClass();
@@ -48,6 +51,20 @@ public class ObjectNativeMethod {
                     thisObj.setHashCode(hashCode);
                 }
                 frame.getOperandStack().pushInt(hashCode);
+            }
+        };
+    }
+
+    public static NativeMethod getCloneNativeMethod(){
+        return new NativeMethod() {
+            @Override
+            public void invokeNativeMethod(CustomFrame frame) throws Exception {
+                CustomObject thisObj = frame.getLocalVariable().getThis();
+                CustomClass cloneableClazz = thisObj.getClazz().getClassloader().loadClass(ClassConstants.CLONEABLE_CLASS);
+                if (!thisObj.getClazz().isImplements(cloneableClazz)) {
+                    throw new CloneNotSupportedException("当前对象所属类未实现Cloneable接口");
+                }
+                frame.getOperandStack().pushReference(CustomObjectClone.cloneObj(thisObj));
             }
         };
     }

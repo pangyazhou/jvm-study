@@ -5,7 +5,7 @@ package org.yzpang.jvm.file;
  * Desc: 子类
  * Date: 2025/4/2 下午4:58
  **/
-public class Dog extends Animal {
+public class Dog extends Animal implements Cloneable{
 
     private void fuck(){
         System.out.println("dog fuck...");
@@ -28,5 +28,14 @@ public class Dog extends Animal {
         dog.fuck();
         Class<Dog> dogClass = Dog.class;
         Class<? extends Dog> aClass = dog.getClass();
+    }
+
+    @Override
+    public Dog clone() {
+        try {
+            return (Dog) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }
