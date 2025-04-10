@@ -26,7 +26,7 @@ public class InvokeNativeReservedInstruction extends NoOperandsInstruction {
         NativeMethod nativeMethod = NativeMethodRegistry.findNativeMethod(className, methodName, methodDescriptor);
         if (nativeMethod == null) {
             String methodInfo = className + "." + methodName + methodDescriptor;
-            throw new UnsatisfiedLinkError(methodInfo);
+            throw new UnsatisfiedLinkError("未查询到注册的本地方法: " + methodInfo);
         }
         nativeMethod.invokeNativeMethod(frame);
     }
