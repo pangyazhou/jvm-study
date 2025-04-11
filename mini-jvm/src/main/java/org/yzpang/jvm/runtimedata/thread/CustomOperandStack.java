@@ -91,4 +91,11 @@ public class CustomOperandStack {
     public boolean popBoolean() {
         return popInt() == 1;
     }
+
+    public void clear() {
+        size = 0;
+        for (CustomSlot slot : slots) {
+            slot.clear();
+        }
+    }
 }

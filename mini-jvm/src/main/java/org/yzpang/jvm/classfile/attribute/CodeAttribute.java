@@ -39,7 +39,7 @@ public class CodeAttribute extends AttributeInfo {
     /**
      * code[]数组中的一个异常处理器, 顺序不可改动
      */
-    private ExceptionInfo[] exceptionInfos;
+    private ExceptionInfo[] exceptionTable;
     /**
      * u2 属性表数量
      */
@@ -52,7 +52,16 @@ public class CodeAttribute extends AttributeInfo {
         this.maxLocals = reader.readUShort();
         this.codeLength = reader.readInt();
         this.code = reader.readBytes(codeLength);
-        this.exceptionInfos = ExceptionInfo.readExceptionInfos(reader);
+        this.exceptionTable = ExceptionInfo.readExceptionInfos(reader);
         this.attributes = AttributeInfo.readAttributes(reader, this.constantPool);
+    }
+
+    public LineNumberTableAttribute getLineNumberTableAttribute() {
+        for (AttributeInfo attribute : attributes) {
+            if (attribute instanceof LineNumberTableAttribute) {
+                return (LineNumberTableAttribute) attribute;
+            }
+        }
+        return null;
     }
 }

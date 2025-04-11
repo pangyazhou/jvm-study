@@ -14,7 +14,9 @@ public class CustomObject {
     // java/lang/Class 对象绑定的CustomClass
     protected CustomClass extra;
     protected CustomSlots fields;
-    private int hashCode = 0;
+    protected int hashCode = 0;
+    // 堆栈跟踪
+    protected CustomStackTraceElement[] stackTrace;
 
     public CustomObject() {
     }

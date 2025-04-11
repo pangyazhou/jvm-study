@@ -56,11 +56,9 @@ public class AttributeInfo {
                 return codeAttribute;
             case AttributeNameConstants.LINE_NUMBER_TABLE:
                 LineNumberTableAttribute lineNumberTableAttribute = new LineNumberTableAttribute();
-
                 return lineNumberTableAttribute;
             case AttributeNameConstants.LOCAL_VARIABLE_TABLE:
                 LocalVariableTableAttribute localVariableTableAttribute = new LocalVariableTableAttribute();
-
                 return localVariableTableAttribute;
             case AttributeNameConstants.INNER_CLASSES:
                 /* 内部类 */

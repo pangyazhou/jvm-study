@@ -58,5 +58,6 @@ public class NativeMethodRegistry {
         DoubleNativeMethod.init();
         StringNativeMethod.init();
         VMNativeMethod.init();
+        ThrowableNativeMethod.init();
     }
 }

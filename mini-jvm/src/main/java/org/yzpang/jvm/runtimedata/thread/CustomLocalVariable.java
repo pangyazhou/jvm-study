@@ -17,7 +17,7 @@ public class CustomLocalVariable extends CustomSlots {
     }
 
     /**
-     * 获取对象引用
+     * 获取调用此方法的对象引用
      * @return objRef
      */
     public CustomObject getThis(){

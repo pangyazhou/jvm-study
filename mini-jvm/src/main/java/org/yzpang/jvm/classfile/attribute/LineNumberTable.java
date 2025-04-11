@@ -1,5 +1,6 @@
 package org.yzpang.jvm.classfile.attribute;
 
+import lombok.Data;
 import org.yzpang.jvm.classfile.ClassReader;
 
 /**
@@ -7,6 +8,7 @@ import org.yzpang.jvm.classfile.ClassReader;
  * Desc: 行号表
  * Date: 2025/3/18 下午5:21
  **/
+@Data
 public class LineNumberTable {
     /**
      * u2 code[]数组的索引,

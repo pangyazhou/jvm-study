@@ -1,7 +1,10 @@
 package org.yzpang.jvm.classfile;
 
 import lombok.Data;
+import org.yzpang.jvm.classfile.attribute.CodeAttribute;
+import org.yzpang.jvm.classfile.attribute.SourceFileAttribute;
 import org.yzpang.jvm.constant.JvmConstants;
+import org.yzpang.jvm.runtimedata.heap.CustomExceptionTable;
 
 /**
  * Author: yzpang
@@ -160,15 +163,13 @@ public class ClassFile {
         return names;
     }
 
-    public MemberInfo getMainMethod(){
-        for (MemberInfo methodInfo : methods) {
-            String methodName = methodInfo.getName();
-            String descriptor = methodInfo.getDescriptor();
-            if (methodName.equals("main") && descriptor.equals("([Ljava/lang/String;)V")) {
-                return methodInfo;
+    public String getSourceFile() {
+        for (AttributeInfo attributeInfo : attributes) {
+            if (attributeInfo instanceof SourceFileAttribute) {
+                SourceFileAttribute sourceFileAttribute = (SourceFileAttribute) attributeInfo;
+                return sourceFileAttribute.fileName();
             }
         }
-        return null;
+        return "Unknown";
     }
-
 }

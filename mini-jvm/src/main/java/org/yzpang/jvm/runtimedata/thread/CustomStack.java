@@ -79,4 +79,23 @@ public class CustomStack {
     public boolean isEmpty(){
         return top == null;
     }
+
+    /**
+     * 清空栈
+     */
+    public void clear() {
+       if (top != null) {
+           pop();
+       }
+    }
+
+    public CustomFrame[] getFrames() {
+        CustomFrame[] frames = new CustomFrame[size];
+        int i = 0;
+        for (CustomFrame frame = top; frame != null; frame = frame.getLower()) {
+            frames[i] = frame;
+            i++;
+        }
+        return frames;
+    }
 }

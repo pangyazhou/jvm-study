@@ -22,4 +22,20 @@ public class LineNumberTableAttribute extends AttributeInfo {
         this.lineNumberTables = LineNumberTable.readLineNumberTables(reader);
         this.lineNumberTableLength = this.lineNumberTables.length;
     }
+
+    /**
+     * 根据字节码pc获取源文件行号
+     * @param pc 指令索引
+     * @return 行号
+     */
+    public int getLineNumber(int pc) {
+        for (int i = lineNumberTableLength - 1; i >= 0; i--) {
+            LineNumberTable lineNumberTable = this.lineNumberTables[i];
+            if (pc >= lineNumberTable.getStartPC()) {
+                return lineNumberTable.getLineNumber();
+            }
+        }
+        return -1;
+    }
+
 }

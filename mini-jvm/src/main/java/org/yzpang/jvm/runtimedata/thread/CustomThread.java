@@ -60,4 +60,15 @@ public class CustomThread {
     public boolean isStackEmpty(){
         return customStack.isEmpty();
     }
+
+    /**
+     * 清空栈
+     */
+    public void clearStack() {
+        this.customStack.clear();
+    }
+
+    public CustomFrame[] getFrames(){
+        return this.customStack.getFrames();
+    }
 }

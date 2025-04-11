@@ -407,7 +407,7 @@ public class InstructionFactory {
             case 0xbe:
                 return new ArrayLengthReferenceInstruction();
             case 0xbf:
-                return null;
+                return new AthrowReferenceInstruction();
             case 0xc0:
                 return new CheckCastReferenceInstruction();
             case 0xc1:

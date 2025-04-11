@@ -33,6 +33,7 @@ public class CustomClass {
     protected boolean initialized = false;
     // java/lang/Class实例
     protected CustomObject jClass;
+    protected String sourceFile;
 
     public CustomClass() {
     }
@@ -46,6 +47,7 @@ public class CustomClass {
         this.fields = CustomField.newFields(this, classFile.getFields());
         this.methods = CustomMethod.newMethods(this, classFile.getMethods());
         this.attributes = CustomAttribute.newAttributes(this, classFile.getAttributes());
+        this.sourceFile = classFile.getSourceFile();
     }
 
     public CustomObject newObject(){

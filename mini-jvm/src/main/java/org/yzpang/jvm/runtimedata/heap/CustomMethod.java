@@ -4,6 +4,7 @@ import lombok.Data;
 import org.yzpang.jvm.classfile.AttributeInfo;
 import org.yzpang.jvm.classfile.MemberInfo;
 import org.yzpang.jvm.classfile.attribute.CodeAttribute;
+import org.yzpang.jvm.classfile.attribute.LineNumberTableAttribute;
 import org.yzpang.jvm.constant.MethodAccessConstants;
 import org.yzpang.jvm.runtimedata.util.DescriptorParserUtil;
 
@@ -14,9 +15,13 @@ import org.yzpang.jvm.runtimedata.util.DescriptorParserUtil;
 public class CustomMethod extends CustomClassMember {
     private int maxLocal;
     private int maxStack;
+    // 字节码数组
     private byte[] code;
     // 参数slot数量
     private int argSlotCount;
+    // 异常表
+    private CustomExceptionTable exceptionTable;
+    private LineNumberTableAttribute lineNumberTable;
 
     public static CustomMethod[] newMethods(CustomClass clazz, MemberInfo[] methodInfos){
         CustomMethod[] methods = new CustomMethod[methodInfos.length];
@@ -30,7 +35,7 @@ public class CustomMethod extends CustomClassMember {
         CustomMethod method = new CustomMethod();
         method.setClazz(clazz);
         method.copyMemberInfo(memberInfo);
-        method.copyCodeAttribute(memberInfo);
+        method.copyAttributes(memberInfo);
         CustomMethodDescriptor methodDescriptor = DescriptorParserUtil.parseMethodDescriptor(method.descriptor);
         method.calcArgSlotCount(methodDescriptor.getParameterTypes());
         if (method.isNative()) {
@@ -39,15 +44,33 @@ public class CustomMethod extends CustomClassMember {
         return method;
     }
 
-    private void copyCodeAttribute(MemberInfo memberInfo) {
+    /**
+     * 复制解析Code属性
+     * @param memberInfo
+     */
+    private void copyAttributes(MemberInfo memberInfo) {
         for (AttributeInfo attributeInfo : memberInfo.getAttributes()) {
             if (attributeInfo instanceof CodeAttribute) {
                 CodeAttribute codeAttribute = (CodeAttribute) attributeInfo;
                 this.maxStack = codeAttribute.getMaxStack();
                 this.maxLocal = codeAttribute.getMaxLocals();
                 this.code = codeAttribute.getCode();
+                this.lineNumberTable = codeAttribute.getLineNumberTableAttribute();
+                this.exceptionTable = new CustomExceptionTable(codeAttribute.getExceptionTable(), this.clazz.getConstantPool());
             }
         }
+    }
+
+    /**
+     * 查找异常处理代码位置
+     */
+    public int findExceptionHandler(CustomClass exClass, int pc) throws Exception {
+        CustomExceptionHandler handler = this.exceptionTable.findExceptionHandler(exClass, pc);
+        if (handler != null) {
+            return handler.getHandlerPc();
+        }
+        // todo 多个catch块/finally语句
+        return -1;
     }
 
     /**
@@ -65,6 +88,21 @@ public class CustomMethod extends CustomClassMember {
         if (!isStatic()){
             this.argSlotCount++;
         }
+    }
+
+    /**
+     * 根据字节码索引查找源文件行号
+     * @param pc pc
+     * @return lineNumber
+     */
+    public int getLineNumber(int pc) {
+        if (isNative()) {
+            return -2;
+        }
+        if (this.lineNumberTable == null) {
+            return -1;
+        }
+        return this.lineNumberTable.getLineNumber(pc);
     }
 
     /**
