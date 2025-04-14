@@ -1,12 +1,10 @@
 package org.yzpang.jvm.nativemethod.sun.misc;
 
+import org.yzpang.jvm.constant.ClassConstants;
 import org.yzpang.jvm.instructions.base.MethodInvokeLogic;
 import org.yzpang.jvm.nativemethod.NativeMethod;
 import org.yzpang.jvm.nativemethod.NativeMethodRegistry;
-import org.yzpang.jvm.runtimedata.heap.CustomClass;
-import org.yzpang.jvm.runtimedata.heap.CustomMethod;
-import org.yzpang.jvm.runtimedata.heap.CustomObject;
-import org.yzpang.jvm.runtimedata.heap.CustomStringPool;
+import org.yzpang.jvm.runtimedata.heap.*;
 import org.yzpang.jvm.runtimedata.thread.CustomFrame;
 
 /**
@@ -35,6 +33,10 @@ public class VMNativeMethod {
                 CustomClass propsClass = clazz.getClassloader().loadClass("java/util/Properties");
                 CustomMethod setPropertyMethod = propsClass.getInstanceMethod("setProperty", "(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/Object;");
                 MethodInvokeLogic.invokeMethod(frame, setPropertyMethod);
+                /*CustomClassLoader classloader = frame.getMethod().getClazz().getClassloader();
+                CustomClass systemClass = classloader.loadClass(ClassConstants.SYSTEM_CLASS);
+                CustomMethod initializeSystemClass = systemClass.getStaticMethod("initializeSystemClass", "()V");
+                MethodInvokeLogic.invokeMethod(frame, initializeSystemClass);*/
             }
         };
     }

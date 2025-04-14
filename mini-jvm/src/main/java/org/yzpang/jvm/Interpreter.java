@@ -12,16 +12,7 @@ import org.yzpang.jvm.runtimedata.thread.CustomThread;
  */
 public class Interpreter {
 
-    /**
-     * 解释执行方法
-     * @param method 方法信息
-     */
-    public void interpret(CustomMethod method, boolean logInst, String[] args) throws Exception {
-        CustomThread thread = new CustomThread();
-        CustomFrame frame = thread.newFrame(method);
-        thread.pushFrame(frame);
-        CustomObject argsArray = createArgsArray(method.getClazz().getClassloader(), args);
-        frame.getLocalVariable().setReference(0, argsArray);
+    public void interpret(CustomThread thread, boolean logInst) throws Exception {
         loop(thread, logInst);
     }
 
@@ -67,15 +58,5 @@ public class Interpreter {
         String methodName = method.getName();
         int pc = frame.getThread().getPc();
         System.out.printf("%s: %s: %2d: %s\n", className, methodName, pc, instruction);
-    }
-
-    private CustomObject createArgsArray(CustomClassLoader classLoader, String[] args) throws Exception {
-        CustomClass stringClass = classLoader.loadClass("java/lang/String");
-        CustomArrayObject arrayObject = (CustomArrayObject) stringClass.getArrayClass().newArray(args.length);
-        CustomObject[] array = arrayObject.getRefs();
-        for (int i = 0; i < args.length; i++) {
-            array[i] = CustomStringPool.jString(classLoader, args[i]);
-        }
-        return arrayObject;
     }
 }

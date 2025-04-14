@@ -4,6 +4,7 @@ import org.yzpang.jvm.constant.ClassConstants;
 import org.yzpang.jvm.nativemethod.NativeMethod;
 import org.yzpang.jvm.nativemethod.NativeMethodRegistry;
 import org.yzpang.jvm.runtimedata.heap.CustomArrayObject;
+import org.yzpang.jvm.runtimedata.heap.CustomClass;
 import org.yzpang.jvm.runtimedata.heap.CustomObject;
 import org.yzpang.jvm.runtimedata.thread.CustomFrame;
 import org.yzpang.jvm.runtimedata.thread.CustomLocalVariable;
@@ -51,4 +52,59 @@ public class SystemNativeMethod {
             }
         };
     }
+
+    // private static native void setIn0(InputStream in);
+    public static NativeMethod getSetIn0NativeMethod() {
+        return new NativeMethod() {
+            @Override
+            public void invokeNativeMethod(CustomFrame frame) throws Exception {
+                CustomLocalVariable variable = frame.getLocalVariable();
+                CustomObject in = variable.getReference(0);
+
+                CustomClass systemClass = frame.getMethod().getClazz();
+                systemClass.setRefVar("in", "Ljava/io/InputStream;", in);
+            }
+        };
+    }
+
+    // private static native void setOut0(PrintStream out);
+    public static NativeMethod getSetOut0NativeMethod() {
+        return new NativeMethod() {
+            @Override
+            public void invokeNativeMethod(CustomFrame frame) throws Exception {
+                CustomLocalVariable variable = frame.getLocalVariable();
+                CustomObject out = variable.getReference(0);
+
+                CustomClass systemClass = frame.getMethod().getClazz();
+                systemClass.setRefVar("out", "Ljava/io/PrintStream;", out);
+            }
+        };
+    }
+
+    // private static native void setErr0(PrintStream err);
+    public static NativeMethod setErr0NativeMethod() {
+        return new NativeMethod() {
+            @Override
+            public void invokeNativeMethod(CustomFrame frame) throws Exception {
+                CustomLocalVariable variable = frame.getLocalVariable();
+                CustomObject err = variable.getReference(0);
+
+                CustomClass systemClass = frame.getMethod().getClazz();
+                systemClass.setRefVar("err", "Ljava/io/PrintStream;", err);
+            }
+        };
+    }
+
+    // public static native long currentTimeMills();
+    public static NativeMethod getCurrentTimeMillsNativeMethod() {
+        return new NativeMethod() {
+            @Override
+            public void invokeNativeMethod(CustomFrame frame) throws Exception {
+                long currentTimeMillis = System.currentTimeMillis();
+                frame.getOperandStack().pushLong(currentTimeMillis);
+            }
+        };
+    }
+
+
 }

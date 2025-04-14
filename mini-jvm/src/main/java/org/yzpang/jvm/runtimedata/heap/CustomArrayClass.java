@@ -9,7 +9,7 @@ import org.yzpang.jvm.runtimedata.util.ClassNameHelper;
  **/
 public class CustomArrayClass extends CustomClass{
 
-    public CustomObject newArray(int count) throws Exception {
+    public CustomArrayObject newArray(int count) throws Exception {
         if (!isArray()) {
             throw new Exception("No array class: " + this.name);
         }
