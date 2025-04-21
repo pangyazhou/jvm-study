@@ -11,6 +11,7 @@
     <modules>
         <module>byte-code</module>
         <module>mini-jvm</module>
+        <module>jvm-advanced</module>
     </modules>
 
     <properties>

@@ -10,13 +10,15 @@ import org.yzpang.jvm.runtimedata.CustomSlots;
  **/
 @Data
 public class CustomObject {
+    /* 对象头*/
     protected CustomClass clazz;
     // java/lang/Class 对象绑定的CustomClass
     protected CustomClass extra;
-    protected CustomSlots fields;
     protected int hashCode = 0;
     // 堆栈跟踪
     protected CustomStackTraceElement[] stackTrace;
+    /* 实例数据 */
+    protected CustomSlots fields;
 
     public CustomObject() {
     }
